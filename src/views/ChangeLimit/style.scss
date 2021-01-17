@@ -1,5 +1,19 @@
 .change-limit-container{
   .change-limit-content-container{
     max-height: calc(100vh - 70px);
+
+    .filter-container{
+      .input-div input,
+      .input-div .datepicker-input{
+        @apply rounded-3xl border-gray-100 bg-gray-100 text-gray-500;
+      }
+
+      .input-div.with-icon input{
+        @apply pl-12;
+      }
+      .input-div .datepicker-input{
+        @apply pl-14 #{!important};
+      }
+    }
   }
 }

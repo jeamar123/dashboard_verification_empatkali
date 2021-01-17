@@ -1,13 +1,13 @@
 <template>
-	<div class="sidemenu-container w-64 p-4 h-full shadow-lg bg-sidemenuColor">
-		<div class="logo-wrapper h-10 mb-5">
+	<div class="sidemenu-container w-64 py-4 h-full shadow-lg bg-sidemenuColor">
+		<div class="logo-wrapper h-10 mb-5 px-4">
 			<img :src="'../assets/img/EmpatKali_Logo.png'" alt="" class="h-full">
 		</div>
-		<div class="mb-8">
+		<div class="mb-8 px-4">
 			<p class="text-md"><span class="font-bold">Verification</span> Dashboard</p>
 		</div>
 
-		<div class="sidemenu-items">
+		<div class="sidemenu-items px-4 overflow-y-auto">
 
 			<div class="menu-item flex items-center px-4 py-5 cursor-pointer rounded-xl">
 				<div class="icon-container w-7 mr-3">
@@ -18,7 +18,12 @@
 				</div>
 			</div>
 
-			<div class="menu-item-w-child sidemenu-user-toggle">
+			<div 
+				class="menu-item-w-child sidemenu-user-toggle rounded-xl "
+				v-bind:class="{
+					'bg-sidemenuChildBgColor' : $route.name == 'Users' || isShowUserChildMenu
+				}"
+			>
 				<div @click="isShowUserChildMenu = isShowUserChildMenu ? false : true" class="menu-item flex items-center px-4 py-5 cursor-pointer rounded-xl">
 					<div class="icon-container w-7 mr-3">
 						<img :src="'../assets/img/users.png'" class="w-full" alt="">
@@ -38,43 +43,73 @@
 				</div>
 
 				<div v-if="isShowUserChildMenu" class="menu-child-items">
-					<div class="child-item p-4 rounded bg-sidemenuActiveColor mb-1 cursor-pointer">
+					<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
 						<p class="text-md ff-medium font-bold">Active</p>
 					</div>
-					<div class="child-item p-4 rounded bg-sidemenuActiveColor mb-1 cursor-pointer">
+					<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
 						<p class="text-md ff-medium font-bold">Pending</p>
 					</div>
-					<div class="child-item p-4 rounded bg-sidemenuActiveColor mb-1 cursor-pointer">
+					<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
 						<p class="text-md ff-medium font-bold">Incomplete</p>
 					</div>
-					<div class="child-item p-4 rounded bg-sidemenuActiveColor mb-1 cursor-pointer">
+					<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
 						<p class="text-md ff-medium font-bold">Banned</p>
 					</div>
-					<div class="child-item p-4 rounded bg-sidemenuActiveColor mb-1 cursor-pointer">
+					<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
 						<p class="text-md ff-medium font-bold">Freeze</p>
 					</div>
-					<div class="child-item p-4 rounded bg-sidemenuActiveColor mb-1 cursor-pointer">
+					<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
 						<p class="text-md ff-medium font-bold">Rejected</p>
 					</div>
 				</div>
 			</div>
 
-			<router-link 
-				:to="{ name: 'Change Limit'}" 
-				class="w-full rounded-xl inline-block"
+			<div 
+				class="menu-item-w-child sidemenu-limit-toggle rounded-xl"
 				v-bind:class="{
-					'bg-sidemenuActiveColor' : $route.name == 'Change Limit'
+					'bg-sidemenuChildBgColor' : $route.name == 'Change Limit'
 				}"
 			>
-				<div class="menu-item flex items-center px-4 py-5">
-					<div class="icon-container w-7 mr-3">
-						<img :src="'../assets/img/change-limit.png'" class="w-full" alt="">
+				<router-link 
+					:to="{ name: 'Change Limit', params: { status: 'all' } }" 
+					class="w-full rounded-xl inline-block"
+					v-bind:class="{
+						'bg-sidemenuActiveColor' : $route.name == 'Change Limit'
+					}"
+				>
+					<div class="menu-item flex items-center px-4 py-5">
+						<div class="icon-container w-7 mr-3">
+							<img :src="'../assets/img/change-limit.png'" class="w-full" alt="">
+						</div>
+						<div class="flex-1">
+							<p class="text-md ff-medium font-bold" v-bind:class="{'text-sidemenuTextActiveColor' : $route.name == 'Change Limit'}">Change Limit</p>
+						</div>
 					</div>
-					<div class="flex-1">
-						<p class="text-md ff-medium font-bold">Change Limit</p>
-					</div>
+				</router-link>
+
+				<div v-if="$route.name == 'Change Limit'" class="menu-child-items pt-2">
+					<router-link :to="{ name: 'Change Limit', params: { status: 'all' } }" >
+						<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
+							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'all' }">All Request</p>
+						</div>
+					</router-link>
+					<router-link :to="{ name: 'Change Limit', params: { status: 'pending' } }" >
+						<div class="child-item px-4 pt-2 pb-6 rounded mb-1 cursor-pointer">
+							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'pending' }">Pending</p>
+						</div>
+					</router-link>
+					<router-link :to="{ name: 'Change Limit', params: { status: 'approved' } }" >
+						<div class="child-item px-4 pt-2 pb-6 rounded mb-1 cursor-pointer">
+							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'approved' }">Approved</p>
+						</div>
+					</router-link>
+					<router-link :to="{ name: 'Change Limit', params: { status: 'rejected' } }" >
+						<div class="child-item px-4 pt-2 pb-6 rounded mb-1 cursor-pointer">
+							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'rejected' }">Rejected</p>
+						</div>
+					</router-link>
 				</div>
-			</router-link>
+			</div>
 
 			<router-link 
 				:to="{ name: 'Settings'}" 

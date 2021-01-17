@@ -1,5 +1,5 @@
 <template>
-	<div v-if="$route.name == 'UserVerificatonDetails'" class="header-container flex border-b items-center px-4 shadow-md bg-navColor">
+	<div v-if="$route.name == 'User Verification Details'" class="header-container flex border-b items-center px-4 shadow-md bg-navColor">
 		<div class="logo-wrapper h-full flex items-center py-4 mr-2">
 			<img :src="'../assets/img/EmpatKali_Logo.png'" alt="" class="h-full">
 			<!-- <span class="logo-text text-2xl font-black text-black">DevNotes</span> -->
@@ -30,13 +30,52 @@
 		</div>
 	</div>
 	<div v-else class="header-container flex items-center px-4">
-		<div class="flex-1">
-			<p class="text-md font-bold">
-				<span v-if="$route.name == 'Email Template' || $route.name == 'Fee' || $route.name == 'User Management' || $route.name == 'Salary'">
+		<div class="flex-2">
+			<p v-if="headerContentName == 'default' || headerContentName == ''" class="text-md font-bold">
+				{{ $route.name }}
+			</p>
+
+			<p v-if="headerContentName == 'settings'" class="text-md font-bold">
+				<span>
 					Settings <font-awesome-icon icon="angle-right" class="mx-2" size="sm" />
 				</span>
 				{{ $route.name }}
 			</p>
+
+			<div v-if="$route.name == 'Change Limit'" class="flex">
+				<div class="flex-none mr-8">
+					<p class="text-md font-bold inline-block">
+						{{ $route.name }}
+						-
+						{{ headerContentName }}
+					</p>
+
+					<div class="count-badge rounded-2xl px-4 py-2 bg-v-status-pending inline-block text-white font-bold text-xs ml-3">
+						{{ changeLimitOptions.resultCount }}
+					</div>
+				</div>
+
+				<div class="flex flex-1">
+					<div class="flex items-center flex-none mr-4">
+						<div class="w-5 mr-4">
+							<img :src="'../assets/img/calendar-icon.png'" class="w-full inline-block" alt="">
+						</div>
+						<div class="flex-1 text-sm">
+							{{ changeLimitOptions.startDate | moment('DD MMM YYYY') }}
+						</div>
+					</div>
+					<div class="flex items-center flex-none mr-4">
+						<div class="w-6 mr-4">
+							<img :src="'../assets/img/clock-icon.png'" class="w-full inline-block" alt="">
+						</div>
+						<div class="flex-1 text-sm">
+							{{ changeLimitOptions.startDate | moment("HH:MM:SS") }} WIB
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
 		</div>
 		<div class="flex flex-1 text-right items-center">
 			<div class="flex-1">

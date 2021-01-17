@@ -1,11 +1,11 @@
 <template>
 	<div class="main-container">
 		<Loader v-if="showLoader"/>
-		<Header v-if="$route.name == 'UserVerificatonDetails'"/>
+		<Header v-if="$route.name == 'User Verification Details'"/>
 
 		<div class="main-content h-full">
 			<div class="flex h-full">
-				<Sidemenu v-if="$route.name != 'UserVerificatonDetails'"/>
+				<Sidemenu v-if="$route.name != 'User Verification Details'"/>
 				<div class="flex-1 h-full" >
 					<router-view></router-view>
 				</div>

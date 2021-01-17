@@ -45,7 +45,6 @@ export default new Router({
       meta: { auth: true },
       children: [
         { name: 'Users', path: '/users', component: Users },
-        { name: 'UserVerificationDetails', path: '/user-verification', component: UserVerificationDetails },
         { name: 'Settings', path: '/settings', component: Settings },
         { name: 'Email Template', path: '/settings/email-template', component: EmailTemplate },
         { name: 'Fee', path: '/settings/fee', component: Fee },
@@ -53,7 +52,9 @@ export default new Router({
         { name: 'Salary', path: '/settings/salary', component: Salary },
         { name: 'Promotions', path: '/promotions', component: Promotions },
         { name: 'Merchants', path: '/merchants', component: Merchants },
-        { name: 'Change Limit', path: '/change-limit', component: ChangeLimit },
+        { name: 'Change Limit', path: '/change-limit/:status', component: ChangeLimit },
+
+        { name: 'User Verification Details', path: '/user-verification/:id', component: UserVerificationDetails },
       ]
     },
     

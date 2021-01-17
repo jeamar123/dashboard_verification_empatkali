@@ -2,6 +2,12 @@
 	import axios from 'axios';
 
 	var Header = {
+		props:	{
+			changeLimitOptions:	{
+				required: false,
+				type: Object
+			},
+		},
 		data() {
 			return {
 				requestedHeaders: {
@@ -11,11 +17,21 @@
 					}
 				},
 				isShowUserProfileMenu: false,
+				headerContentName: 'default',
 			}
 		},
 		created() {
 			this.initializeShowHideListener();
 			this.actionAdmin();
+			this.getHeaderContent();
+		},
+		watch: {
+    	$route(to, from) {
+				// react to route changes...
+				console.log('from', from.params);
+				console.log('to', to.params);
+				this.getHeaderContent();
+			}
 		},
 		methods: {
 			decodeJwt(paramToken) {
@@ -97,6 +113,34 @@
 					})
 				// console.log('actionAdmin', actionAdmin)
 			},
+
+			getHeaderContent()	{
+				let vm = this
+				if(
+					vm.$route.name == 'Email Template' || 
+					vm.$route.name == 'Fee' || 
+					vm.$route.name == 'User Management' || 
+					vm.$route.name == 'Salary'){
+						vm.headerContentName = 'settings';
+				}else if(vm.$route.name == 'Change Limit'){
+					switch (vm.$route.params.status) {
+						case 'all':
+							vm.headerContentName = 'All request';
+							break;
+						case 'pending':
+							vm.headerContentName = 'Pending';
+							break;
+						case 'approved':
+							vm.headerContentName = 'Approved';
+							break;
+						case 'rejected':
+							vm.headerContentName = 'Rejected';
+							break;
+						default:
+							break;
+					}
+				}
+			}
     }
 	}
 	export default Header

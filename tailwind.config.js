@@ -8,6 +8,8 @@ module.exports = {
         'backgroundColor' : '#f7f7f8',          // Background color
         'sidemenuColor' : '#fff',               // Sidemenu Background color
         'sidemenuActiveColor' : '#d8d8f7',      // Sidemenu Active state color
+        'sidemenuTextActiveColor' : '#393C8E',  // Sidemenu Text Active state color
+        'sidemenuChildBgColor' : '#F8F8FF',     // Sidemenu Bg Active state color
         'dangerBtn' : '#E24949',                // button red color
         'primaryBtn' : '#393C8E',               // button blue color
         'successBtn' : '#28B867',               // button green color
@@ -41,6 +43,8 @@ module.exports = {
       },
       minHeight: {
         '50px': '50px',
+        '300px': '300px',
+        '500px': '500px',
       },
       maxWidth: {
         '150px': '150px',
@@ -49,6 +53,8 @@ module.exports = {
         '44': '11rem',
       },
       minWidth: {
+        '220px': '220px',
+        '250px': '250px',
         '11': '2.75rem',
         '28': '7rem',
         '40': '10rem',

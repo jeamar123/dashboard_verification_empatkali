@@ -1,9 +1,18 @@
+
 .input-div input,
 .input-div select,
-.input-div textarea{
+.input-div textarea,
+.input-div .datepicker-input{
   @apply border rounded-md px-3 py-2 w-full border-gray-400 text-gray-700;
 }
 
+.input-div.with-icon{
+  @apply relative;
+}
+
+.input-div.with-icon input{
+  @apply pl-12;
+}
 
 input{
 
