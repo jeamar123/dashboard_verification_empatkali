@@ -12,14 +12,30 @@
 				loader:	{
 					isShow: true,
 					message: 'Preparing'
-				}
+				},
+				headerOptions:	{
+					startDate: new Date(),
+					endDate: new Date(),
+					resultCount: 0
+				},
 			}
 		},
 		created() {
 			this.getUsersList();
 		},
+		watch: {
+    	async $route() {
+				// to, from
+				let vm = this
+				vm.loader =	{
+					isShow: true,
+					message: 'Loading data',
+				},
+				await vm.getUsersList();
+			}
+		},
 		methods: {
-      getUsersList()	{
+      async getUsersList()	{
 				let vm = this
 
 				setTimeout(() => {

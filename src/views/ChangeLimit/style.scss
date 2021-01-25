@@ -12,7 +12,7 @@
         @apply pl-12;
       }
       .input-div .datepicker-input{
-        @apply pl-14 #{!important};
+        @apply pl-14 cursor-pointer #{!important};
       }
     }
   }

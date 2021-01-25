@@ -44,7 +44,7 @@ export default new Router({
       component: Dashboard,
       meta: { auth: true },
       children: [
-        { name: 'Users', path: '/users', component: Users },
+        { name: 'Users', path: '/users/:status', component: Users },
         { name: 'Settings', path: '/settings', component: Settings },
         { name: 'Email Template', path: '/settings/email-template', component: EmailTemplate },
         { name: 'Fee', path: '/settings/fee', component: Fee },

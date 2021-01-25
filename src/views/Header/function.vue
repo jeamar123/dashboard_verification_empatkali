@@ -3,7 +3,7 @@
 
 	var Header = {
 		props:	{
-			changeLimitOptions:	{
+			headerOptions:	{
 				required: false,
 				type: Object
 			},
@@ -18,6 +18,7 @@
 				},
 				isShowUserProfileMenu: false,
 				headerContentName: 'default',
+				dateToday: new Date(),
 			}
 		},
 		created() {
@@ -117,28 +118,16 @@
 			getHeaderContent()	{
 				let vm = this
 				if(
+					vm.$route.name == 'Settings' ||
 					vm.$route.name == 'Email Template' || 
 					vm.$route.name == 'Fee' || 
 					vm.$route.name == 'User Management' || 
 					vm.$route.name == 'Salary'){
 						vm.headerContentName = 'settings';
 				}else if(vm.$route.name == 'Change Limit'){
-					switch (vm.$route.params.status) {
-						case 'all':
-							vm.headerContentName = 'All request';
-							break;
-						case 'pending':
-							vm.headerContentName = 'Pending';
-							break;
-						case 'approved':
-							vm.headerContentName = 'Approved';
-							break;
-						case 'rejected':
-							vm.headerContentName = 'Rejected';
-							break;
-						default:
-							break;
-					}
+					vm.headerContentName = vm.$route.params.status == 'all' ? 'All request' : vm.$route.params.status;
+				}else if(vm.$route.name == 'Users'){
+					vm.headerContentName = vm.$route.params.status == 'all' ? 'All users' : vm.$route.params.status;
 				}
 			}
     }

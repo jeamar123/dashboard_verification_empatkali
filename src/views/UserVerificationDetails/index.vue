@@ -1,258 +1,521 @@
 <template>
-	<div class="verification-details-container overflow-y-auto p-5">
-		<div class="flex">
-			<div class="card w-28 px-5 py-4 text-center mr-3 mb-3">
-				<p class="text-sm font-bold mb-6">Score</p>
-				<p class="text-3xl">0</p>
-			</div>
-			<div class="card flex flex-8 px-5 pt-4 pb-0 mr-3 mb-3">
-				<div class="flex flex-col flex-1">
-					<label class="flex-1 border-b text-sm font-bold pb-3 block">NIK</label>
-					<p class="flex flex-3 items-center text-sm mt-0 pr-8">317500482642819</p>
+	<div class="verification-details-container relative">
+		<Loader v-if="loader.isShow" :message="loader.message"/>
+
+		<div class="verification-details-content p-4">
+			<div class="grid details-grid gap-3 h-full w-full">
+				<div class="row-span-2 card p-4">
+					<div class="flex mb-4">
+						<div class="flex-1">
+							<p class="sm-text font-bold">Informasi Personal</p>
+						</div>
+						<div class="flex-1 text-right">
+							<button @click="toggleModals(true, 'editInfo')" class="btn rounded-sm font-bold py-1 px-4 bg-primaryBtn text-white xs-text">Edit</button>
+						</div>
+					</div>
+					
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Jeff Benzos' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ '317500482642819' }}
+						</p>
+					</div>
+					
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Tempat/ Tgl Lahir <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Jakarta/ 29 Agustus 2020' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Jenis Kelamin <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Laki-laki' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Golongan Darah <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'O' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Alamat <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Jl. Raya No. 101' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">RT/RW <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ '004/05' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Kelurahan <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Kalibata' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Kecamatan <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Pancoran' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Agama <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Islam' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Status Pernikahan <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Kawin' }}
+						</p>
+					</div>
+					
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Kewarganegaraan <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Indonesia' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ '081199988777' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Email <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'jeff@afterpay.com' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Nomor NPWP <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ '99.999.999.9-999.999' }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-3">
+						<label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
+						<p class="font-bold flex-4">
+							{{ 'Lebih dari Rp20.000.000' }}
+						</p>
+					</div>
+
+					<!-- <div class="text-right flex mt-4">
+						<div class="flex-1"></div>
+						<div class="flex-1">
+							<button class="btn w-full rounded-md font-bold py-2 bg-primaryBtn text-white xs-text">Edit</button>
+						</div>
+					</div>
+
+					<div v-if="isEditInfoShow" class="flex mt-4">
+						<div class="flex-1 text-center">
+							<button class="btn w-full rounded-md font-bold py-2 bg-closeBtn text-white xs-text">Cancel</button>
+						</div>
+						<div class="flex-1 text-center">
+							<button class="btn w-full rounded-md font-bold py-2 bg-successBtn text-white xs-text">Update</button>
+						</div>
+					</div> -->
+
 				</div>
-				<div class="flex flex-col flex-1">
-					<label class="flex-1 border-b text-sm font-bold pb-3 block">Nama</label>
-					<p class="flex flex-3 items-center text-sm mt-0 pr-8 ff-medium">Jeff Benzos</p>
+				<div class="card p-4">
+					<div class="flex mb-3">
+						<div class="flex-1">
+							<p class="sm-text font-bold mb-3">Total Transaksi</p>
+							<p class="xl-text font-bold">{{ '18' }}</p>
+						</div>
+						<div class="flex-1 text-right">
+							<a href="#" @click="toggleModals(true, 'transactions')" class="text-violet xxs-text font-bold">Lihat Detail</a>
+						</div>
+					</div>
+
+					<div class="flex mb-2">
+						<div class="flex-1">
+							<p class="sm-text font-bold mb-1">Completed</p>
+							<p class="xxs-text text-gray-700 mb-3">Finshed 4th payment</p>
+							<p class="lg-text">{{ '6' }}</p>
+						</div>
+						<div class="flex-1">
+							<p class="sm-text font-bold mb-1">Completed</p>
+							<p class="xxs-text text-gray-700 mb-3">Unpaid on track</p>
+							<p class="lg-text">{{ '2' }}</p>
+						</div>
+					</div>
+
+					<div class="flex">
+						<div class="flex-1">
+							<p class="sm-text font-bold mb-1">Completed</p>
+							<p class="xxs-text text-gray-700 mb-3">Finshed 4th payment</p>
+							<p class="lg-text">{{ '6' }}</p>
+						</div>
+						<div class="flex-1">
+							<p class="sm-text font-bold mb-1">Completed</p>
+							<p class="xxs-text text-gray-700 mb-3">Unpaid on track</p>
+							<p class="lg-text">{{ '2' }}</p>
+						</div>
+					</div>
 				</div>
-				<div class="flex flex-col flex-1">
-					<label class="flex-1 border-b text-sm font-bold pb-3 block">Nomor HP</label>
-					<p class="flex flex-3 items-center text-sm mt-0 pr-8">081199988777</p>
+				<div class="card p-4">
+					<p class="sm-text font-bold mb-4">Limit</p>
+
+					<div class="flex mb-4">
+						<div class="flex-2">
+							<label class="xs-text font-bold mb-5 block">Pengajuan Limit baru</label>
+							<p class="xl-text text-violet font-bold">{{ '5000000' | currency }}</p>
+						</div>
+						<div class="flex-1">
+							<label class="xs-text font-bold mb-3 block">Waktu Request</label>
+							
+							<div class="flex items-center mb-2">
+								<div class="w-5 mr-2">
+									<img :src="'../assets/img/calendar-icon.png'" class="w-full block" alt="">
+								</div>
+								<div class="flex-1 sm-text">
+									{{ new Date( ) | moment("DD MMM YYYY") }}
+								</div>
+							</div>
+							<div class="flex items-center">
+								<div class="w-5 mr-2">
+									<img :src="'../assets/img/clock-icon.png'" class="w-full block" alt="">
+								</div>
+								<div class="flex-1 sm-text">
+									{{ new Date( ) | moment("HH:MM:SS") }} WIB
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<p class="xs-text font-bold mb-4">Riwayat Limit</p>
+
+					<div class="flex xs-text mb-2">
+						<label class="text-gray-500 w-32">Limit Sekarang</label>
+						<p class="flex-1">
+							<span class="mr-2">:</span>
+							{{ '2000000' | currency }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-2">
+						<label class="text-gray-500 w-32">Outstanding</label>
+						<p class="flex-1">
+							<span class="mr-2">:</span>
+							{{ '500000' | currency }}
+						</p>
+					</div>
+
+					<div class="flex xs-text mb-2">
+						<label class="text-gray-500 w-32">Sisa Limit</label>
+						<p class="flex-1">
+							<span class="mr-2">:</span>
+							{{ '1500000' | currency }}
+						</p>
+					</div>
 				</div>
-				<div class="flex flex-col w-44">
-					<label class="flex-1 border-b text-sm font-bold pb-3 block">Validasi KTP</label>
-					<div class="flex flex-3 items-center pr-8">
-						<button 
-							class="btn text-white text-sm cursor-default ff-medium rounded-3xl py-2 px-4 bg-dangerMsg" 
+				<div class="card p-4 flex flex-col">
+					<p class="sm-text font-bold mb-4">Data Dokumen</p>
+
+					<div class="flex mb-3 items-center">
+						<label for="" class="flex-none font-bold xs-text mr-3">Validasi KTP</label>
+						<div class="">
+							<div class="rounded-2xl bg-successBtn px-4 py-2 xxs-text text-white">
+								<font-awesome-icon 
+									:icon="['fas', true ? 'check' : 'times']" 
+									class="mr-2" 
+								/>
+								Found - Match
+							</div>
+						</div>
+					</div>
+
+					<div class="flex flex-1">
+						<div class="flex-1 flex flex-col mr-1">
+							<p class="sm-text font-bold mb-3">Foto KTP</p>
+							<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+								<!-- style="background-image: url('https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg');background-size: cover;" -->
+								<img 
+									:src="'https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg'" 
+									class="rounded-lg absolute" alt=""
+								>
+							</div>
+						</div>
+						<div class="flex-1 flex flex-col mx-2">
+							<p class="sm-text font-bold mb-3">Selfie KTP</p>
+							<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+								<img 
+									:src="'/assets/img/no-image.png'" 
+									class="rounded-lg absolute" alt=""
+								>
+							</div>
+						</div>
+						<div class="flex-1 flex flex-col mx-2">
+							<p class="sm-text font-bold mb-3">Foto NPWP</p>
+							<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+								<img 
+									:src="'/assets/img/no-image.png'" 
+									class="rounded-lg absolute" alt=""
+								>
+							</div>
+						</div>
+						<div class="flex-1 flex flex-col ml-1">
+							<p class="sm-text font-bold mb-3">Slip Gaji</p>
+							<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+								<img 
+									:src="'https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg'" 
+									class="rounded-lg absolute" alt=""
+								>
+							</div>
+						</div>
+					</div>
+
+					<!-- <div class="grid grid-cols-4">
+						<div v-for="list in 4" :key="list.index" class="">
+							<p class="sm-text font-bold mb-3">Foto KTP</p>
+							<img :src="'https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg'" class="rounded-lg border" alt="">
+						</div>
+					</div> -->
+				</div>
+				<div class="row-span-2 card p-4">
+					<p class="sm-text font-bold mb-4">AFPI</p>
+
+					<div class="flex border-b-2 mb-2 pb-2">
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Income</p>
+							<p class="xs-text">{{ '550000000' | currency }}</p>
+						</div>
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Limit</p>
+							<p class="xs-text">{{ '550000000' | currency }}</p>
+						</div>
+					</div>
+
+					<div class="flex mb-2">
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Total number of loan</p>
+							<p class="xs-text">n/a</p>
+						</div>
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Total amount of loan</p>
+							<p class="xs-text">n/a</p>
+						</div>
+					</div>
+
+					<div class="flex mb-2">
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Total paid</p>
+							<p class="xs-text">n/a</p>
+						</div>
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Total outstanding</p>
+							<p class="xs-text">n/a</p>
+						</div>
+					</div>
+
+					<div class="flex mb-2">
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Total default</p>
+							<p class="xs-text">n/a</p>
+						</div>
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Current Capacity</p>
+							<p class="xs-text">n/a</p>
+						</div>
+					</div>
+
+					<div class="flex mb-2">
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Default Rate</p>
+							<p class="xs-text">n/a</p>
+						</div>
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Total default (6 Months)</p>
+							<p class="xs-text">n/a</p>
+						</div>
+					</div>
+
+					<div class="flex mb-2">
+						<div class="flex-1">
+							<p class="text-gray-600 xs-text mb-1">Max DPD</p>
+							<p class="xs-text">n/a</p>
+						</div>
+						<div class="flex-1">
+							<img :src="'../assets/img/afpi.png'" class="h-2/5 mt-2" alt="">
+						</div>
+					</div>
+				</div>
+				<div class="card p-4 max-h-93px 2xl:max-h-none flex flex-col">
+					<p class="sm-text font-bold mb-2">Komentar</p>
+					<button @click="toggleModals(true, 'comment')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 flex-1 shadow">Lihat & Komentar disini</button>
+				</div>
+				<div class="flex max-h-93px 2xl:max-h-none">
+					<div class="card flex-2 mr-1.5 p-4  flex flex-col">
+						<p class="sm-text font-bold mb-2">Email</p>
+						<button @click="toggleModals(true, 'email')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 flex-1 shadow">Detail</button>
+					</div>
+
+					<div class="card flex-4 ml-1.5 relative">
+						<p class="sm-text font-bold mb-2 absolute top-4 left-4 z-10">Lokasi</p>
+
+						<GmapMap
+							:center="{
+								lat: -6.24072456693954,
+								lng: 106.804145698369
+							}"
+							:zoom="10"
+							style="height: 100%; border-radius: 12px;overflow: hidden;"
 						>
-							<font-awesome-icon :icon="['fas', 'times']" class="mr-2" size="lg" />
-							{{ 'No Record' }}
-						</button>
-					</div>
-				</div>
-				<div class="flex flex-col w-44">
-					<label class="flex-1 border-b text-sm font-bold pb-3 block">Face Recognition</label>
-					<div class="flex flex-3 items-center pr-8">
-						<button 
-							class="btn text-white text-sm cursor-default ff-medium rounded-3xl py-2 px-4 bg-successMsg" 
-						>
-							<font-awesome-icon :icon="['fas', 'check']" class="mr-2" size="lg" />
-							{{ 'Pass' }}
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="card flex w-60 p-5 mr-3 mb-3">
-				<div v-viewer="{}" class="flex-1 mr-1">
-					<img :src="'/assets/img/passport.png' || '/assets/img/no-image.png'" class="rounded-lg w-full border" alt="">
-				</div>
-				<div v-viewer="{}" class="flex-1 ml-1">
-					<img :src="'/assets/img/passport.png' || '/assets/img/no-image.png'" class="rounded-lg w-full border" alt="">
-				</div>
-			</div>
-			<div class="card w-40 px-5 py-4 mb-3">
-				<p class="text-sm font-bold mb-5">Pengajuan</p>
-				<div class="flex items-center mb-3">
-					<div class="w-5 mr-4">
-						<img :src="'../assets/img/calendar-icon.png'" class="w-full inline-block" alt="">
-					</div>
-					<div class="flex-1 text-sm">
-						19 Agu 2020
-					</div>
-				</div>
-				<div class="flex items-center">
-					<div class="w-5 mr-4">
-						<img :src="'../assets/img/clock-icon.png'" class="w-full inline-block" alt="">
-					</div>
-					<div class="flex-1 text-sm">
-						14:59:09 WIB
+							<GmapMarker
+									:position="{
+										lat: -6.24072456693954,
+										lng: 106.804145698369
+									}"
+								/>
+						</GmapMap>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="flex">
-			<div class="card flex-1 px-4 py-4 mr-3 mb-3">
-				<p class="text-base font-bold mb-4">Personal Information</p>
-				<div class="flex mb-3">
-					<label class="text-sm flex-1 text-gray-500">Email</label>
-					<p class="text-sm flex-2"><span class="mr-3">:</span> {{ 'jeff@afterpay.com' }}</p>
-				</div>
-				<div class="flex mb-3">
-					<label class="text-sm flex-1 text-gray-500">Nomor NPWP</label>
-					<p class="text-sm flex-2"><span class="mr-3">:</span> {{ '99.999.999.9-999.999' }}</p>
-				</div>
-				<div class="flex mb-3">
-					<label class="text-sm flex-1 text-gray-500">Penghasilan</label>
-					<p class="text-sm flex-2"><span class="mr-3">:</span> {{ 'Lebih dari Rp20.000.000' }}</p>
-				</div>
+		<div class="btn-options-wrapper flex items-center px-4 h-14 bg-white shadow-lg-reverse absolute w-full bottom-0 left-0">
+			<div class="flex-none mr-10">
+				<a href="#" @click="$router.go(-1)" class="text-violet xs-text font-bold flex items-center">
+					<img :src="'../assets/img/blue-arrow-left.png'" alt="" class="w-5 mr-2">
+					Kembali ke list
+				</a>
 			</div>
-			<div class="card w-64 px-4 py-4 mr-3 mb-3">
-				<p class="text-base font-bold mb-4">NPWP</p>
-				<div v-viewer="{}" class="w-full">
-					<img :src="'/assets/img/full-passport.png' || '/assets/img/no-image.png'" class="rounded-lg w-full border" alt="">
-				</div>
+
+			<div v-if="true" class="flex-1 text-right">
+				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-28 text-xs text-white rounded-md font-bold bg-dangerBtn">
+					Reject
+				</button>
+				<button @click="toggleModals(true, 'process', 'approve-w-limit')" class="btn ml-4 px-5 py-2 w-52 text-xs text-white rounded-md font-bold bg-primaryBtn">
+					Approve dengan limit lain
+				</button>
+				<button @click="toggleModals(true, 'process', 'approve')" class="btn ml-4 px-5 py-2 w-52 text-xs text-white rounded-md font-bold bg-successBtn">
+					Approve
+				</button>
 			</div>
-			<div class="card w-64 px-4 py-4 mr-3 mb-3">
-				<p class="text-base font-bold mb-4">Slip Gaji</p>
-				<div v-viewer="{}" class="w-full">
-					<img :src="'/assets/img/full-passport.png' || '/assets/img/no-image.png'" class="rounded-lg w-full border" alt="">
-				</div>
-			</div>
-			<div class="card w-103 mb-3 relative">
-				<p class="text-base font-bold absolute top-4 left-4">Location</p>
-			</div>
-		</div>
 
-		<div class="flex">
-			<div class="flex flex-col flex-1 mr-3">
-				<div class="card flex-1 px-5 py-4 mb-3">
-					<p class="text-base font-bold mb-7">Pengajuan Limit</p>
-
-					<p class="text-2xl pb-3 mb-3 border-b">Rp5.000.000</p>
-
-					<p class="text-sm font-bold mb-5">Riwayat Limit</p>
-
-					<div class="flex mb-3">
-						<label class="text-sm flex-1 text-gray-500">Limit Sekarang</label>
-						<p class="text-sm flex-2"><span class="mr-3">:</span> {{ 'Rp2.000.000' }}</p>
-					</div>
-					<div class="flex mb-3">
-						<label class="text-sm flex-1 text-gray-500">Outstanding</label>
-						<p class="text-sm flex-2"><span class="mr-3">:</span> {{ 'Rp2.000.000' }}</p>
-					</div>
-					<div class="flex mb-3">
-						<label class="text-sm flex-1 text-gray-500">Sisa Limit</label>
-						<p class="text-sm flex-2"><span class="mr-3">:</span> {{ 'Rp2.000.000' }}</p>
-					</div>
-				</div>
-				<div class="card px-5 py-4 mb-3 flex items-center">
-					<p class="text-sm font-bold flex-1 mr-5">Komentar</p>
-					<button class="btn flex-2 border-2 border-violet text-violet font-bold rounded-md py-2 px-4 h-10">Lihat</button>
-				</div>
-			</div>
-			<div class="card w-110 px-5 py-4 mr-3 mb-3 relative">
-				<p class="text-base font-bold mb-4 mr-5">Riwayat Pembelian</p>
-				<a href="#" class="absolute text-xs font-bold top-5 right-5 text-violet">Lihat Detail</a>
-				
-				<table class="w-full text-left">
-					<thead>
-						<tr>
-							<th class="text-sm font-bold border-b py-3">Nomor Transaksi</th>
-							<th class="text-sm font-bold border-b py-3">1st</th>
-							<th class="text-sm font-bold border-b py-3">2nd</th>
-							<th class="text-sm font-bold border-b py-3">3rd</th>
-							<th class="text-sm font-bold border-b py-3">4th</th>
-							<th class="text-sm font-bold border-b py-3 text-right">Jumlah</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="list in 4" :key="list.index">
-							<td class="border-b py-3">
-								<p class="text-sm font-bold text-violet mb-1">DEUSE.14736591814771</p>
-								<p class="text-xs text-gray-500">12 Okt 2020 23:59</p>
-							</td>
-							<td class="border-b py-3 min-w-11">
-								<div class="bg-v-status-approved rounded-sm w-4 h-4"></div>
-							</td>
-							<td class="border-b py-3 min-w-11">
-								<div class="bg-v-status-pending rounded-sm w-4 h-4"></div>
-							</td>
-							<td class="border-b py-3 min-w-11">
-								<div class="bg-v-status-rejected rounded-sm w-4 h-4"></div>
-							</td>
-							<td class="border-b py-3 min-w-11">
-								<div class="bg-v-status-none rounded-sm w-4 h-4"></div>
-							</td>
-							<td class="border-b py-3 text-right">
-								<p class="text-sm">Rp850.000</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="card w-103 px-5 py-4 mb-3">
-				<div class="flex border-b pb-3 mb-3">
-					<div class="flex-1">
-						<label class="text-sm inline-block mb-2 text-gray-500">Income</label>
-						<p class="text-sm">Rp550.000.000</p>
-					</div>
-					<div class="flex-1">
-						<label class="text-sm inline-block mb-2 text-gray-500">Limit</label>
-						<p class="text-sm">Rp550.000.000</p>
+			<div v-if="false" class="flex-1 flex items-center">
+				<div class="flex-1 flex truncate">
+					<label class="flex-none mr-3 mb-0 sm-text">
+						<b>
+							Alasan :
+						</b>
+					</label>
+					<div class="flex-auto mr-2 truncate sm-text">
+						{{ 'Lorem Ipsum' }}
+						<!-- {{ userDetails.reason ? userDetails.reason : '---' }} -->
 					</div>
 				</div>
 
-				<div class="flex mb-3">
-					<div class="flex-1">
-						<label class="text-sm inline-block mb-2 text-gray-500">Total number of loan</label>
-						<p class="text-sm">n/a</p>
-					</div>
-					<div class="flex-1">
-						<label class="text-sm inline-block mb-2 text-gray-500">Total amount of loan</label>
-						<p class="text-sm">n/a</p>
-					</div>
-				</div>
-
-				<div class="flex mb-3">
-					<div class="flex-1">
-						<label class="text-sm inline-block mb-2 text-gray-500">Total paid</label>
-						<p class="text-sm">n/a</p>
-					</div>
-					<div class="flex-1">
-						<label class="text-sm inline-block mb-2 text-gray-500">Total outstanding</label>
-						<p class="text-sm">n/a</p>
+				<div class="flex-none flex justify-end items-center ml-3">
+					<label class="mr-3 mb-0 sm-text">
+						<b>
+							Di {{ false ? 'Reject' : 'Approve' }} oleh :
+						</b>
+					</label>
+					<div class="mr-2 sm-text">
+						{{ 'Lorem Ipsum' }}
+						<!-- {{ userDetails.sideDetails && userDetails.sideDetails.name ? userDetails.sideDetails.name : '---' }} -->
 					</div>
 				</div>
-
-				<div class="flex mb-3">
-					<div class="flex-1">
-						<label class="text-sm inline-block mb-2 text-gray-500">Total default</label>
-						<p class="text-sm">n/a</p>
+				<div class="flex-none flex justify-end items-center border-l pl-3 ml-3 ">
+					<label for="" class="mr-3 font-bold sm-text">
+						Waktu di {{ false ? 'Reject' : 'Approve' }} :
+					</label>
+					<div class="flex mr-2 items-center">
+						<div class="img-icon w-5 mr-3">
+							<img :src="'../assets/img/calendar-icon.png'" class="w-full block align-middle" alt="">
+						</div>
+						<div class="flex-1 sm-text">
+							{{ new Date( ) | moment("DD MMM YYYY") }}
+						</div>
 					</div>
-					<div class="flex-1">
-						<label class="text-sm inline-block mb-2 text-gray-500">Current Capacity</label>
-						<p class="text-sm">n/a</p>
-					</div>
-				</div>
-
-				<div class="flex mb-3">
-					<div class="flex-1">
-						<label class="text-sm mb-4 text-gray-500">Default Rate</label>
-						<p class="text-sm">n/a</p>
-					</div>
-					<div class="flex-1">
-						<label class="text-sm mb-4 text-gray-500">Total default(6 Months)</label>
-						<p class="text-sm">n/a</p>
-					</div>
-				</div>
-				
-				<div class="flex">
-					<div class="flex-1">
-						<label class="text-sm mb-4 text-gray-500">Max DPD</label>
-						<p class="text-sm">n/a</p>
-					</div>
-					<div class="flex-1">
-						<img :src="'../assets/img/afpi.png'">
+					<div class="flex items-center">
+						<div class="img-icon w-5 mr-3">
+							<img :src="'../assets/img/clock-icon.png'" class="w-full block align-middle" alt="">
+						</div>
+						<div class="flex-1 sm-text">
+							{{ new Date( ) | moment("HH:mm:SS") }} WIB
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="flex">
-			<div class="card flex flex-1 items-center px-5 py-4">
-				<div class="w-52">
-					<button class="btn font-bold text-sm rounded-md py-2 px-4 h-10">
-						<img :src="'../assets/img/blue-arrow-left.png'" class="w-8 mr-3 inline-block" alt="">
-            Kembali ke list
-					</button>
-				</div>
-				<div class="flex-1 text-right">
-					<button class="btn bg-dangerBtn font-bold py-2 w-32 text-center text-base rounded-md ml-5 text-white">Rejected</button>
-					<button class="btn bg-primaryBtn font-bold py-2 px-4 text-center text-base rounded-md ml-5 text-white">Approve dengan limit lain</button>
-					<button class="btn bg-successBtn font-bold py-2 w-64 text-center text-base rounded-md ml-5 text-white">Approve</button>
-				</div>
-			</div>
-		</div>
+
+		<!-- Edit Personal Information Modal -->
+		<Modal 
+			v-model="isEditInfoModalShow" 
+			title="Edit Personal Information"
+			modal-class="modal-wrapper w-5/10 max-w-none"
+		>
+			<EditInformationModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+		<!-- Comments Section Modal -->
+		<Modal 
+			v-model="isCommentModalShow" 
+			title="Komentar"
+			modal-class="modal-wrapper"
+		>
+			<CommentsModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+
+		<!-- Email Modal -->
+		<Modal 
+			v-model="isEmailModalShow" 
+			title="Email"
+			modal-class="modal-wrapper"
+		>
+		</Modal>
+
+
+		<!-- Transaction List Modal -->
+		<Modal 
+			v-model="isTransModalShow" 
+			title="List Transaksi"
+			modal-class="modal-wrapper max-w-none w-9/10"
+		>
+			<TransactionsModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+
+		<!-- Approve/Reject Confirmation Modal -->
+		<Modal 
+			v-model="isProcessModalShow" 
+			:title="confirmTitle"
+			modal-class="modal-wrapper"
+		>
+			<RequestConfirmModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
 	</div>
 </template>
 

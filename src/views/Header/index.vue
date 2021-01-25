@@ -20,10 +20,20 @@
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 					</svg>
 				</div>
-				<div v-if="isShowUserProfileMenu" class="user-drop-container absolute right-0 top-10">
-					<div class="bg-white border rounded-md w-52">
-						<!-- <div class="menu-item px-6 py-4 font-bold cursor-pointer text-md text-left border-b">Profile</div> -->
-						<div @click.prevent="logout()" class="menu-item px-6 py-4 font-bold cursor-pointer text-md text-left">Logout</div>
+				<div v-if="isShowUserProfileMenu" class="user-drop-container absolute right-0 top-10 z-50">
+					<div class="bg-white shadow-md border middle rounded-2xl w-40 p-4">
+						<div class="flex items-center border-b-2 mb-3 pb-3 cursor-pointer">
+							<div class="img-container mr-3">
+								<img :src="'../assets/img/edit.png'" class="w-4" alt="">
+							</div>
+							<p class="text-sm">Ubah Profil</p>
+						</div>
+						<div @click.prevent="logout()" class="flex items-center cursor-pointer">
+							<div class="img-container mr-3">
+								<img :src="'../assets/img/logout.png'" class="w-4" alt="">
+							</div>
+							<p class="text-sm">Logout</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -35,23 +45,14 @@
 				{{ $route.name }}
 			</p>
 
-			<p v-if="headerContentName == 'settings'" class="text-md font-bold">
-				<span>
-					Settings <font-awesome-icon icon="angle-right" class="mx-2" size="sm" />
-				</span>
-				{{ $route.name }}
-			</p>
-
-			<div v-if="$route.name == 'Change Limit'" class="flex">
+			<div v-if="headerContentName != 'default' && headerContentName != ''" class="flex items-center">
 				<div class="flex-none mr-8">
-					<p class="text-md font-bold inline-block">
-						{{ $route.name }}
-						-
-						{{ headerContentName }}
+					<p class="text-md font-bold inline-block capitalize">
+						{{ headerContentName != 'All users' && headerContentName != 'settings' ? $route.name + ' - ' + headerContentName : headerContentName }}
 					</p>
 
-					<div class="count-badge rounded-2xl px-4 py-2 bg-v-status-pending inline-block text-white font-bold text-xs ml-3">
-						{{ changeLimitOptions.resultCount }}
+					<div v-if="$route.name == 'Change Limit' || $route.name == 'Users'" class="count-badge rounded-2xl px-4 py-2 bg-v-status-pending inline-block text-white font-bold text-xs ml-3">
+						{{ headerOptions.resultCount }}
 					</div>
 				</div>
 
@@ -61,7 +62,7 @@
 							<img :src="'../assets/img/calendar-icon.png'" class="w-full inline-block" alt="">
 						</div>
 						<div class="flex-1 text-sm">
-							{{ changeLimitOptions.startDate | moment('DD MMM YYYY') }}
+							{{ dateToday | moment('DD MMM YYYY') }}
 						</div>
 					</div>
 					<div class="flex items-center flex-none mr-4">
@@ -69,7 +70,7 @@
 							<img :src="'../assets/img/clock-icon.png'" class="w-full inline-block" alt="">
 						</div>
 						<div class="flex-1 text-sm">
-							{{ changeLimitOptions.startDate | moment("HH:MM:SS") }} WIB
+							{{ dateToday | moment("HH:MM:SS") }} WIB
 						</div>
 					</div>
 				</div>
@@ -90,10 +91,20 @@
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 					</svg>
 				</div>
-				<div v-if="isShowUserProfileMenu" class="user-drop-container absolute right-0 top-10">
-					<div class="bg-white border rounded-md w-52">
-						<!-- <div class="menu-item px-6 py-4 font-bold cursor-pointer text-md text-left border-b">Profile</div> -->
-						<div @click.prevent="logout()" class="menu-item px-6 py-4 font-bold cursor-pointer text-md text-left">Logout</div>
+				<div v-if="isShowUserProfileMenu" class="user-drop-container absolute right-0 top-10 z-50">
+					<div class="bg-white shadow-md border middle rounded-2xl w-40 p-4">
+						<div class="flex items-center border-b-2 mb-3 pb-3 cursor-pointer">
+							<div class="img-container mr-3">
+								<img :src="'../assets/img/edit.png'" class="w-4" alt="">
+							</div>
+							<p class="text-sm">Ubah Profil</p>
+						</div>
+						<div @click.prevent="logout()" class="flex items-center cursor-pointer">
+							<div class="img-container mr-3">
+								<img :src="'../assets/img/logout.png'" class="w-4" alt="">
+							</div>
+							<p class="text-sm">Logout</p>
+						</div>
 					</div>
 				</div>
 			</div>

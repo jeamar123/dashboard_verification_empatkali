@@ -22,6 +22,7 @@
 					message: 'Preparing',
 				},
 				filter:	{
+					searchVal: '',
 					startDate: new Date(),
 					endDate: new Date(),
 				},
@@ -231,6 +232,41 @@
 				console.log(userData);
 				let vm = this
 				vm.$router.push({ name: 'User Verification Details', params: { id: userData._id } });
+			},
+			submitFilter() {
+				let vm = this
+				console.log(vm.filter);
+
+				if (vm.filter.searchVal == '') {
+					vm.$swal('', 'Seems like you forgot to put something on the search input!', 'warning')
+					return false;
+				}
+
+				// Prepare end users input i.e. trim,etc.
+				let sanitizeQuery = vm.filter.searchVal.split(',').map(item=>item.trim())
+				console.log( sanitizeQuery )
+				let searchFilterObj = {}
+				searchFilterObj['name'] = sanitizeQuery
+				vm.isSearchActive = true;
+				console.log(searchFilterObj);
+				vm.getLimitRequests(1, searchFilterObj)
+			},
+			removeFilter() {
+				let vm = this
+				vm.isSearchActive = false;
+				vm.filter =	{
+					searchVal: '',
+					startDate: new Date(),
+					endDate: new Date(),
+				};
+				// vm.showUsersPerPage(1)
+			},
+			filterDateChanged()	{
+				let vm = this
+				console.log(vm.filter.startDate);
+				console.log(vm.filter.endDate);
+
+				vm.getLimitRequests(1)
 			}
     }
 	}
