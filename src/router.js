@@ -7,6 +7,7 @@ import VueAxios from 'vue-axios'
 import Login from './views/Login.vue'
 import { Dashboard } from './views/Dashboard'
 import { Users } from './views/Users'
+import { UserDetails } from './views/UserDetails'
 import { Settings } from './views/Settings'
 import { EmailTemplate } from './views/EmailTemplate'
 import { Fee } from './views/Fee'
@@ -17,7 +18,7 @@ import { Merchants } from './views/Merchants'
 
 
 
-import { UserVerificationDetails } from './views/UserVerificationDetails'
+import { UserLimitDetails } from './views/UserLimitDetails'
 import { ChangeLimit } from './views/ChangeLimit'
 
 
@@ -36,15 +37,16 @@ export default new Router({
   linkActiveClass: 'active bg-sidemenuActiveColor',
   routes: [
     { path: '*', redirect: '/login'},
-    { path: '/login', component: Login, meta: { auth: false } },
+    { name: 'Login', path: '/login', component: Login, meta: { auth: false } },
     {
       path: '/',
       name: 'Dashboard',
       redirect: '/users',
       component: Dashboard,
-      meta: { auth: true },
+      meta: { auth: false },
       children: [
         { name: 'Users', path: '/users/:status', component: Users },
+        { name: 'User Details', path: '/users-details/:id', component: UserDetails },
         { name: 'Settings', path: '/settings', component: Settings },
         { name: 'Email Template', path: '/settings/email-template', component: EmailTemplate },
         { name: 'Fee', path: '/settings/fee', component: Fee },
@@ -52,9 +54,9 @@ export default new Router({
         { name: 'Salary', path: '/settings/salary', component: Salary },
         { name: 'Promotions', path: '/promotions', component: Promotions },
         { name: 'Merchants', path: '/merchants', component: Merchants },
-        { name: 'Change Limit', path: '/change-limit/:status', component: ChangeLimit },
 
-        { name: 'User Verification Details', path: '/user-verification/:id', component: UserVerificationDetails },
+        { name: 'Change Limit', path: '/change-limit/:status', component: ChangeLimit },
+        { name: 'User Limit Details', path: '/limit-details/:id', component: UserLimitDetails },
       ]
     },
     

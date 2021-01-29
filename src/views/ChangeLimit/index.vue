@@ -3,8 +3,23 @@
 		<Loader v-if="loader.isShow" :message="loader.message"/>
 		<Header :headerOptions="changeLimitOptions" />
 
-		<div class="change-limit-content-container overflow-y-auto px-4 pb-4 ">
-			<div class="card p-5 min-h-500px">
+
+
+		<div class="change-limit-content-container overflow-y-auto px-4 pb-4 relative">
+			<div v-if="false" class="bg-white p-4 rounded-xl shadow-md fixed right-10 top-14 z-50 w-107">
+				<div class="flex">
+					<div class="icon mr-4">
+						<img :src="'../assets/img/check-green-circle.png'" class="max-w-40px" alt="">
+					</div>
+					<div class="flex-1">
+						<p class="mb-1 text-sm font-bold">Change Limit Approved</p>
+						<p v-if="true" class="text-sm">Kamu berhasil menyetujui request {{ 'Jeff Benzos' }}.<br>User sudah memiliki limit baru.</p>
+        		<p v-if="false" class="text-sm">>Kamu berhasil tidak menyetujui request {{ 'Jeff Benzos' }}.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="card p-5 h-full">
 				<div class="filter-container flex mb-5">
 					<form @submit.prevent="submitFilter">
 						<div class="input-div with-icon border-r pr-4 mr-4">
@@ -82,8 +97,40 @@
 							<th class="border-b-2 py-3 pr-6 text-sm text-center">Aksi</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr v-for="(list) in usersArr.data" :key="list.index">
+					<tbody v-if="true">
+						<tr v-for="list in 10" :key="list.index">
+							<td class="border-b-2 py-3 pr-6 text-sm">
+								<p class="text-sm mb-1 font-bold text-violet">
+									{{ 'Jhon Doe' }}
+								</p>
+								<p class="text-gray-500 text-xs">
+									{{ 'jhondoe@empatkali.co.id' }}
+								</p>
+							</td>
+							<td class="border-b-2 py-3 pr-6 text-sm">
+								{{ '1234567891011' }}
+							</td>
+							<td class="border-b-2 py-3 pr-6 text-sm">
+								{{ 5000000 | currency }}
+							</td>
+							<td class="border-b-2 py-3 pr-6 text-sm">
+								<div class="flex mb-1 text-xs">
+									<label class="text-gray-500 w-24">Outstanding</label>
+									<span>{{ (5000000 - 300000) | currency }}</span>
+								</div>
+								<div class="flex text-xs">
+									<label class="text-gray-500 w-24">Sisa Limit</label>
+									<span>{{ 4000000 | currency }}</span>
+								</div>
+							</td>
+							<td class="border-b-2 py-3 pr-6 text-sm font-bold">
+								{{ 9000000 | currency }}
+							</td>
+							<td class="border-b-2 py-3 pr-6 text-sm text-center">
+								<button @click="goToVericationDetails({})" class="btn border-2 font-bold border-violet py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
+							</td>
+						</tr>
+						<!-- <tr v-for="(list) in usersArr.data" :key="list.index">
 							<td class="border-b-2 py-3 pr-6 text-sm">
 								<p class="text-sm mb-1 font-bold text-violet">
 									{{ list.user.detail.name }}
@@ -114,11 +161,18 @@
 							<td class="border-b-2 py-3 pr-6 text-sm text-center">
 								<button @click="goToVericationDetails(list)" class="btn border border-violet py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
 							</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 
-				<div class="flex text-sm py-3">
+				<div v-if="false" class="flex items-center w-full no-data-content">
+					<div class="w-full text-center">
+						<img :src="'../assets/img/no data results.png'" class="my-4 w-1/4" alt="">
+						<p class="text-xl 2xl:text-2xl mt-10">Pencarian kamu tidak ditemukan</p>
+					</div>
+				</div>
+
+				<div v-if="true" class="flex text-sm py-3">
           <div class="flex-1 flex font-bold">
             <span class="mr-1">Terlihat</span>
             <span class="mr-1">{{ paginationData.resultStart }}-{{ paginationData.resultEnd }}</span> 

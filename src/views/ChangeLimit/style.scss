@@ -1,6 +1,6 @@
 .change-limit-container{
   .change-limit-content-container{
-    max-height: calc(100vh - 70px);
+    height: calc(100vh - 70px);
 
     .filter-container{
       .input-div input,
@@ -14,6 +14,10 @@
       .input-div .datepicker-input{
         @apply pl-14 cursor-pointer #{!important};
       }
+    }
+
+    .no-data-content{
+      height: calc(100vh - 235px);
     }
   }
 }

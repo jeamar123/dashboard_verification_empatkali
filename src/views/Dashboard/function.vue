@@ -21,9 +21,7 @@
       	this.showLoader = true;
       },
       hideLoading() {
-      	setTimeout(()=>{
-				  this.showLoader = false;
-				},500);
+				this.showLoader = false;
       },
     }
 	}

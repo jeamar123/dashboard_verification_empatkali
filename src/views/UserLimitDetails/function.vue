@@ -6,7 +6,7 @@
 	import TransactionsModal from './modals/TransactionsModal.vue';
 	import RequestConfirmModal from './modals/RequestConfirmModal.vue';
 
-	var UserVerificationDetails = {
+	var UserLimitDetails = {
 		components: {
 			EditInformationModal,
 			CommentsModal,
@@ -107,5 +107,5 @@
 			},
     }
 	}
-	export default UserVerificationDetails
+	export default UserLimitDetails
 </script>

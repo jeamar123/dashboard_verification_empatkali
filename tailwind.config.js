@@ -21,6 +21,10 @@ module.exports = {
         'v-status-approved' : '#36D37A',         // verification status approve color
         'v-status-rejected' : '#EB5757',        // verification status rejected color
         'v-status-pending' : '#F08B34',         // verification status pending color
+        'v-status-active' : '#2F80ED',         // verification status active color
+        'v-status-incomplete' : '#F7C848',         // verification status incomplete color
+        'v-status-banned' : '#353D46',         // verification status banned color
+        'v-status-freeze' : '#9A9EA2',         // verification status freeze color
         'loader' : '#000000cc',                 // loading state bg color
         'violet' : '#393C8E',                   // violet color
       },
@@ -55,6 +59,7 @@ module.exports = {
         '500px': '500px',
       },
       maxWidth: {
+        '40px': '40px',
         '150px': '150px',
         '170px': '170px',
         '180px': '180px',
@@ -63,22 +68,26 @@ module.exports = {
       minWidth: {
         '220px': '220px',
         '250px': '250px',
+        '350px': '350px',
         '11': '2.75rem',
         '28': '7rem',
         '40': '10rem',
         '48': '12rem',
       },
       width:  {
-        '4/10': '40%',
-        '5/10': '50%',
-        '6/10': '60%',
-        '7/10': '70%',
-        '8/10': '80%',
-        '9/10': '90%',
+        '1/10': '10%', '2/10': '20%', '3/10': '30%', '4/10': '40%', '5/10': '50%', '6/10': '60%', '7/10': '70%', '8/10': '80%', '9/10': '90%',
         '45': '11.25rem',
         '100': '25rem',
         '103': '25.75rem',
+        '104': '26rem',
+        '105': '26.25rem',
+        '106': '26.50rem',
+        '107': '26.75rem',
+        '108': '27rem',
         '110': '32.625rem',
+      },
+      height: {
+        '1/10': '10%', '2/10': '20%', '3/10': '30%', '4/10': '40%', '5/10': '50%', '6/10': '60%', '7/10': '70%', '8/10': '80%', '9/10': '90%',
       },
       gridTemplateRows:  {
         '12': 'repeat(12, minmax(0, 1fr));',

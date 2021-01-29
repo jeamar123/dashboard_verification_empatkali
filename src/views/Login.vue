@@ -54,30 +54,30 @@ export default {
   methods: {
     login() {
       let vm = this
-      // let redirect = vm.$auth.redirect()
-      vm.$auth
-        .login({
-          data: vm.data.body, // Axios
-          rememberMe: true,
-          redirect: "/users",
-          fetchUser: false,
-          headers: {
-            'Authorization': process.env.VUE_APP_AUTHORIZATION,
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(
-          res => {
-            // alert('logging in..')
-            // should add some effects for logging in
-            this.actionAdmin('Admin new login', res.data.token)
-            vm.captureInfo()
-          },
-          err => {
-            console.log(err);
-            alert("Invalid Email/Password!");
-          }
-        )
+      vm.$router.push({ name: 'Users', params: { status: 'all' } });
+
+      // // let redirect = vm.$auth.redirect()
+      // vm.$auth
+      //   .login({
+      //     data: vm.data.body, // Axios
+      //     rememberMe: true,
+      //     redirect: "/users/all",
+      //     fetchUser: false,
+      //     headers: {
+      //       'Authorization': process.env.VUE_APP_AUTHORIZATION,
+      //       'Content-Type': 'application/json'
+      //     }
+      //   })
+      //   .then(
+      //     res => {
+      //       this.actionAdmin('Admin new login', res.data.token)
+      //       vm.captureInfo()
+      //     },
+      //     err => {
+      //       console.log(err);
+      //       alert("Invalid Email/Password!");
+      //     }
+      //   )
     },
     decodeJwt(paramToken) {
       const b64DecodeUnicode = str =>

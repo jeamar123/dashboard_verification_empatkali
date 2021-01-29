@@ -7,7 +7,7 @@
 			<p class="text-md"><span class="font-bold">Verification</span> Dashboard</p>
 		</div>
 
-		<div class="sidemenu-items px-4 overflow-y-auto">
+		<div class="sidemenu-items px-4 pb-4 overflow-y-auto">
 
 			<div class="menu-item flex items-center px-4 py-5 cursor-pointer rounded-xl">
 				<div class="icon-container w-7 mr-3">
@@ -62,8 +62,16 @@
 						</div>
 					</router-link>
 					<router-link :to="{ name: 'Users', params: { status: 'pending' } }" >
-						<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
-							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'pending' }">Pending</p>
+						<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer flex items-center">
+							<p class="text-md ff-medium font-bold flex-1" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'pending' }">Pending</p>
+
+							<div class="flex-none">
+								<div 
+									class="count-badge rounded-2xl px-4 py-2 inline-block font-bold text-xxs ml-3 bg-v-status-pending text-white"
+								>
+									{{ '100' }}
+								</div>
+							</div>
 						</div>
 					</router-link>
 					<router-link :to="{ name: 'Users', params: { status: 'incomplete' } }" >
@@ -79,6 +87,11 @@
 					<router-link :to="{ name: 'Users', params: { status: 'freeze' } }" >
 						<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
 							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'freeze' }">Freeze</p>
+						</div>
+					</router-link>
+					<router-link :to="{ name: 'Users', params: { status: 'approved' } }" >
+						<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
+							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'approved' }">Approved</p>
 						</div>
 					</router-link>
 					<router-link :to="{ name: 'Users', params: { status: 'rejected' } }" >
@@ -119,8 +132,15 @@
 						</div>
 					</router-link>
 					<router-link :to="{ name: 'Change Limit', params: { status: 'pending' } }" >
-						<div class="child-item px-4 pt-2 pb-6 rounded mb-1 cursor-pointer">
-							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'pending' }">Pending</p>
+						<div class="child-item px-4 pt-2 pb-6 rounded mb-1 cursor-pointer flex items-center">
+							<p class="text-md ff-medium font-bold flex-1"  v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'pending' }">Pending</p>
+							<div class="flex-none">
+								<div 
+									class="count-badge rounded-2xl px-4 py-2 inline-block font-bold text-xxs ml-3 bg-v-status-pending text-white"
+								>
+									{{ '100' }}
+								</div>
+							</div>
 						</div>
 					</router-link>
 					<router-link :to="{ name: 'Change Limit', params: { status: 'approved' } }" >

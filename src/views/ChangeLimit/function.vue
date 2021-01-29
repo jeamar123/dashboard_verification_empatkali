@@ -18,7 +18,7 @@
 					}
 				},
 				loader:	{
-					isShow: true,
+					isShow: false,
 					message: 'Preparing',
 				},
 				filter:	{
@@ -54,23 +54,23 @@
 			console.log(this.filter);
 
 			vm.setCurrentLimitStatus();
-			await vm.getAllUsers()
-    	await vm.totalUsers()
-			await vm.getLimitRequests(1);
-			await vm.getAdmin()
+			// await vm.getAllUsers()
+    	// await vm.totalUsers()
+			// await vm.getLimitRequests(1);
+			// await vm.getAdmin()
 		},
 		watch: {
     	async $route() {
 				// to, from
 				let vm = this
 				vm.loader =	{
-					isShow: true,
+					isShow: false,
 					message: 'Loading data',
 				},
 				vm.setCurrentLimitStatus();
-				await vm.getAllUsers()
-				await vm.totalUsers()
-				await vm.getLimitRequests(1);
+				// await vm.getAllUsers()
+				// await vm.totalUsers()
+				// await vm.getLimitRequests(1);
 			}
 		},
 		methods: {
@@ -231,7 +231,8 @@
 			goToVericationDetails(userData)	{
 				console.log(userData);
 				let vm = this
-				vm.$router.push({ name: 'User Verification Details', params: { id: userData._id } });
+				vm.$router.push({ name: 'User Limit Details', params: { id: 1 } });
+				// vm.$router.push({ name: 'User Verification Details', params: { id: userData._id } });
 			},
 			submitFilter() {
 				let vm = this
@@ -249,7 +250,7 @@
 				searchFilterObj['name'] = sanitizeQuery
 				vm.isSearchActive = true;
 				console.log(searchFilterObj);
-				vm.getLimitRequests(1, searchFilterObj)
+				// vm.getLimitRequests(1, searchFilterObj)
 			},
 			removeFilter() {
 				let vm = this
@@ -266,7 +267,7 @@
 				console.log(vm.filter.startDate);
 				console.log(vm.filter.endDate);
 
-				vm.getLimitRequests(1)
+				// vm.getLimitRequests(1)
 			}
     }
 	}

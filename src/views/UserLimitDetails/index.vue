@@ -409,13 +409,13 @@
 			</div>
 
 			<div v-if="true" class="flex-1 text-right">
-				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-28 text-xs text-white rounded-md font-bold bg-dangerBtn">
+				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-28 2xl:w-36 xs-text text-white rounded-md font-bold bg-dangerBtn">
 					Reject
 				</button>
-				<button @click="toggleModals(true, 'process', 'approve-w-limit')" class="btn ml-4 px-5 py-2 w-52 text-xs text-white rounded-md font-bold bg-primaryBtn">
+				<button @click="toggleModals(true, 'process', 'approve-w-limit')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-primaryBtn">
 					Approve dengan limit lain
 				</button>
-				<button @click="toggleModals(true, 'process', 'approve')" class="btn ml-4 px-5 py-2 w-52 text-xs text-white rounded-md font-bold bg-successBtn">
+				<button @click="toggleModals(true, 'process', 'approve')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-successBtn">
 					Approve
 				</button>
 			</div>
@@ -524,6 +524,6 @@
 </style>
 
 <script>
-	import UserVerificationDetails from './function.vue'
-	export default UserVerificationDetails
+	import UserLimitDetails from './function.vue'
+	export default UserLimitDetails
 </script>

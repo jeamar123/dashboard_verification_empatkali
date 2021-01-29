@@ -123,33 +123,33 @@ Vue.config.productionTip = false;
 // window.$ = $; 
 
 Vue.router = router;
-Vue.use(require('@websanova/vue-auth'), {
-  auth: {
-    request(req, token) {
-      this.options.http._setHeaders.call(this, req, {
-        Authorization: `Bearer ${token}`,
-      })
-    },
-    response(res) {
-      var token = res.data.token
-      if (token) {
-        token = token.split(/Bearer\:?\s?/i) //eslint-disable-line
-        return token[token.length > 1 ? 1 : 0].trim()
-      }
-    },
-  },
-  http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
-  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-  loginData: {
-    url: '/api/auth/login',
-    method: 'POST',
-    redirect: '/login',
-  },
-  authRedirect: { path: '/api/auth/login' },
-  tokenDefaultName: 'auth_token',
-  refreshData: { enabled: false },
-  fetchData: { enabled: false },
-})
+// Vue.use(require('@websanova/vue-auth'), {
+//   auth: {
+//     request(req, token) {
+//       this.options.http._setHeaders.call(this, req, {
+//         Authorization: `Bearer ${token}`,
+//       })
+//     },
+//     response(res) {
+//       var token = res.data.token
+//       if (token) {
+//         token = token.split(/Bearer\:?\s?/i) //eslint-disable-line
+//         return token[token.length > 1 ? 1 : 0].trim()
+//       }
+//     },
+//   },
+//   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
+//   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+//   loginData: {
+//     url: '/api/auth/login',
+//     method: 'POST',
+//     redirect: '/login',
+//   },
+//   authRedirect: { path: '/api/auth/login' },
+//   tokenDefaultName: 'auth_token',
+//   refreshData: { enabled: false },
+//   fetchData: { enabled: false },
+// })
 
 
 new Vue({
