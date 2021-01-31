@@ -10,118 +10,118 @@
 							<p class="sm-text font-bold">Informasi Personal</p>
 						</div>
 						<div class="flex-1 text-right">
-							<button @click="toggleModals(true, 'editInfo')" class="btn rounded-sm font-bold py-1 px-4 text-violet xs-text">Edit</button>
+							<button @click="toggleModals(true, 'editInfo')" class="btn rounded-sm font-bold py-1 px-4 bg-primaryBtn text-white xs-text">Edit</button>
 						</div>
 					</div>
 					
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Jeff Benzos' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ '317500482642819' }}
 						</p>
 					</div>
 					
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Tempat/ Tgl Lahir <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Jakarta/ 29 Agustus 2020' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Jenis Kelamin <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Laki-laki' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Golongan Darah <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'O' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Alamat <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Jl. Raya No. 101' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">RT/RW <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ '004/05' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Kelurahan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Kalibata' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Kecamatan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Pancoran' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Agama <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Islam' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Status Pernikahan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Kawin' }}
 						</p>
 					</div>
 					
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Kewarganegaraan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Indonesia' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ '081199988777' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Email <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'jeff@afterpay.com' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Nomor NPWP <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ '99.999.999.9-999.999' }}
 						</p>
 					</div>
 
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="font-bold flex-4">
 							{{ 'Lebih dari Rp20.000.000' }}
 						</p>
 					</div>
@@ -520,10 +520,10 @@
 </template>
 
 <style lang="scss" scoped>
-	@import "./style.scss";
+	@import "../style.scss";
 </style>
 
 <script>
-	import UserLimitDetails from './function.vue'
-	export default UserLimitDetails
+	import Approved from './function.vue'
+	export default Approved
 </script>

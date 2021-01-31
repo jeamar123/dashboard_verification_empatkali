@@ -36,11 +36,8 @@
 					resultEnd: 1,
 					totalPages: 1,
 				},
-				adminData: {},
-				limitStatus: '',
 				usersArr: [],
 				search: {},
-				activeStatus: 'all',
 				isTransModalShow: false,
 				isBanUserModalShow: false,
 			}
@@ -127,6 +124,11 @@
 				vm.isBanUserModalShow = false;
 				vm.loader.isShow = false;
 			},
+			goToUserDetails(data)	{
+				console.log(data);
+				let vm = this
+				vm.$router.push({ name: 'User Details', params: { status: 'active', id: 1 } });
+			}
     }
 	}
 	export default Active

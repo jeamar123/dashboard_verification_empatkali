@@ -1,6 +1,23 @@
 <template>
   <div>
-    
+    <p class="text-sm mt-2 mb-4">Kamu yakin akan banned user ini :</p>
+    <div class="flex mb-3">
+      <label for="" class="flex-1 text-sm text-gray-700 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
+      <p class="flex-1 text-sm font-bold">{{ 'Jeff Benzos' }}</p>
+    </div>
+    <div class="flex mb-3">
+      <label for="" class="flex-1 text-sm text-gray-700 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
+      <p class="flex-1 text-sm">{{ '081998679999' }}</p>
+    </div>
+    <div class="flex mb-3">
+      <label for="" class="flex-1 text-sm text-gray-700 relative">Email <span class="absolute top-0 right-2 font-bold">:</span></label>
+      <p class="flex-1 text-sm text-violet font-bold">{{ 'elon@empatkali.co.id' }}</p>
+    </div>
+
+    <div class="text-right mt-8">
+      <button @click.prevent="closeModal(false, 'comment')" class="btn px-4 py-2 mx-1 text-violet font-bold rounded-md text-sm">Batal</button>
+      <button class="btn px-6 py-3 mx-1 bg-black text-white rounded-md text-sm">Banned</button>
+    </div>
   </div>
 </template>
 

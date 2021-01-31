@@ -40,7 +40,7 @@
 					endDate: new Date(),
 					resultCount: 0
 				},
-				statusSelected: 'all',
+				statusSelected: this.$route.params.status,
 			}
 		},
 		created() {

@@ -13,6 +13,7 @@ module.exports = {
         'dangerBtn' : '#E24949',                // button red color
         'primaryBtn' : '#393C8E',               // button blue color
         'successBtn' : '#28B867',               // button green color
+        'warningBtn' : '#F7C848',               // button green color
         'closeBtn' : '#6c757d',                 // button gray color
         'dangerMsg' : '#EB5757 !important',     // message bg red color
         'primaryMsg' : '#393C8E',               // message bg blue color

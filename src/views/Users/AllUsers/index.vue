@@ -12,7 +12,7 @@
 			</div>
 		</div>
 
-		<div v-if="$route.params.status == 'all'" class="users-status-count-wrapper px-4 pb-4">
+		<div class="users-status-count-wrapper px-4 pb-4">
 			<div class="user-count-div grid grid-cols-4 gap-3">
 				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'all'}" @click="selectUserStatus('all')">
 					<div class="flex mb-5 items-center">
@@ -82,7 +82,7 @@
 			<div 
 				class="card p-5 h-full"
 			>
-				<div v-if="$route.params.status == 'all'" class="flex items-center mb-6">
+				<div class="flex items-center mb-6">
 					<p class="font-bold">List of users</p>
 					<div 
 						class="count-badge rounded-2xl px-4 py-1 inline-block font-bold text-xs ml-3"
@@ -174,10 +174,8 @@
 							<th class="border-b-2 py-3 pr-6 text-sm">Nama</th>
 							<th class="border-b-2 py-3 pr-6 text-sm">Nomor HP</th>
 							<th class="border-b-2 py-3 pr-6 text-sm">NIK</th>
-							<th v-if="$route.params.status != 'all'" class="border-b-2 py-3 pr-6 text-sm">Limit</th>
-							<th v-if="$route.params.status != 'all'" class="border-b-2 py-3 pr-6 text-sm">Limit digunakan</th>
 							<th class="border-b-2 py-3 pr-6 text-sm">Waktu Daftar</th>
-							<th v-if="$route.params.status == 'all'"  class="border-b-2 py-3 pr-6 text-sm">Status</th>
+							<th  class="border-b-2 py-3 pr-6 text-sm">Status</th>
 							<th class="border-b-2 py-3 text-sm text-center">Aksi</th>
 						</tr>
 					</thead>
@@ -197,20 +195,6 @@
 							<td class="border-b-2 py-3 pr-6 text-sm">
 								{{ '3178273819009817' }}
 							</td>
-
-							<td v-if="$route.params.status != 'all'" class="border-b-2 py-3 pr-6 text-sm font-bold">
-								{{ 4000000 | currency }}
-							</td>
-							<td v-if="$route.params.status != 'all'" class="border-b-2 py-3 pr-6 text-sm">
-								<div class="flex text-sm">
-									<span>{{ (5000000 - 300000) | currency }}</span>
-								</div>
-								<div class="flex text-xs color--blue font-bold">
-									<label class="mr-1">Sisa :</label><span>{{ 4000000 | currency }}</span>
-								</div>
-							</td>
-
-
 							<td class="border-b-2 py-3 pr-6">
 								<div class="text-sm">
 									<span>{{ new Date() | moment('DD MMM YYYY') }}</span>
@@ -219,30 +203,17 @@
 									<span>{{ new Date() | moment('HH:mm:ss') }} WIB</span>
 								</div>
 							</td>
-							<td v-if="$route.params.status == 'all'" class="border-b-2 py-3 pr-6">
-								<div 
-									class="count-badge rounded-2xl px-4 py-1 inline-block font-bold text-xs"
-									:class="{
-										'bg-v-status-pending text-white' : index == 0 || index > 6,
-										'bg-v-status-approved text-white' : index == 1,
-										'bg-v-status-rejected text-white' : index == 2,
-										'bg-v-status-active text-white' : index == 3,
-										'bg-v-status-incomplete text-white' : index == 4,
-										'bg-v-status-banned text-white' : index == 5,
-										'bg-v-status-freeze text-white' : index == 6,
-									}"
-								>
-									{{ 'Pending' }}
-								</div>
+							<td class="border-b-2 py-3 pr-6">
+								<div v-if="index == 0 || index > 6" class="count-badge rounded-2xl text-center w-24  px-4 py-1 inline-block font-bold text-xs bg-v-status-pending text-white">Pending</div>
+								<div v-if="index == 1" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-approved text-white">Approved</div>
+								<div v-if="index == 2" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-rejected text-white">Rejected</div>
+								<div v-if="index == 3" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-active text-white">Active</div>
+								<div v-if="index == 4" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-incomplete text-white">Incomplete</div>
+								<div v-if="index == 5" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-banned text-white">Banned</div>
+								<div v-if="index == 6" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-freeze text-white">Freeze</div>
 							</td>
 							<td class="border-b-2 py-3 text-sm text-center">
-								<a v-if="$route.params.status != 'all'" href="#" @click.prevent="toggleModals(true, 'ban')">
-									<img :src="'../assets/img/banned.png'" alt="" class="w-6 mr-5">
-								</a>
-								<a v-if="$route.params.status != 'all'" href="#" @click.prevent="toggleModals(true, 'transaction')">
-									<img :src="'../assets/img/transactions.png'" alt="" class="w-6 mr-5">
-								</a>
-								<button @click="goToUserDetails(list)" class="btn border-2 font-bold border-violet font-bold py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
+								<button @click="goToUserDetails(list, index)" class="btn border-2 font-bold border-violet font-bold py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
 							</td>
 						</tr>
 					</tbody>
@@ -296,7 +267,7 @@
 </template>
 
 <style lang="scss" scoped>
-	@import "./style.scss";
+	@import "../style.scss";
 </style>
 
 <script>

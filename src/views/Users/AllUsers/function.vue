@@ -127,10 +127,42 @@
 				vm.isBanUserModalShow = false;
 				vm.loader.isShow = false;
 			},
-			goToUserDetails(data)	{
+			goToUserDetails(data, index)	{
 				console.log(data);
+				console.log(index);
 				let vm = this
-				vm.$router.push({ name: 'User Details', params: { id: 1 } });
+				let status = '';
+
+				switch (index) {
+					case 0:
+						status = 'pending';
+						break;
+					case 1:
+						status = 'approved';
+						break;
+					case 2:
+						status = 'rejected';
+						break;
+					case 3:
+						status = 'active';
+						break;
+					case 4:
+						status = 'incomplete';
+						break;
+					case 5:
+						status = 'banned';
+						break;
+					case 6:
+						status = 'freeze';
+						break;
+					default:
+						status = 'pending';
+						break;
+				}
+
+				if(status != ''){
+					vm.$router.push({ name: 'User Details', params: { status: status, id: 1 } });
+				}
 			}
     }
 	}

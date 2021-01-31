@@ -193,7 +193,7 @@ export default {
       background-color:#F7C848; 
     }
     &--danger{
-      background-color: #c96969; 
+      background-color:#EB5757; 
     }
   }
   .va-select{

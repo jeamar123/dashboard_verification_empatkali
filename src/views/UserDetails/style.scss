@@ -5,8 +5,8 @@
     height: calc(100vh - 126px);
     
     .details-grid{
-      grid-template-columns: 3fr 4fr 3fr;
-      grid-template-rows: 1.1fr 1fr 93px;
+      grid-template-columns: 3.2fr 5fr 3fr;
+      grid-template-rows: 1fr auto;
     }
   }
 
@@ -30,6 +30,24 @@
   }
 }
 
+.bdg-status{
+  &--success{
+    background-color:#58DA90;
+  }
+  &--warning{
+    background-color:#F7C848; 
+  }
+  &--danger{
+    background-color: #EB5757; 
+  }
+  &--info{
+    background-color: #39A0FD;
+  }
+  &--blacklist{
+    background-color: #353D46;
+  }
+}
+
 
 @media (max-height: 763px){
   .verification-details-container .verification-details-content {
@@ -50,7 +68,7 @@
     .verification-details-content{
       .details-grid{
         grid-template-columns: 3fr 4fr 3fr;
-        grid-template-rows: auto auto 120px;
+        // grid-template-rows: auto auto 120px;
       }
     }
 
