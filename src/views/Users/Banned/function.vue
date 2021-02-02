@@ -1,11 +1,9 @@
 <script>
-	import TransactionsModal from '../modals/TransactionsModal.vue';
-	import BanUserModal from '../modals/BanUserModal.vue';
+	import UnBanUserModal from '../modals/UnBanUserModal.vue';
 	// import axios from 'axios'
 	var Banned = {
 		components:	{
-			TransactionsModal,
-			BanUserModal,
+			UnBanUserModal,
 		},
 		data() {
 			return {
@@ -41,7 +39,6 @@
 				usersArr: [],
 				search: {},
 				activeStatus: 'all',
-				isTransModalShow: false,
 				isBanUserModalShow: false,
 			}
 		},
@@ -117,16 +114,19 @@
 			},
 			toggleModals(opt, type)	{
 				let vm = this;
-				vm.isTransModalShow = type == 'transaction' ? opt : false;
 				vm.isBanUserModalShow = type == 'ban' ? opt : false;
 			},
 			refreshData(data, type)	{
 				console.log(data, type);
 				let vm = this
-				vm.isTransModalShow = false;
 				vm.isBanUserModalShow = false;
 				vm.loader.isShow = false;
 			},
+			goToUserDetails(data)	{
+				console.log(data);
+				let vm = this
+				vm.$router.push({ name: 'User Details', params: { status: 'banned', id: 1 } });
+			}
     }
 	}
 	export default Banned

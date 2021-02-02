@@ -127,6 +127,11 @@
 				vm.isBanUserModalShow = false;
 				vm.loader.isShow = false;
 			},
+			goToUserDetails(data)	{
+				console.log(data);
+				let vm = this
+				vm.$router.push({ name: 'User Details', params: { status: 'rejected', id: 1 } });
+			}
     }
 	}
 	export default Rejected

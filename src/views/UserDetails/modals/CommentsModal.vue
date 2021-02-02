@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="false" class="text-center mb-5">
-      <img :src="'../assets/img/message-icon.png'" class="w-28" alt="">
+      <img :src="'../../assets/img/message-icon.png'" class="w-28" alt="">
       <p class="text-center text-lg my-4">Belum ada yang<br>komentar sebelumnya</p>
     </div>
 
@@ -9,7 +9,7 @@
       <div class="flex flex-col p-4 mb-4 bg-gray-100 rounded-lg">
         <div class="flex items-center">
           <div class="w-8 h-8">
-            <img :src="'../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
+            <img :src="'../../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
           </div>
           <p class="flex-1 text-base mx-3">
             {{ 'Jamie C' }}
@@ -29,7 +29,7 @@
       <div class="flex flex-col p-4 mb-4 bg-gray-100 bg-current-user rounded-lg">
         <div class="flex items-center" v-bind:class="{'flex-row-reverse' : true}">
           <div class="w-8 h-8">
-            <img :src="'../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
+            <img :src="'../../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
           </div>
           <p class="flex-1 text-base mx-3" v-bind:class="{'text-right' : true}">
             {{ 'Jamie C' }}

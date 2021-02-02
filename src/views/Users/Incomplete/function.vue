@@ -110,23 +110,11 @@
 
 				// vm.getLimitRequests(1)
 			},
-			selectUserStatus(opt)	{
+			goToUserDetails(data)	{
+				console.log(data);
 				let vm = this
-				vm.activeStatus = opt;
-				vm.getUsersList();
-			},
-			toggleModals(opt, type)	{
-				let vm = this;
-				vm.isTransModalShow = type == 'transaction' ? opt : false;
-				vm.isBanUserModalShow = type == 'ban' ? opt : false;
-			},
-			refreshData(data, type)	{
-				console.log(data, type);
-				let vm = this
-				vm.isTransModalShow = false;
-				vm.isBanUserModalShow = false;
-				vm.loader.isShow = false;
-			},
+				vm.$router.push({ name: 'User Details', params: { status: 'incomplete', id: 1 } });
+			}
     }
 	}
 	export default Incomplete

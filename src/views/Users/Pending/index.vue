@@ -6,8 +6,16 @@
 					<img :src="'../assets/img/check-green-circle.png'" class="max-w-40px" alt="">
 				</div>
 				<div class="flex-1">
-					<p class="mb-1 text-sm font-bold">User Banned</p>
-					<p v-if="true" class="text-sm">Kamu berhasil banned user. </p>
+					<p class="mb-1 text-sm font-bold">
+						{{ 'User Approved' }}
+						<!-- {{ 'User Rejected' }} -->
+						<!-- {{ 'User Incomplete' }} -->
+					</p>
+					<p class="text-sm">
+						{{ 'Kamu berhasil menyetujui Jeff Benzos. ' }}
+						<!-- {{ 'Kamu berhasil menolak Jeff Benzos. ' }} -->
+						<!-- {{ 'Kamu berhasil menjadikan Jeff Benzos Incomplete. . ' }} -->
+					</p>
 				</div>
 			</div>
 		</div>

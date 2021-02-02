@@ -4,32 +4,27 @@
       <div class="flex mb-2">
         <div class="flex-1 mr-2">
           <div class="input-div">
-            <label for="" class="text-xs block mb-1">Nama</label>
-            <input type="text" class="text-xs" name="Nama" v-model="editInfoData.name">
-          </div>
-        </div>
-        <div class="flex-1 mx-2">
-          <div class="input-div">
             <label for="" class="text-xs block mb-1">NIK</label>
             <input type="text" class="text-xs" name="NIK" v-model="editInfoData.idNumber">
           </div>
         </div>
-        <div class="flex-1 ml-2">
+        <div class="flex-1 mx-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tempat</label>
             <input type="text" class="text-xs" name="Tempat" v-model="editInfoData.birthPlace">
           </div>
         </div>
-      </div>
-
-      <div class="flex mb-2">
-        <div class="flex-1 mr-2">
+        <div class="flex-1 ml-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tgl Lahir</label>
             <input type="date" class="text-xs" name="tgl Lahir" v-model="editInfoData.dob">
           </div>
         </div>
-        <div class="flex-1 mx-2">
+      </div>
+
+      <div class="flex mb-2">
+        
+        <div class="flex-1 mr-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Jenis Kelamin</label>
             <select class="text-xs" name="Jenis Kelamin" v-model="editInfoData.gender">
@@ -37,21 +32,6 @@
               <option>PEREMPUAN</option>
             </select>
             <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Jenis Kelamin') }}</small>
-          </div>
-        </div>
-        <div class="flex-1 ml-2">
-          <div class="input-div">
-            <label for="" class="text-xs block mb-1">Pekerjaan</label>
-            <input type="text" class="text-xs" name="Pekerjaan" v-model="editInfoData.occupation">
-          </div>
-        </div>
-      </div>
-
-      <div class="flex mb-2">
-        <div class="flex-1 mr-2">
-          <div class="input-div">
-            <label for="" class="text-xs block mb-1">Golongan Darah</label>
-            <input type="text" class="text-xs" name="Golongan Darah" v-model="editInfoData.bloodType">
           </div>
         </div>
         <div class="flex-1 mx-2">
@@ -79,26 +59,6 @@
       <div class="flex mb-2">
         <div class="flex-1 mr-2">
           <div class="input-div">
-            <label for="" class="text-xs block mb-1">Kota</label>
-            <input type="text" class="text-xs" name="Kota" 
-                    v-model="editInfoData.city"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Kota') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Kota') }}</small>
-          </div>
-        </div>
-        <div class="flex-1 mx-2">
-          <div class="input-div">
-            <label for="" class="text-xs block mb-1">Propinsi</label>
-            <input type="text" class="text-xs" name="Propinsi" 
-                    v-model="editInfoData.province"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Propinsi') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Propinsi') }}</small>
-          </div>
-        </div>
-        <div class="flex-1 ml-2">
-          <div class="input-div">
             <label for="" class="text-xs block mb-1">Kelurahan</label>
             <input type="text" class="text-xs" name="Kelurahan" 
                     v-model="editInfoData.village"
@@ -107,10 +67,7 @@
             <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Kelurahan') }}</small>
           </div>
         </div>
-      </div>
-
-      <div class="flex mb-2">
-        <div class="flex-1 mr-2">
+        <div class="flex-1 mx-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Kecamatan</label>
             <input type="text" class="text-xs" name="Kecamatan" 
@@ -120,36 +77,29 @@
             <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Kecamatan') }}</small>
           </div>
         </div>
-        <div class="flex-1 mx-2">
-          <div class="input-div">
-            <label for="" class="text-xs block mb-1">Agama</label>
-            <input type="text" class="text-xs" name="Agama" v-model="editInfoData.religion">
-          </div>
-        </div>
         <div class="flex-1 ml-2">
           <div class="input-div">
-            <label for="" class="text-xs block mb-1">Status Pernikahan</label>
-            <input type="text" class="text-xs" name="Status Pernikahan" v-model="editInfoData.maritalStatus">
+            <label for="" class="text-xs block mb-1">Provinsi</label>
+            <input type="text" class="text-xs" name="Provinsi" 
+                    v-model="editInfoData.province"
+                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Provinsi') }"
+                    v-validate="'required'">
+            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Provinsi') }}</small>
           </div>
         </div>
+        
       </div>
 
       <div class="flex mb-2">
         <div class="flex-1 mr-2">
           <div class="input-div">
-            <label for="" class="text-xs block mb-1">Kewarganegaraan</label>
-            <input type="text" class="text-xs" name="Kewarganegaraan" v-model="editInfoData.nationality">
+            <label for="" class="text-xs block mb-1">Status Pernikahan</label>
+            <input type="text" class="text-xs" name="Status Pernikahan" v-model="editInfoData.maritalStatus">
           </div>
         </div>
-        <div class="flex-1 mx-2">
-          <div class="input-div">
-            <label for="" class="text-xs block mb-1">Tanggal Kadaluarsa</label>
-            <input type="date" class="text-xs" name="Tanggal Kadaluarsa" v-model="editInfoData.expiryDate">
-          </div>
-        </div>
+        <div class="flex-1 mx-2"></div>
         <div class="flex-1 ml-2"></div>
       </div>
-      
 
       <div class="text-right mt-5">
         <button @click.prevent="closeModal(false, 'editInfo')" class="btn px-4 py-2 mx-1 bg-closeBtn text-white rounded-md text-sm">Close</button>

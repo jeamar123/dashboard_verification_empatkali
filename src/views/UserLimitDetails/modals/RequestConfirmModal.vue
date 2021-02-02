@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative">
 
     <p class="text-sm mt-2 mb-4">Kamu yakin menyetujui pengajuan limit dari:</p>
     <div class="flex mb-3">
@@ -21,14 +21,14 @@
         <!-- <p class="flex-1 text-sm text-voilet">{{ '5000000' | currency }}</p> -->
         <div class="flex-1">
           <div class="relative select-limit-drop">
-            <div class="border-b w-36 py-1 text-sm relative cursor-pointer" :class="{'text-gray-400' : true}" @click="toggleLimitDrop()">
+            <div class="border-b w-36 py-1 text-sm relative cursor-pointer" :class="{'text-gray-400' : true, 'border-dangerBtn' : true}" @click="toggleLimitDrop()">
               Pilih Limit
               <svg class="text-gray-500 w-4 absolute top-1.5 right-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
 
-            <div v-if="isShowLimitDrop" class="w-36 absolute -bottom-48 left-0 bg-gray-100 px-2 text-left">
+            <div v-if="isShowLimitDrop" class="w-36 absolute top-10 left-0 bg-gray-100 px-2 text-left">
               <ul>
                 <li class="cursor-pointer text-sm px-1 py-2 border-b">{{ '1000000' | currency }}</li>
                 <li class="cursor-pointer text-sm px-1 py-2 border-b text-gray-300">{{ '2000000' | currency }}</li>
@@ -51,6 +51,9 @@
         cols="30" 
         rows="3" 
         class="comment-textarea" 
+        :class="{
+          'error' : true
+        }"
         style="resize: none;" 
         placeholder="Tulis disini"
       ></textarea>
@@ -67,6 +70,26 @@
       >
         {{ false ? 'Approve' : 'Reject' }}
       </button>
+    </div>
+
+    <div class="rounded-full p-3 absolute bg-white -bottom-24"
+      :class="{
+        'w-130 -left-8 ' : false,
+        'w-68 left-16' : true,
+      }"
+    >
+      <div class="flex items-center">
+        <div class="img-container mr-4">
+          <img :src="'../../assets/img/red-circle-times.png'" class="w-8" alt="">
+        </div>
+        <p class="text-sm">
+          {{
+            true ? 
+            'Kamu belum memasukkan alasan' :
+            'Kamu belum memilih Limit yang disetujui dan menulis alasan.'
+          }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -153,6 +176,10 @@ export default {
 
 <style lang="scss" scoped>
   .comment-textarea{
-    @apply w-full rounded-md text-sm py-4 px-4 outline-none border-2 border-gray-200 #{!important};
+    @apply w-full rounded-md text-sm py-4 px-4 outline-none border #{!important};
+
+    &.error{
+      @apply border-dangerBtn #{!important};
+    }
   }
 </style>

@@ -246,23 +246,6 @@
 			</div>
 		</div>
 
-		<!-- Transaction List Modal -->
-		<Modal 
-			v-model="isTransModalShow" 
-			title="List Transaksi"
-			modal-class="modal-wrapper max-w-none w-9/10"
-		>
-			<TransactionsModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
-		</Modal>
-
-		<!-- Ban User Modal -->
-		<Modal 
-			v-model="isBanUserModalShow" 
-			title="Banned Confirmation"
-			modal-class="modal-wrapper"
-		>
-			<BanUserModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
-		</Modal>
 	</div>
 </template>
 

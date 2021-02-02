@@ -2,15 +2,23 @@
 	// import axios from 'axios'
 	import EditInformationModal from '../modals/EditInformationModal.vue';
 	import CommentsModal from '../modals/CommentsModal.vue';
-	import TransactionsModal from '../modals/TransactionsModal.vue';
 	import RequestConfirmModal from '../modals/RequestConfirmModal.vue';
+	import EmailModal from '../modals/EmailModal.vue';
+	import EmergencyContactModal from '../modals/EmergencyContactModal.vue';
+	import PaymentMethodModal from '../modals/PaymentMethodModal.vue';
+	import LocationModal from '../modals/LocationModal.vue';
+	import BlacklistModal from '../modals/BlacklistModal.vue';
 
 	var Pending = {
 		components: {
 			EditInformationModal,
 			CommentsModal,
-			TransactionsModal,
 			RequestConfirmModal,
+			EmailModal,
+			EmergencyContactModal,
+			PaymentMethodModal,
+			LocationModal,
+			BlacklistModal
 		},
 		props:	{
 			id: {
@@ -33,11 +41,15 @@
 				isEditInfoModalShow: false,
 				isCommentModalShow: false,
 				isEmailModalShow: false,
-				isTransModalShow: false,
 				isProcessModalShow: false,
+				isEmergencyContactModalShow: false,
+				isPaymentMethodModalShow: false,
+				isLocationModalShow: false,
+				isBlacklistModalShow: false,
 				editInfoData:	{},
 				confirmTypeSelected: '',
 				confirmTitle: '',
+				requestData: {},
 			}
 		},
 		created() {
@@ -49,19 +61,25 @@
 				vm.isEditInfoModalShow = type == 'editInfo' ? opt : false;
 				vm.isCommentModalShow = type == 'comment' ? opt : false;
 				vm.isEmailModalShow = type == 'email' ? opt : false;
-				vm.isTransModalShow = type == 'transactions' ? opt : false;
 				vm.isProcessModalShow = type == 'process' ? opt : false;
+				vm.isEmergencyContactModalShow = type == 'emergencyContact' ? opt : false;
+				vm.isPaymentMethodModalShow = type == 'paymentMethod' ? opt : false;
+				vm.isLocationModalShow = type == 'location' ? opt : false;
+				vm.isBlacklistModalShow = type == 'blacklist' ? opt : false;
 
 				if(type == 'process'){
 					vm.confirmTypeSelected = confirmType;
 					if(confirmType == 'approve'){
 						vm.confirmTitle = 'Approve Confirmation'
+						vm.requestData.type = 'approve';
 					}
-					if(confirmType == 'approve-w-limit'){
-						vm.confirmTitle = 'Approve dengan limit lain Confirmation'
+					if(confirmType == 'incomplete'){
+						vm.confirmTitle = 'Jadikan user Incomplete Confirmation'
+						vm.requestData.type = 'incomplete';
 					}
 					if(confirmType == 'reject'){
 						vm.confirmTitle = 'Reject Confirmation'
+						vm.requestData.type = 'reject';
 					}
 				}
 				if(type == 'editInfo'){

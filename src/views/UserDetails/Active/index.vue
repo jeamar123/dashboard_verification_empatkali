@@ -61,7 +61,7 @@
 						<label class="text-gray-500 flex-2 relative">Input NIK sama dengan NIK OCR <span class="absolute top-0 right-3 font-bold">:</span></label>
 						<div class="flex-1">
 							<div 
-								class="count-badge rounded-2xl px-5 py-1 text-center w-16 inline-block text-white font-bold xs-text"
+								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
 									'bdg-status--success' : true,
 									'bdg-status--warning' : false,
@@ -76,7 +76,7 @@
 						<label class="text-gray-500 flex-2 relative">Terdaftar sebagai Kontak Darurat user lain <span class="absolute top-0 right-3 font-bold">:</span></label>
 						<div class="flex-1">
 							<div 
-								class="count-badge rounded-2xl px-5 py-1 text-center w-16 inline-block text-white font-bold xs-text"
+								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
 									'bdg-status--success' : false,
 									'bdg-status--warning' : false,
@@ -85,7 +85,7 @@
 							>
 								{{ 'Yes' }}
 							</div>
-							<img :src="'../../assets/img/info-circle-violet.png'" class="w-4 ml-3 cursor-pointer" alt="">
+							<img :src="'../../assets/img/info-circle-violet.png'" class="w-4 ml-3 cursor-pointer" @click="toggleModals(true, 'emergencyContact')" alt="">
 						</div>
 					</div>
 					<div class="flex xs-text items-center mb-2">
@@ -96,7 +96,7 @@
 						<label class="text-gray-500 flex-2 relative">Nomor HP sama dengan Kontak Darurat <span class="absolute top-0 right-3 font-bold">:</span></label>
 						<div class="flex-1">
 							<div 
-								class="count-badge rounded-2xl px-5 py-1 text-center w-16 inline-block text-white font-bold xs-text"
+								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
 									'bdg-status--success' : true,
 									'bdg-status--warning' : false,
@@ -111,7 +111,7 @@
 						<label class="text-gray-500 flex-2 relative">Total Pinjaman 3 bulan terakhir <span class="absolute top-0 right-3 font-bold">:</span></label>
 						<div class="flex-1">
 							<div 
-								class="count-badge rounded-2xl px-5 py-1 text-center w-16 inline-block text-white font-bold xs-text"
+								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
 									'bdg-status--success' : false,
 									'bdg-status--warning' : true,
@@ -126,7 +126,7 @@
 						<label class="text-gray-500 flex-2 relative">Trusting Social <span class="absolute top-0 right-3 font-bold">:</span></label>
 						<div class="flex-1">
 							<div 
-								class="count-badge rounded-2xl px-5 py-1 text-center w-16 inline-block text-white font-bold xs-text"
+								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
 									'bdg-status--success' : true,
 									'bdg-status--warning' : false,
@@ -141,7 +141,7 @@
 				<div class="row-span-2 flex flex-col">
 					<div class="flex flex-col flex-3">
 						<div class="flex flex-2">
-							<div class="card px-4 py-3 mr-2 mb-2 flex-4">
+							<div class="card px-4 py-3 mr-2 mb-2 flex-5">
 								<p class="sm-text font-bold mb-1">Limit</p>
 								<p class="xl-text text-violet font-bold ff-medium mb-1">{{ '5000000' | currency }}</p>
 								<div class="flex">
@@ -149,7 +149,7 @@
 									<p class="flex-5 xs-text">{{ '0' | currency }}</p>
 								</div>
 							</div>
-							<div class="card px-4 py-3 ml-1 mb-2 flex-2">
+							<div class="card px-4 py-3 ml-1 mb-2 flex-3">
 								<p class="xs-text font-bold mb-2">Waktu Daftar</p>
 
 								<div class="flex items-center mb-2">
@@ -171,7 +171,7 @@
 							</div>
 						</div>
 						<div class="flex flex-3">
-							<div class="card px-4 py-3 mr-2 mt-1 flex-4 flex flex-col">
+							<div class="card px-4 py-3 mr-2 mt-1 flex-5 flex flex-col">
 								<div class="flex flex-1 mb-2">
 									<div class="flex-1 mr-1">
 										<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
@@ -208,10 +208,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="card p-4 ml-1 mt-1 flex-2">
+							<div class="card p-4 ml-1 mt-1 flex-3">
 								<p class="xs-text font-bold mb-2">Metode Pembayaran</p>
 								<img :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
-								<button class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-1 shadow py-2">Info Lainnya</button>
+								<button @click="toggleModals(true, 'paymentMethod')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-1 shadow py-2">Info Lainnya</button>
 							</div>
 						</div>
 					</div>
@@ -382,12 +382,12 @@
 						<div class="flex-1 mr-1">
 							<div class="card px-4 py-3 h-full w-full">
 								<p class="sm-text font-bold mb-5">Komentar</p>
-								<button class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Lihat & Komentar disini</button>
+								<button @click="toggleModals(true, 'comment')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Lihat & Komentar disini</button>
 							</div>
 						</div>	
 						
 						<div class="flex flex-1 ml-2 ">
-							<div class="card mr-1 flex-1 relative">
+							<div @click.prevent="toggleModals(true, 'location')" class="card mr-1 flex-1 relative outline-none border-none">
 								<p class="sm-text font-bold mb-2 absolute top-3 left-4 z-10">Lokasi</p>
 
 								<GmapMap
@@ -396,6 +396,10 @@
 										lng: 106.804145698369
 									}"
 									:zoom="10"
+									:options="{
+										fullscreenControl: false,
+										disableDefaultUI: false
+									}"
 									style="height: 100%; border-radius: 12px;overflow: hidden;"
 								>
 									<GmapMarker
@@ -408,7 +412,7 @@
 							</div>
 							<div class="card px-4 py-3 ml-2 flex-1">
 								<p class="sm-text font-bold mb-5">Email</p>
-								<button class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Detail</button>
+								<button @click="toggleModals(true, 'email')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Detail</button>
 							</div>
 						</div>
 					</div>
@@ -424,7 +428,7 @@
 				</a>
 			</div>
 
-			<div v-if="true" class="flex-1 text-right">
+			<div v-if="false" class="flex-1 text-right">
 				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-warningBtn">
 					Jadikan user Incomplete
 				</button>
@@ -437,7 +441,7 @@
 				</button>
 			</div>
 
-			<div v-if="false" class="flex-1 flex items-center">
+			<div v-if="true" class="flex-1 flex items-center">
 				<div class="flex-1 flex truncate">
 					<label class="flex-none mr-3 mb-0 sm-text">
 						<b>
@@ -467,7 +471,7 @@
 					</label>
 					<div class="flex mr-2 items-center">
 						<div class="img-icon w-5 mr-3">
-							<img :src="'../assets/img/calendar-icon.png'" class="w-full block align-middle" alt="">
+							<img :src="'../../assets/img/calendar-icon.png'" class="w-full block align-middle" alt="">
 						</div>
 						<div class="flex-1 sm-text">
 							{{ new Date( ) | moment("DD MMM YYYY") }}
@@ -475,7 +479,7 @@
 					</div>
 					<div class="flex items-center">
 						<div class="img-icon w-5 mr-3">
-							<img :src="'../assets/img/clock-icon.png'" class="w-full block align-middle" alt="">
+							<img :src="'../../assets/img/clock-icon.png'" class="w-full block align-middle" alt="">
 						</div>
 						<div class="flex-1 sm-text">
 							{{ new Date( ) | moment("HH:mm:SS") }} WIB
@@ -484,7 +488,6 @@
 				</div>
 			</div>
 		</div>
-
 
 		<!-- Edit Personal Information Modal -->
 		<Modal 
@@ -504,25 +507,41 @@
 			<CommentsModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
-
 		<!-- Email Modal -->
 		<Modal 
 			v-model="isEmailModalShow" 
 			title="Email"
-			modal-class="modal-wrapper"
+			modal-class="modal-wrapper max-w-none w-4/10"
 		>
+			<EmailModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
-
-
-		<!-- Transaction List Modal -->
+		
+		<!-- Emergency Contact Modal -->
 		<Modal 
-			v-model="isTransModalShow" 
-			title="List Transaksi"
-			modal-class="modal-wrapper max-w-none w-9/10"
+			v-model="isEmergencyContactModalShow" 
+			title="Terdaftar sebagai Kontak Darurat user lain"
+			modal-class="modal-wrapper max-w-none w-4/10"
 		>
-			<TransactionsModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<EmergencyContactModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
+		<!-- Payment Method Modal -->
+		<Modal 
+			v-model="isPaymentMethodModalShow" 
+			title="Metode Pembayaran"
+			modal-class="modal-wrapper max-w-none w-5/10"
+		>
+			<PaymentMethodModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+		<!-- Location Modal -->
+		<Modal 
+			v-model="isLocationModalShow" 
+			title="Lokasi"
+			modal-class="modal-wrapper max-w-none w-6/10"
+		>
+			<LocationModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
 
 		<!-- Approve/Reject Confirmation Modal -->
 		<Modal 

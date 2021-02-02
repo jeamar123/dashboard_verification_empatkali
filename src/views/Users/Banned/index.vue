@@ -6,100 +6,14 @@
 					<img :src="'../assets/img/check-green-circle.png'" class="max-w-40px" alt="">
 				</div>
 				<div class="flex-1">
-					<p class="mb-1 text-sm font-bold">User Banned</p>
-					<p v-if="true" class="text-sm">Kamu berhasil banned user. </p>
+					<p class="mb-1 text-sm font-bold">User UnBanned</p>
+					<p v-if="true" class="text-sm">Kamu berhasil unbanned user. </p>
 				</div>
 			</div>
 		</div>
 
-		<div v-if="$route.params.status == 'all'" class="users-status-count-wrapper px-4 pb-4">
-			<div class="user-count-div grid grid-cols-4 gap-3">
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'all'}" @click="selectUserStatus('all')">
-					<div class="flex mb-5 items-center">
-						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base dot--all"></div>
-						<p class="flex-1 font-bold text-sm">All users</p>
-					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">511.230</p>
-				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'active'}" @click="selectUserStatus('active')">
-					<div class="flex mb-5 items-center">
-						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-active"></div>
-						<p class="flex-1 font-bold text-sm">Active</p>
-					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">496.090</p>
-				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'pending'}" @click="selectUserStatus('pending')">
-					<div class="flex mb-5 items-center">
-						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-pending"></div>
-						<p class="flex-1 font-bold text-sm">Pending</p>
-					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">100</p>
-				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'incomplete'}" @click="selectUserStatus('incomplete')">
-					<div class="flex mb-5 items-center">
-						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-incomplete"></div>
-						<p class="flex-1 font-bold text-sm">Incomplete</p>
-					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">314</p>
-				</div>
-
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'banned'}" @click="selectUserStatus('banned')">
-					<div class="flex mb-5 items-center">
-						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-banned"></div>
-						<p class="flex-1 font-bold text-sm">Banned</p>
-					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">511.230</p>
-				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'freeze'}" @click="selectUserStatus('freeze')">
-					<div class="flex mb-5 items-center">
-						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-freeze"></div>
-						<p class="flex-1 font-bold text-sm">Freeze</p>
-					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">496.090</p>
-				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'approved'}" @click="selectUserStatus('approved')">
-					<div class="flex mb-5 items-center">
-						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-approved"></div>
-						<p class="flex-1 font-bold text-sm">Approved</p>
-					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">100</p>
-				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'rejected'}" @click="selectUserStatus('rejected')">
-					<div class="flex mb-5 items-center">
-						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-rejected"></div>
-						<p class="flex-1 font-bold text-sm">Rejected</p>
-					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">314</p>
-				</div>
-
-
-			</div>
-		</div>
-
-		<div 
-			class="users-list-content px-4 pb-4 flex-1"
-		>
-			<div 
-				class="card p-5 h-full"
-			>
-				<div v-if="$route.params.status == 'all'" class="flex items-center mb-6">
-					<p class="font-bold">List of users</p>
-					<div 
-						class="count-badge rounded-2xl px-4 py-1 inline-block font-bold text-xs ml-3"
-						:class="{
-							'dot--all' : activeStatus == 'all',
-							'bg-v-status-pending text-white' : activeStatus == 'pending',
-							'bg-v-status-approved text-white' : activeStatus == 'approved',
-							'bg-v-status-rejected text-white' : activeStatus == 'rejected',
-							'bg-v-status-active text-white' : activeStatus == 'active',
-							'bg-v-status-incomplete text-white' : activeStatus == 'incomplete',
-							'bg-v-status-banned text-white' : activeStatus == 'banned',
-							'bg-v-status-freeze text-white' : activeStatus == 'freeze',
-						}"
-					>
-						{{ '0' }}
-					</div>
-				</div>
+		<div class="users-list-content px-4 pb-4 flex-1">
+			<div class="card p-5 h-full">
 
 				<div class="filter-container flex mb-5">
 					<form @submit.prevent="submitFilter">
@@ -174,15 +88,12 @@
 							<th class="border-b-2 py-3 pr-6 text-sm">Nama</th>
 							<th class="border-b-2 py-3 pr-6 text-sm">Nomor HP</th>
 							<th class="border-b-2 py-3 pr-6 text-sm">NIK</th>
-							<th v-if="$route.params.status != 'all'" class="border-b-2 py-3 pr-6 text-sm">Limit</th>
-							<th v-if="$route.params.status != 'all'" class="border-b-2 py-3 pr-6 text-sm">Limit digunakan</th>
 							<th class="border-b-2 py-3 pr-6 text-sm">Waktu Daftar</th>
-							<th v-if="$route.params.status == 'all'"  class="border-b-2 py-3 pr-6 text-sm">Status</th>
 							<th class="border-b-2 py-3 text-sm text-center">Aksi</th>
 						</tr>
 					</thead>
 					<tbody v-if="true">
-						<tr v-for="(list, index) in 10" :key="list.index">
+						<tr v-for="(list) in 10" :key="list.index">
 							<td class="border-b-2 py-3 pr-6 text-sm">
 								<p class="text-sm mb-1 font-bold text-violet">
 									{{ 'Jhon Doe' }}
@@ -197,20 +108,6 @@
 							<td class="border-b-2 py-3 pr-6 text-sm">
 								{{ '3178273819009817' }}
 							</td>
-
-							<td v-if="$route.params.status != 'all'" class="border-b-2 py-3 pr-6 text-sm font-bold">
-								{{ 4000000 | currency }}
-							</td>
-							<td v-if="$route.params.status != 'all'" class="border-b-2 py-3 pr-6 text-sm">
-								<div class="flex text-sm">
-									<span>{{ (5000000 - 300000) | currency }}</span>
-								</div>
-								<div class="flex text-xs color--blue font-bold">
-									<label class="mr-1">Sisa :</label><span>{{ 4000000 | currency }}</span>
-								</div>
-							</td>
-
-
 							<td class="border-b-2 py-3 pr-6">
 								<div class="text-sm">
 									<span>{{ new Date() | moment('DD MMM YYYY') }}</span>
@@ -219,30 +116,11 @@
 									<span>{{ new Date() | moment('HH:mm:ss') }} WIB</span>
 								</div>
 							</td>
-							<td v-if="$route.params.status == 'all'" class="border-b-2 py-3 pr-6">
-								<div 
-									class="count-badge rounded-2xl px-4 py-1 inline-block font-bold text-xs"
-									:class="{
-										'bg-v-status-pending text-white' : index == 0 || index > 6,
-										'bg-v-status-approved text-white' : index == 1,
-										'bg-v-status-rejected text-white' : index == 2,
-										'bg-v-status-active text-white' : index == 3,
-										'bg-v-status-incomplete text-white' : index == 4,
-										'bg-v-status-banned text-white' : index == 5,
-										'bg-v-status-freeze text-white' : index == 6,
-									}"
-								>
-									{{ 'Pending' }}
-								</div>
-							</td>
 							<td class="border-b-2 py-3 text-sm text-center">
 								<a v-if="$route.params.status != 'all'" href="#" @click.prevent="toggleModals(true, 'ban')">
-									<img :src="'../assets/img/banned.png'" alt="" class="w-6 mr-5">
+									<img :src="'../assets/img/un-banned.png'" alt="" class="w-6 mr-5">
 								</a>
-								<a v-if="$route.params.status != 'all'" href="#" @click.prevent="toggleModals(true, 'transaction')">
-									<img :src="'../assets/img/transactions.png'" alt="" class="w-6 mr-5">
-								</a>
-								<button @click="goToVericationDetails(list)" class="btn border-2 font-bold border-violet font-bold py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
+								<button @click="goToUserDetails(list)" class="btn border-2 font-bold border-violet font-bold py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
 							</td>
 						</tr>
 					</tbody>
@@ -275,22 +153,13 @@
 			</div>
 		</div>
 
-		<!-- Transaction List Modal -->
-		<Modal 
-			v-model="isTransModalShow" 
-			title="List Transaksi"
-			modal-class="modal-wrapper max-w-none w-9/10"
-		>
-			<TransactionsModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
-		</Modal>
-
-		<!-- Ban User Modal -->
+		<!-- UnBan User Modal -->
 		<Modal 
 			v-model="isBanUserModalShow" 
-			title="Banned Confirmation"
+			title="UnBanned Confirmation"
 			modal-class="modal-wrapper"
 		>
-			<BanUserModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<UnBanUserModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 	</div>
 </template>
