@@ -69,7 +69,6 @@ import router from './router';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import '@kouts/vue-modal/dist/vue-modal.css';
 import 'viewerjs/dist/viewer.css'
-import './assets/styles/font.css';
 import './assets/styles/index.css';
 
 

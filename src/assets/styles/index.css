@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@import "./fonts.scss";
 @import "./card.scss";
 @import "./form.scss";
 @import "./modal.scss";
