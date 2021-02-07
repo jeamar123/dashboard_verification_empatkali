@@ -162,26 +162,26 @@
 								<div class="flex flex-1 mb-2">
 									<div class="flex-1 flex flex-col mr-1">
 										<p class="xs-text font-bold mb-3">Foto KTP</p>
-										<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+										<div @click="toggleModals(true, 'fotoKtp')"  class="img-container w-full h-full rounded-lg border relative overflow-hidden">
 											<!-- style="background-image: url('https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg');background-size: cover;" -->
 											<img 
-												:src="'https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg'" 
-												class="rounded-lg absolute" alt=""
+												:src="'../../assets/img/full-passport.png'" 
+												class="rounded-lg absolute object-cover h-full" alt=""
 											>
 										</div>
 									</div>
 									<div class="flex-1 flex flex-col ml-1">
 										<p class="xs-text font-bold mb-3">Selfie KTP</p>
-										<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+										<div @click="toggleModals(true, 'selfieKtp')"  class="img-container w-full h-full rounded-lg border relative overflow-hidden">
 											<img 
 												:src="'../../assets/img/no-image.png'" 
-												class="rounded-lg absolute" alt=""
+												class="rounded-lg absolute object-cover h-full" alt=""
 											>
 										</div>
 									</div>
 								</div>
 
-								<button @click="toggleModals(true, 'paymentMethod')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-none shadow py-2">Bandingkan</button>
+								<button @click="toggleModals(true, 'compareKTP')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-none shadow py-2">Bandingkan</button>
 							</div>
 							
 						</div>
@@ -548,6 +548,33 @@
 			modal-class="modal-wrapper max-w-none w-5/10"
 		>
 			<BlacklistModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+		<!-- Foto KTP Modal -->
+		<Modal 
+			v-model="isFotoKtpModalShow" 
+			title="Foto KTP"
+			modal-class="modal-wrapper max-w-none w-125 h-552px"
+		>
+			<FotoKtpModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+		<!-- Selfie KTP Modal -->
+		<Modal 
+			v-model="isSelfieKtpModalShow" 
+			title="Selfie KTP"
+			modal-class="modal-wrapper max-w-none w-125 h-552px"
+		>
+			<SelfieKtpModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+		<!-- Compare KTP Modal -->
+		<Modal 
+			v-model="isCompareKTPModalShow" 
+			title=""
+			modal-class="modal-wrapper max-w-none w-8/10 h-552px"
+		>
+			<CompareKTPModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Approve/Reject Confirmation Modal -->

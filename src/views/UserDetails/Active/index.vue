@@ -174,19 +174,19 @@
 							<div class="card px-4 py-3 mr-2 mt-1 flex-5 flex flex-col">
 								<div class="flex flex-1 mb-2">
 									<div class="flex-1 mr-1">
-										<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+										<div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
 											<!-- style="background-image: url('https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg');background-size: cover;" -->
 											<img 
-												:src="'https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg'" 
-												class="rounded-lg absolute" alt=""
+												:src="'../../assets/img/full-passport.png'" 
+												class="rounded-lg absolute object-cover h-full" alt=""
 											>
 										</div>
 									</div>
 									<div class="flex-1 ml-1">
-										<div v-viewer="{}" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+										<div @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
 											<img 
 												:src="'../../assets/img/no-image.png'" 
-												class="rounded-lg absolute" alt=""
+												class="rounded-lg absolute object-cover h-full" alt=""
 											>
 										</div>
 									</div>
@@ -541,6 +541,33 @@
 			modal-class="modal-wrapper max-w-none w-6/10"
 		>
 			<LocationModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+		
+		<!-- Foto KTP Modal -->
+		<Modal 
+			v-model="isFotoKtpModalShow" 
+			title="Foto KTP"
+			modal-class="modal-wrapper max-w-none w-125 h-552px"
+		>
+			<FotoKtpModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+		<!-- Selfie KTP Modal -->
+		<Modal 
+			v-model="isSelfieKtpModalShow" 
+			title="Selfie KTP"
+			modal-class="modal-wrapper max-w-none w-125 h-552px"
+		>
+			<SelfieKtpModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+		<!-- Compare KTP Modal -->
+		<Modal 
+			v-model="isCompareKTPModalShow" 
+			title=""
+			modal-class="modal-wrapper max-w-none w-8/10 h-552px"
+		>
+			<CompareKTPModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Approve/Reject Confirmation Modal -->

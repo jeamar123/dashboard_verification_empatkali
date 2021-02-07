@@ -8,6 +8,9 @@
 	import PaymentMethodModal from '../modals/PaymentMethodModal.vue';
 	import LocationModal from '../modals/LocationModal.vue';
 	import BlacklistModal from '../modals/BlacklistModal.vue';
+	import FotoKtpModal from '../modals/FotoKtpModal.vue';
+	import SelfieKtpModal from '../modals/SelfieKtpModal.vue';
+	import CompareKTPModal from '../modals/CompareKTPModal.vue';
 
 	var Freeze = {
 		components: {
@@ -19,6 +22,9 @@
 			PaymentMethodModal,
 			LocationModal,
 			BlacklistModal,
+			FotoKtpModal,
+			SelfieKtpModal,
+			CompareKTPModal,
 		},
 		props:	{
 			id: {
@@ -46,6 +52,9 @@
 				isPaymentMethodModalShow: false,
 				isLocationModalShow: false,
 				isBlacklistModalShow: false,
+				isFotoKtpModalShow: false,
+				isSelfieKtpModalShow: false,
+				isCompareKTPModalShow: false,
 				editInfoData:	{},
 				confirmTypeSelected: '',
 				confirmTitle: '',
@@ -65,6 +74,9 @@
 				vm.isPaymentMethodModalShow = type == 'paymentMethod' ? opt : false;
 				vm.isLocationModalShow = type == 'location' ? opt : false;
 				vm.isBlacklistModalShow = type == 'blacklist' ? opt : false;
+				vm.isFotoKtpModalShow = type == 'fotoKtp' ? opt : false;
+				vm.isSelfieKtpModalShow = type == 'selfieKtp' ? opt : false;
+				vm.isCompareKTPModalShow = type == 'compareKTP' ? opt : false;
 
 				if(type == 'process'){
 					vm.confirmTypeSelected = confirmType;
