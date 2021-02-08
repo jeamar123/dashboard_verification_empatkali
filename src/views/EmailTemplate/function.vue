@@ -27,7 +27,7 @@
 				template: {},
 				activeTemplateId: null,
 				loader:	{
-					isShow: true,
+					isShow: false,
 					message: 'Preparing',
 				},
 			}
@@ -41,7 +41,7 @@
 			 */
 			getAllTemplates() {
 				let vm = this
-				vm.loader.isShow = true;
+				vm.loader.isShow = false;
 				axios
 					.get('/api/templates', vm.requestedHeaders)
 					.then(res => {

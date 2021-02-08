@@ -23,7 +23,7 @@
 				},
 				usersArr: [],
 				loader:	{
-					isShow: true,
+					isShow: false,
 					message: 'Preparing',
 				},
 				isShowAddUserModal: false,
@@ -35,7 +35,7 @@
 		methods: {
 			getUsers(){
 				let vm = this
-				vm.loader.isShow = true;
+				vm.loader.isShow = false;
 				axios.get(`${process.env.VUE_APP_API_URL}/api/admins`, vm.requestedHeaders)
 					.then(res => {
 						this.usersArr = res.data;

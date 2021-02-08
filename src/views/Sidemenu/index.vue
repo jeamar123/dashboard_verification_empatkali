@@ -168,7 +168,7 @@
 				:to="{ name: 'Messages'}" 
 				class="w-full rounded-xl inline-block"
 				v-bind:class="{
-					'bg-sidemenuActiveColor' : $route.name == 'Email Template'
+					'bg-sidemenuActiveColor' : $route.name == 'Messages'
 				}"
 			>
 				<div class="menu-item flex items-center px-4 py-5">
