@@ -49,7 +49,10 @@
 				<div v-if="headerContentName != 'default' && headerContentName != ''" class="flex items-center">
 					<div class="flex-none mr-8">
 						<p class="text-md font-bold inline-block capitalize">
-							{{ headerContentName != 'All users' && headerContentName != 'All request' && headerContentName != 'settings' ? $route.name + ' - ' + headerContentName : headerContentName }}
+							{{ 
+								headerContentName != 'Dashboard' && headerContentName != 'All users' && headerContentName != 'All request' && headerContentName != 'settings' ? 
+								$route.name + ' - ' + headerContentName : headerContentName 
+							}}
 						</p>
 
 						<div 

@@ -9,14 +9,22 @@
 
 		<div class="sidemenu-items px-4 pb-4 overflow-y-auto">
 
-			<div class="menu-item flex items-center px-4 py-5 cursor-pointer rounded-xl">
-				<div class="icon-container w-7 mr-3">
-					<img :src="'../assets/img/dashboard.png'" class="w-full" alt="">
+			<router-link 
+					:to="{ name: 'Home'}" 
+					class="w-full rounded-xl inline-block"
+					v-bind:class="{
+						'bg-sidemenuActiveColor' : $route.name == 'Home'
+					}"
+				>
+				<div class="menu-item flex items-center px-4 py-5 cursor-pointer rounded-xl">
+					<div class="icon-container w-7 mr-3">
+						<img :src="'../assets/img/dashboard.png'" class="w-full" alt="">
+					</div>
+					<div class="flex-1">
+						<p class="text-md ff-medium font-bold">Dashboard</p>
+					</div>
 				</div>
-				<div class="flex-1">
-					<p class="text-md ff-medium font-bold">Dashboard</p>
-				</div>
-			</div>
+			</router-link>
 
 			<div 
 				class="menu-item-w-child sidemenu-user-toggle rounded-xl "
@@ -155,6 +163,23 @@
 					</router-link>
 				</div>
 			</div>
+
+			<router-link 
+				:to="{ name: 'Messages'}" 
+				class="w-full rounded-xl inline-block"
+				v-bind:class="{
+					'bg-sidemenuActiveColor' : $route.name == 'Email Template'
+				}"
+			>
+				<div class="menu-item flex items-center px-4 py-5">
+					<div class="icon-container w-7 mr-3">
+						<img :src="'../assets/img/messages.png'" class="w-full" alt="">
+					</div>
+					<div class="flex-1">
+						<p class="text-md ff-medium font-bold">Messages</p>
+					</div>
+				</div>
+			</router-link>
 
 			<router-link 
 				:to="{ name: 'Settings'}" 

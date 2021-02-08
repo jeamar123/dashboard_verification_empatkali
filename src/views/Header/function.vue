@@ -135,6 +135,8 @@
 					vm.headerContentName = vm.$route.params.status == 'all' ? 'All request' : vm.$route.params.status;
 				}else if(vm.$route.name == 'Users'){
 					vm.headerContentName = vm.$route.params.status == 'all' ? 'All users' : vm.$route.params.status;
+				}else if(vm.$route.name == 'Home'){
+					vm.headerContentName = 'Dashboard';
 				}
 			},
 			toggleProfileModal(opt)	{

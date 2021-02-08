@@ -6,6 +6,7 @@ import VueAxios from 'vue-axios'
 
 import Login from './views/Login.vue'
 import { Dashboard } from './views/Dashboard'
+import { Home } from './views/Home'
 import { Users } from './views/Users'
 import { UserDetails } from './views/UserDetails'
 import { Settings } from './views/Settings'
@@ -15,6 +16,7 @@ import { UserManagement } from './views/UserManagement'
 import { Salary } from './views/Salary'
 import { Promotions } from './views/Promotions'
 import { Merchants } from './views/Merchants'
+import { Messages } from './views/Messages'
 
 
 
@@ -45,6 +47,7 @@ export default new Router({
       component: Dashboard,
       meta: { auth: false },
       children: [
+        { name: 'Home', path: '/home', component: Home },
         { name: 'Users', path: '/users/:status', component: Users },
         { name: 'User Details', path: '/users-details/:status/:id', component: UserDetails },
         { name: 'Settings', path: '/settings', component: Settings },
@@ -54,6 +57,7 @@ export default new Router({
         { name: 'Salary', path: '/settings/salary', component: Salary },
         { name: 'Promotions', path: '/promotions', component: Promotions },
         { name: 'Merchants', path: '/merchants', component: Merchants },
+        { name: 'Messages', path: '/messages', component: Messages },
 
         { name: 'Change Limit', path: '/change-limit/:status', component: ChangeLimit },
         { name: 'User Limit Details', path: '/limit-details/:id', component: UserLimitDetails },

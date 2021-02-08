@@ -4,7 +4,7 @@
 	import { Header } from '../Header'
 	import { Loader } from '../../components/Loader'
 
-	var Home = {
+	var Messages = {
 		components:	{
 			Header,
 			Loader,
@@ -29,5 +29,5 @@
 			
     }
 	}
-	export default Home
+	export default Messages
 </script>
