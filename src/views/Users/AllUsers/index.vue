@@ -19,57 +19,81 @@
 						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base dot--all"></div>
 						<p class="flex-1 font-bold text-sm">All users</p>
 					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">511.230</p>
+					<div>
+						<InsideSpinner v-if="statusCount.all === null" :options="{}"  />
+						<p v-if="statusCount.all != null" class="text-xl 2xl:text-2xl ff-light">{{ statusCount.all }}</p>
+					</div>
 				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'active'}" @click="selectUserStatus('active')">
+				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'active'}" @click="selectUserStatus(2)">
 					<div class="flex mb-5 items-center">
 						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-active"></div>
 						<p class="flex-1 font-bold text-sm">Active</p>
 					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">496.090</p>
+					<div>
+						<InsideSpinner v-if="statusCount.active === null" :options="{}"  />
+						<p v-if="statusCount.active != null" class="text-xl 2xl:text-2xl ff-light">{{ statusCount.active }}</p>
+					</div>
 				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'pending'}" @click="selectUserStatus('pending')">
+				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'pending'}" @click="selectUserStatus(1)">
 					<div class="flex mb-5 items-center">
 						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-pending"></div>
 						<p class="flex-1 font-bold text-sm">Pending</p>
 					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">100</p>
+					<div>
+						<InsideSpinner v-if="statusCount.pending === null" :options="{}"  />
+						<p v-if="statusCount.pending != null" class="text-xl 2xl:text-2xl ff-light">{{ statusCount.pending }}</p> 
+					</div>
 				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'incomplete'}" @click="selectUserStatus('incomplete')">
+				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'incomplete'}" @click="selectUserStatus(0)">
 					<div class="flex mb-5 items-center">
 						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-incomplete"></div>
 						<p class="flex-1 font-bold text-sm">Incomplete</p>
 					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">314</p>
+					<div>
+						<InsideSpinner v-if="statusCount.incomplete === null" :options="{}"  />
+						<p v-if="statusCount.incomplete != null" class="text-xl 2xl:text-2xl ff-light">{{ statusCount.incomplete }}</p>
+					</div>
 				</div>
 
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'banned'}" @click="selectUserStatus('banned')">
+				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'banned'}" @click="selectUserStatus(3)">
 					<div class="flex mb-5 items-center">
 						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-banned"></div>
 						<p class="flex-1 font-bold text-sm">Banned</p>
 					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">511.230</p>
+					<div>
+						<InsideSpinner v-if="statusCount.banned === null" :options="{}"  />
+						<p v-if="statusCount.banned != null" class="text-xl 2xl:text-2xl ff-light">{{ statusCount.banned }}</p>
+					</div>
 				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'freeze'}" @click="selectUserStatus('freeze')">
+				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'freeze'}" @click="selectUserStatus(5)">
 					<div class="flex mb-5 items-center">
 						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-freeze"></div>
 						<p class="flex-1 font-bold text-sm">Freeze</p>
 					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">496.090</p>
+					<div>
+						<InsideSpinner v-if="statusCount.freeze === null" :options="{}"  />
+						<p v-if="statusCount.freeze != null" class="text-xl 2xl:text-2xl ff-light">{{ statusCount.freeze }}</p>
+					</div>
 				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'approved'}" @click="selectUserStatus('approved')">
+				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'approved'}" @click="selectUserStatus(6)">
 					<div class="flex mb-5 items-center">
 						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-approved"></div>
 						<p class="flex-1 font-bold text-sm">Approved</p>
 					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">100</p>
+					<div>
+						<InsideSpinner v-if="statusCount.approved === null" :options="{}"  />
+						<p v-if="statusCount.approved != null" class="text-xl 2xl:text-2xl ff-light">{{ statusCount.approved }}</p>
+					</div>
 				</div>
-				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'rejected'}" @click="selectUserStatus('rejected')">
+				<div class="card p-5 cursor-pointer border-2 border-white" :class="{'active' : activeStatus == 'rejected'}" @click="selectUserStatus(4)">
 					<div class="flex mb-5 items-center">
 						<div class="dot-div h-3 w-3 2xl:h-4 2xl:w-4 rounded-full mr-4 text-sm 2xl:text-base bg-v-status-rejected"></div>
 						<p class="flex-1 font-bold text-sm">Rejected</p>
 					</div>
-					<p class="text-xl 2xl:text-2xl ff-light">314</p>
+					<div>
+						<InsideSpinner v-if="statusCount.rejected === null" :options="{}"  />
+						<p v-if="statusCount.rejected != null" class="text-xl 2xl:text-2xl ff-light">{{ statusCount.rejected }}</p>
+					</div>
 				</div>
 
 
@@ -97,7 +121,7 @@
 							'bg-v-status-freeze text-white' : activeStatus == 'freeze',
 						}"
 					>
-						{{ '0' }}
+						{{ paginationData.totalResultsRows }}
 					</div>
 				</div>
 
@@ -179,38 +203,39 @@
 							<th class="border-b-2 py-3 text-sm text-center">Aksi</th>
 						</tr>
 					</thead>
-					<tbody v-if="true">
-						<tr v-for="(list, index) in 10" :key="list.index">
+					<tbody>
+						<tr v-for="(list, index) in usersArr.data" :key="list.index">
 							<td class="border-b-2 py-3 pr-6 text-sm">
 								<p class="text-sm mb-1 font-bold text-violet">
-									{{ 'Jhon Doe' }}
+									{{ list.detail ? list.detail.name : '---' }}
 								</p>
 								<p class="text-gray-500 text-xs">
-									{{ 'jhondoe@empatkali.co.id' }}
+									{{ list.detail ? list.detail.email : '---' }}
 								</p>
 							</td>
 							<td class="border-b-2 py-3 pr-6 text-sm">
-								{{ '1234567891011' }}
+								{{ list.mobileNumber ? list.mobileNumber : '---' }}
 							</td>
 							<td class="border-b-2 py-3 pr-6 text-sm">
-								{{ '3178273819009817' }}
+								{{ list.nik ? list.nik : '---' }}
 							</td>
 							<td class="border-b-2 py-3 pr-6">
 								<div class="text-sm">
-									<span>{{ new Date() | moment('DD MMM YYYY') }}</span>
+									<span>{{ list.createdAt | moment('DD MMM YYYY') }}</span>
 								</div>
 								<div class="text-xs text-gray-500">
-									<span>{{ new Date() | moment('HH:mm:ss') }} WIB</span>
+									<span>{{ list.createdAt | moment('HH:mm:ss') }} WIB</span>
 								</div>
 							</td>
 							<td class="border-b-2 py-3 pr-6">
-								<div v-if="index == 0 || index > 6" class="count-badge rounded-2xl text-center w-24  px-4 py-1 inline-block font-bold text-xs bg-v-status-pending text-white">Pending</div>
-								<div v-if="index == 1" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-approved text-white">Approved</div>
-								<div v-if="index == 2" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-rejected text-white">Rejected</div>
-								<div v-if="index == 3" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-active text-white">Active</div>
-								<div v-if="index == 4" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-incomplete text-white">Incomplete</div>
-								<div v-if="index == 5" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-banned text-white">Banned</div>
-								<div v-if="index == 6" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-freeze text-white">Freeze</div>
+								<div v-if="list.status == 0" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-incomplete text-white">Incomplete</div>
+								<div v-if="list.status == 1" class="count-badge rounded-2xl text-center w-24  px-4 py-1 inline-block font-bold text-xs bg-v-status-pending text-white">Pending</div>
+								<div v-if="list.status == 2" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-active text-white">Active</div>
+								<div v-if="list.status == 3" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-banned text-white">Banned</div>
+								<div v-if="list.status == 4" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-rejected text-white">Rejected</div>
+								<div v-if="list.status == 5" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-freeze text-white">Freeze</div>
+								<div v-if="list.status == 6" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs bg-v-status-approved text-white">Approved</div>
+								<div v-if="list.status == 7" class="count-badge rounded-2xl text-center w-24 px-4 py-1 inline-block font-bold text-xs dot--all text-black">In Review</div>
 							</td>
 							<td class="border-b-2 py-3 text-sm text-center">
 								<button @click="goToUserDetails(list, index)" class="btn border-2 font-bold border-violet font-bold py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
@@ -219,14 +244,14 @@
 					</tbody>
 				</table>
 
-				<div v-if="false" class="flex items-center w-full no-data-content " :class="{'isAllUsers' : false}">
+				<div v-if="usersArr.data && usersArr.data.length == 0" class="flex items-center w-full no-data-content " :class="{'isAllUsers' : false}">
 					<div class="w-full h-full text-center relative">
 						<img :src="'../assets/img/no data results.png'" class="my-4 w-1/4" :class="{'h-6/10' : false}" alt="">
 						<p class="text-xl 2xl:text-2xl mt-5 2xl:mt-10">Pencarian kamu tidak ditemukan</p>
 					</div>
 				</div>
 
-				<div v-if="true" class="flex text-sm py-3">
+				<div v-if="usersArr.data && usersArr.data.length > 0" class="flex text-sm py-3">
 					<div class="flex-1 flex font-bold">
 						<span class="mr-1">Terlihat</span>
 						<span class="mr-1">{{ paginationData.resultStart }}-{{ paginationData.resultEnd }}</span> 
@@ -234,13 +259,45 @@
 						<span>{{ paginationData.totalResultsRows }}</span>
 					</div>
 					<div class="flex-1 flex justify-end pr-5">
+						<div v-if="paginationData.currentPage > 1" @click="changePage('prev')" class="cursor-pointer">
+							<svg class="w-5 text-violet" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+							</svg>
+						</div>
 						<div 
-							v-for="(list) in paginationData.totalPages" 
+							v-if="paginationData.currentPage > paginationCount"
+							class="font-bold px-1 h-5 cursor-pointer text-violet"
+							@click="selectPage(1)"
+						>1</div>
+						<div 
+							v-if="paginationData.currentPage > paginationCount"
+							class="font-bold text-lg h-5 leading-none tracking-widest text-violet"
+						>...</div>
+
+						<div 
+							v-for="list in paginateTotalPages" 
 							:key="list.index" 
-							class="font-bold px-2 cursor-pointer"
-							v-bind:class="{'text-violet' : list != paginationData.currentPage}" 
+							class="font-bold px-1 mx-1 h-5 cursor-pointer"
+							v-bind:class="{
+								'text-violet' : list != paginationData.currentPage,
+							}" 
 							@click="selectPage(list)"
 						>{{ list }}</div>
+
+						<div 
+							v-if="(paginationData.totalPages % paginationCount > 1) || (paginationData.totalPages % paginationCount == 1 && paginationData.totalPages - paginationData.currentPage > 10)"
+							class="font-bold text-lg h-5 leading-none tracking-widest text-violet"
+						>...</div>
+						<div 
+							v-if="(paginationData.totalPages % paginationCount > 1) || (paginationData.totalPages % paginationCount == 1 && paginationData.totalPages - paginationData.currentPage > 10)"
+							class="font-bold px-1 h-5 cursor-pointer text-violet"
+							@click="selectPage(paginationData.totalPages)"
+						>{{ paginationData.totalPages }}</div>
+						<div v-if="paginationData.currentPage < paginationData.totalPages" @click="changePage('next')" class="cursor-pointer">
+							<svg class="w-5 text-violet" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+							</svg>
+						</div>
 					</div>
 				</div>
 			</div>

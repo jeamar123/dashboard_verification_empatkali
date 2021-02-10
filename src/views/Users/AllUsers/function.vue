@@ -1,11 +1,10 @@
 <script>
-	import TransactionsModal from '../modals/TransactionsModal.vue';
-	import BanUserModal from '../modals/BanUserModal.vue';
-	// import axios from 'axios'
+	import axios from 'axios'
+	import { InsideSpinner } from '../../../components/InsideSpinner'
+
 	var AllUsers = {
 		components:	{
-			TransactionsModal,
-			BanUserModal,
+			InsideSpinner
 		},
 		data() {
 			return {
@@ -15,10 +14,6 @@
 						'x-access-token': localStorage.getItem("auth_token")
 					}
 				},
-				loader:	{
-					isShow: false,
-					message: 'Preparing',
-				},
 				filter:	{
 					searchVal: '',
 					startDate: new Date(),
@@ -27,53 +22,75 @@
 				dateFormat: {
 					input: 'DD MMM YYYY',
 				},
-				allUsers: [],
 				paginationData:	{
 					totalResultsRows: 1,
 					currentPage: 1,
-					perPage: 10,
+					perPage: 5,
 					resultStart: 1,
 					resultEnd: 1,
 					totalPages: 1,
 				},
-				adminData: {},
-				limitStatus: '',
-				usersArr: [],
+				paginationCount: 10,
+				allUsers: [],
+				usersArr: {},
 				search: {},
 				activeStatus: 'all',
-				isTransModalShow: false,
-				isBanUserModalShow: false,
+				statusCount:	{
+					all: null,
+					active: null,
+					pending: null,
+					incomplete: null,
+					banned: null,
+					freeze: null,
+					approved: null,
+					rejected: null,
+				}
 			}
 		},
-		created() {
-			this.getUsersList();
-			console.log(this.$route);
+		async created() {
+			let vm = this
+			vm.toggleLoader(true);
+			// await vm.getAllUsers()
+			vm.getEachTotalUsers();
+    	await vm.totalUsers()
+			await vm.getUserList(1);
 		},
-		watch: {
-    	async $route() {
-				// to, from
+		computed: {
+			paginateTotalPages: function() {
 				let vm = this
-				vm.loader =	{
-					isShow: false,
-					message: 'Loading data',
-				},
-				await vm.getUsersList();
+				if(vm.paginationData.totalPages > vm.paginationCount){
+					let pagiArr = [];
+					let chunkArr = vm._.chunk([...Array(vm.paginationData.totalPages).keys()], 10);
+					pagiArr = chunkArr[vm._.findIndex(chunkArr, function(el) { return el.includes(vm.paginationData.currentPage-1)})];
+					pagiArr = pagiArr.map(v => v+1);
+					if(pagiArr[pagiArr.length - 1] < vm.paginationData.totalPages){
+						pagiArr.push( pagiArr[pagiArr.length - 1] + 1 );
+					}
+					return pagiArr;
+				}else{
+					return vm.paginationData.totalPages;
+				}
 			}
-		},
+    },
 		methods: {
-      async getUsersList()	{
-				let vm = this
-
-				setTimeout(() => {
-					vm.loader.isShow = false;
-				}, 500);
+			decodeJwt(paramToken) {
+				const b64DecodeUnicode = str =>
+				decodeURIComponent(
+					Array.prototype.map.call(atob(str), c =>
+					'%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+				).join(''));
+				const parseJwt = token =>
+				JSON.parse(
+					b64DecodeUnicode(token.split('.')[1].replace('-', '+').replace('_', '/'))
+				);
+				return parseJwt(paramToken)
 			},
 			/**
 			 * Toggle Loader
 			 */
-			toggleLoader(opt){
+			toggleLoader(opt, msg){
 				let vm = this
-				vm.$parent.toggleLoader(opt);
+				vm.$parent.toggleLoader(opt, msg);
 			},
 			submitFilter() {
 				let vm = this
@@ -91,7 +108,8 @@
 				searchFilterObj['name'] = sanitizeQuery
 				vm.isSearchActive = true;
 				console.log(searchFilterObj);
-				// vm.getLimitRequests(1, searchFilterObj)
+				vm.toggleLoader(true, 'Loading data');
+				// vm.getUserList(1, searchFilterObj)
 			},
 			removeFilter() {
 				let vm = this
@@ -101,69 +119,198 @@
 					startDate: new Date(),
 					endDate: new Date(),
 				};
-				// vm.showUsersPerPage(1)
+				// vm.getUserList(1)
 			},
 			filterDateChanged()	{
 				let vm = this
 				console.log(vm.filter.startDate);
 				console.log(vm.filter.endDate);
-
-				// vm.getLimitRequests(1)
+				// vm.getUserList(1)
 			},
-			selectUserStatus(opt)	{
+			async selectUserStatus(opt)	{
 				let vm = this
-				vm.activeStatus = opt;
-				vm.getUsersList();
+				vm.activeStatus = opt == 'all' ? 'all' : vm.getStatusValue(opt);
+				vm.toggleLoader(true, 'Loading data');
+				await vm.totalUsers();
+				await vm.getUserList(1, undefined);
 			},
-			toggleModals(opt, type)	{
-				let vm = this;
-				vm.isTransModalShow = type == 'transaction' ? opt : false;
-				vm.isBanUserModalShow = type == 'ban' ? opt : false;
-			},
-			refreshData(data, type)	{
-				console.log(data, type);
-				let vm = this
-				vm.isTransModalShow = false;
-				vm.isBanUserModalShow = false;
-				vm.loader.isShow = false;
-			},
-			goToUserDetails(data, index)	{
-				console.log(data);
-				console.log(index);
-				let vm = this
-				let status = '';
-
-				switch (index) {
+			getStatusValue(status){
+				let value = '';
+				let numVal = '';
+				switch (status) {
 					case 0:
-						status = 'pending';
+					case 'incomplete':
+						value = 'incomplete';
+						numVal = 0;
 						break;
 					case 1:
-						status = 'approved';
+					case 'pending':
+						value = 'pending';
+						numVal = 1;
 						break;
 					case 2:
-						status = 'rejected';
+					case 'active':
+						value = 'active';
+						numVal = 2;
 						break;
 					case 3:
-						status = 'active';
+					case 'banned':
+						value = 'banned';
+						numVal = 3;
 						break;
 					case 4:
-						status = 'incomplete';
+					case 'rejected':
+						value = 'rejected';
+						numVal = 4;
 						break;
 					case 5:
-						status = 'banned';
+					case 'freeze':
+						value = 'freeze';
+						numVal = 5;
 						break;
 					case 6:
-						status = 'freeze';
+					case 'approved':
+						value = 'approved';
+						numVal = 6;
 						break;
 					default:
-						status = 'pending';
+						value = '';
+						numVal = null;
 						break;
 				}
-
+				return typeof status == 'number' ? value : numVal;
+			},
+			goToUserDetails(data)	{
+				let vm = this
+				let status = vm.getStatusValue(data.status);
+				
 				if(status != ''){
-					vm.$router.push({ name: 'User Details', params: { status: status, id: 1 } });
+					vm.$router.push({ name: 'User Details', params: { status: status, id: data._id } });
 				}
-			}
+			},
+			async getAllUsers() {
+				let vm = this
+				let url = `/api/users?skip=0&limit=10000`;
+				let results = await axios.get(url, vm.requestedHeaders);
+				vm.allUsers = results.data.data;
+			},
+			async totalUsers() {
+				let vm = this
+				try {
+					let url = `/api/users?skip=0&limit=10000`;
+					if(vm.activeStatus != 'all'){
+						console.log(vm.activeStatus);
+						console.log(vm.getStatusValue(vm.activeStatus));
+						url += `&status=${vm.getStatusValue(vm.activeStatus)}`;
+					}
+					let totalRows = await axios.get(url, vm.requestedHeaders)
+					vm.paginationData.totalResultsRows = totalRows.data.total;
+					// vm.changeLimitOptions =	{
+					// 	startDate: new Date(),
+					// 	endDate: new Date(),
+					// 	resultCount: vm.paginationData.totalResultsRows
+					// };
+				} catch (err) {
+					console.log(err);
+					this.$swal('Error!', err ,'error')
+					vm.toggleLoader(false);
+				}
+			},
+			async getUserList(page, queryStringObj) {
+				let vm = this
+				let skip
+				if (vm.paginationData.currentPage == 1) {
+					skip = 0
+				} else if (vm.paginationData.currentPage == page) {
+					skip = (page - 1) * vm.paginationData.perPage
+				}
+				// if query string object is passed it'll be appended, otherwise no changes
+				let url = `/api/users?skip=${skip}&limit=${vm.paginationData.perPage}${ (queryStringObj!==undefined)?`&${Object.keys(queryStringObj)}=${Object.values(queryStringObj)}`:'' }`
+				if(vm.activeStatus != 'all'){
+					url += `&status=${vm.getStatusValue(vm.activeStatus)}`;
+				}
+				vm.toggleLoader(true, 'Loading data');
+				// Limit display per page
+				await axios.get(url, vm.requestedHeaders)
+					.then((res)	=>	{
+						console.log(res);
+						vm.usersArr = res.data;
+						vm._.remove(vm.usersArr.data, function(n) {
+							return n.status == 7;
+						});
+
+						vm.paginationData = { ...vm.paginationData, ...{
+							resultStart: skip + 1,
+							resultEnd: skip + vm.usersArr.data.length,
+							totalPages: Math.ceil(vm.paginationData.totalResultsRows / vm.paginationData.perPage),
+							currentPage: page,
+						}};  
+						
+						// vm.usersArr.data.map(async (value)  =>  {
+						// 	if(value.user != null){
+						// 		value.otherDetails = await vm.getOtherDetails(value); 
+						// 		value.transactionDetails = await vm.getTransactionDetails(value);
+						// 		let sideDetailsData = await vm.getSideDetails(value);
+						// 		value.sideDetails = sideDetailsData.information;
+						// 		value.imageDocs = sideDetailsData.docs;
+						// 		this.$forceUpdate();
+						// 	}else{
+						// 		value.user = {
+						// 			mobileNumber: 0
+						// 		}
+						// 	}
+						// })
+
+						// if query string object is passed, load, otherwise, no changes
+						if (queryStringObj!==undefined) {
+							vm.search.showResult = true
+							vm.search.totalRows = vm.users.length
+						}
+						vm.toggleLoader(false);
+					})
+					.catch((err)	=>	{
+						console.log(err);
+						vm.$swal('Error!', err, 'error')
+						vm.toggleLoader(false);
+					})
+			},
+			selectPage(page)  {
+				let vm = this
+				vm.paginationData.currentPage = page;
+				vm.getUserList(page);
+			},
+			changePage(opt)  {
+				let vm = this
+				vm.paginationData.currentPage = opt == 'prev' ? vm.paginationData.currentPage-1 : vm.paginationData.currentPage+1;
+				vm.getUserList(vm.paginationData.currentPage);
+			},
+			async getEachTotalUsers(){
+				let vm = this
+				vm.statusCount.all = await vm.getUserStatusCount(null);
+				vm.statusCount.active = await vm.getUserStatusCount(2);
+				vm.statusCount.pending = await vm.getUserStatusCount(1);
+				vm.statusCount.incomplete = await vm.getUserStatusCount(0);
+				vm.statusCount.banned = await vm.getUserStatusCount(3);
+				vm.statusCount.freeze = await vm.getUserStatusCount(5);
+				vm.statusCount.approved = await vm.getUserStatusCount(6);
+				vm.statusCount.rejected = await vm.getUserStatusCount(4);
+			},
+			async getUserStatusCount(status){
+				let vm = this
+				try {
+					let url = `/api/users?skip=0&limit=10000`;
+					if(status != null){
+						url += `&status=${status}`;
+					}
+					let totalRows = await axios.get(url, vm.requestedHeaders)
+					// console.log(totalRows);
+					return totalRows.data.total;
+				} catch (err) {
+					console.log(err);
+					this.$swal('Error!', err ,'error')
+					vm.toggleLoader(false);
+				}
+			},
     }
 	}
 	export default AllUsers

@@ -89,15 +89,15 @@
 				});
 			},
 			logout() {
-				let vm = this
-				vm.$router.replace({ name: 'Login'});
-				// this.actionAdmin('admin logout')
-				// this.$auth.logout({
-				// 	// makeRequest: true,
-				// 	success() {},
-				// 	error() {},
-				// 	redirect: "/login"
-				// });
+				// let vm = this
+				// vm.$router.replace({ name: 'Login'});
+				this.actionAdmin('admin logout')
+				this.$auth.logout({
+					// makeRequest: true,
+					success() {},
+					error() {},
+					redirect: "/login"
+				});
 			},
 			actionAdmin(paramsAction) {
 				let vm = this

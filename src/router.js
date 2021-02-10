@@ -43,9 +43,9 @@ export default new Router({
     {
       path: '/',
       name: 'Dashboard',
-      redirect: '/users',
+      redirect: '/users/all',
       component: Dashboard,
-      meta: { auth: false },
+      meta: { auth: true },
       children: [
         { name: 'Home', path: '/home', component: Home },
         { name: 'Users', path: '/users/:status', component: Users },

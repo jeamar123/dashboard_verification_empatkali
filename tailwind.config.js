@@ -19,6 +19,7 @@ module.exports = {
         'primaryMsg' : '#393C8E',               // message bg blue color
         'successMsg' : '#36D37A',               // message bg green color
         'v-status-none' : '#E5E6E8',            // verification status none color
+        'v-status-all' : '#B2FCE4',            // verification status none color
         'v-status-approved' : '#36D37A',         // verification status approve color
         'v-status-rejected' : '#EB5757',        // verification status rejected color
         'v-status-pending' : '#F08B34',         // verification status pending color
