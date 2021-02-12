@@ -10,12 +10,12 @@
 		<div class="sidemenu-items px-4 pb-4 overflow-y-auto">
 
 			<router-link 
-					:to="{ name: 'Home'}" 
-					class="w-full rounded-xl inline-block"
-					v-bind:class="{
-						'bg-sidemenuActiveColor' : $route.name == 'Home'
-					}"
-				>
+				:to="{ name: 'Home'}" 
+				class="w-full rounded-xl inline-block"
+				v-bind:class="{
+					'bg-sidemenuActiveColor' : $route.name == 'Home'
+				}"
+			>
 				<div class="menu-item flex items-center px-4 py-5 cursor-pointer rounded-xl">
 					<div class="icon-container w-7 mr-3">
 						<img :src="'../assets/img/dashboard.png'" class="w-full" alt="">
@@ -77,7 +77,7 @@
 								<div 
 									class="count-badge rounded-2xl px-4 py-2 inline-block font-bold text-xxs ml-3 bg-v-status-pending text-white"
 								>
-									{{ '100' }}
+									{{ pendingUsersCount }}
 								</div>
 							</div>
 						</div>

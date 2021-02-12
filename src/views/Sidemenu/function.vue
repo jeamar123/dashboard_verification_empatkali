@@ -1,15 +1,29 @@
 <script>
+	import axios from 'axios'
 	var Sidemenu = {
 		data() {
 			return {
+				requestedHeaders: {
+					headers: {
+						Authorization: process.env.VUE_APP_AUTHORIZATION,
+						'x-access-token': localStorage.getItem("auth_token")
+					}
+				},
 				isShowUserChildMenu: false,
 				isShowLimitChildMenu: false,
+				pendingUsersCount: 0,
 			}
 		},
-		created() {
+		async created() {
+			let vm = this
 			this.initializeShowHideListener();
+			vm.pendingUsersCount = await this.getUserStatusCount(1); /* Get Pending Users Count */
 		},
 		methods: {
+			toggleLoader(opt, msg){ /* Toggle Parent Loader */
+				let vm = this
+				vm.$parent.toggleLoader(opt, msg);
+			},
 			/*
 			 * For ShowHide Toggle Event Listeners
 			 */
@@ -49,7 +63,23 @@
 					}
 				}
 				return parentMatch;
-			}
+			},
+			async getUserStatusCount(status){
+				let vm = this
+				try {
+					let url = `/api/users?skip=0&limit=10000`;
+					if(status != null){
+						url += `&status=${status}`;
+					}
+					let totalRows = await axios.get(url, vm.requestedHeaders)
+					// console.log(totalRows);
+					return totalRows.data.total;
+				} catch (err) {
+					console.log(err);
+					this.$swal('Error!', err ,'error')
+					vm.toggleLoader(false);
+				}
+			},
     }
 	}
 	export default Sidemenu

@@ -100,12 +100,8 @@
 			</div>
 		</div>
 
-		<div 
-			class="users-list-content px-4 pb-4 flex-1"
-		>
-			<div 
-				class="card p-5 h-full"
-			>
+		<div class="users-list-content px-4 pb-4 flex-1">
+			<div class="card p-5 h-full">
 				<div class="flex items-center mb-6">
 					<p class="font-bold">List of users</p>
 					<div 
@@ -126,7 +122,7 @@
 				</div>
 
 				<div class="filter-container flex mb-5">
-					<form @submit.prevent="submitFilter">
+					<form @submit.prevent="submitFilter()">
 						<div class="input-div with-icon border-r pr-4 mr-4">
 							<div class="icon-div absolute left-5 top-3 h-5">
 								<svg class="h-full text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -187,7 +183,7 @@
 							</v-date-picker>
 						</div>
 
-						<button class="btn bg-primaryBtn text-white px-10 py-4 font-bold ml-3 rounded-md" @click="submitFilter">Cari</button>
+						<button class="btn bg-primaryBtn text-white px-10 py-4 font-bold ml-3 rounded-md" @click="submitFilter()">Cari</button>
 						<button class="btn border-none text-gray-400 font-bold p-2 ml-3" @click="removeFilter">reset filter</button>
 					</div>
 				</div>

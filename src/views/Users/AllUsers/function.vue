@@ -16,8 +16,8 @@
 				},
 				filter:	{
 					searchVal: '',
-					startDate: new Date(),
-					endDate: new Date(),
+					startDate: new Date(this.$moment().startOf('month')),
+					endDate: new Date(this.$moment()),
 				},
 				dateFormat: {
 					input: 'DD MMM YYYY',
@@ -85,33 +85,32 @@
 				);
 				return parseJwt(paramToken)
 			},
-			/**
-			 * Toggle Loader
-			 */
+			/** Toggle Parent Loader */
 			toggleLoader(opt, msg){
 				let vm = this
 				vm.$parent.toggleLoader(opt, msg);
 			},
-			submitFilter() {
+			async submitFilter(page) {
 				let vm = this
-				console.log(vm.filter);
-
 				if (vm.filter.searchVal == '') {
 					vm.$swal('', 'Seems like you forgot to put something on the search input!', 'warning')
 					return false;
 				}
-
 				// Prepare end users input i.e. trim,etc.
 				let sanitizeQuery = vm.filter.searchVal.split(',').map(item=>item.trim())
-				console.log( sanitizeQuery )
-				let searchFilterObj = {}
-				searchFilterObj['name'] = sanitizeQuery
+				let searchFilterObj = {
+					// start: vm.$moment(vm.filter.startDate).format('YYYY-MM-DD'),
+					// end: vm.$moment(vm.filter.endDate).format('YYYY-MM-DD'),
+					name: sanitizeQuery,
+				}
 				vm.isSearchActive = true;
 				console.log(searchFilterObj);
 				vm.toggleLoader(true, 'Loading data');
-				// vm.getUserList(1, searchFilterObj)
+				vm.paginationData.currentPage = page !== undefined ? vm.paginationData.currentPage : 1;
+				await vm.totalUsers(searchFilterObj);
+				await vm.getUserList(vm.paginationData.currentPage, searchFilterObj)
 			},
-			removeFilter() {
+			async removeFilter() {
 				let vm = this
 				vm.isSearchActive = false;
 				vm.filter =	{
@@ -119,7 +118,9 @@
 					startDate: new Date(),
 					endDate: new Date(),
 				};
-				// vm.getUserList(1)
+				vm.toggleLoader(true, 'Loading data');
+				await vm.totalUsers();
+				await vm.getUserList(1)
 			},
 			filterDateChanged()	{
 				let vm = this
@@ -194,22 +195,15 @@
 				let results = await axios.get(url, vm.requestedHeaders);
 				vm.allUsers = results.data.data;
 			},
-			async totalUsers() {
+			async totalUsers(queryStringObj) {
 				let vm = this
 				try {
-					let url = `/api/users?skip=0&limit=10000`;
+					let url = `/api/users?skip=0&limit=10000${ (queryStringObj!==undefined)?`&${Object.keys(queryStringObj)}=${Object.values(queryStringObj)}`:'' }`;
 					if(vm.activeStatus != 'all'){
-						console.log(vm.activeStatus);
-						console.log(vm.getStatusValue(vm.activeStatus));
 						url += `&status=${vm.getStatusValue(vm.activeStatus)}`;
 					}
 					let totalRows = await axios.get(url, vm.requestedHeaders)
 					vm.paginationData.totalResultsRows = totalRows.data.total;
-					// vm.changeLimitOptions =	{
-					// 	startDate: new Date(),
-					// 	endDate: new Date(),
-					// 	resultCount: vm.paginationData.totalResultsRows
-					// };
 				} catch (err) {
 					console.log(err);
 					this.$swal('Error!', err ,'error')
@@ -235,37 +229,15 @@
 					.then((res)	=>	{
 						console.log(res);
 						vm.usersArr = res.data;
-						vm._.remove(vm.usersArr.data, function(n) {
-							return n.status == 7;
-						});
-
+						// vm._.remove(vm.usersArr.data, function(n) {
+						// 	return n.status == 7;
+						// });
 						vm.paginationData = { ...vm.paginationData, ...{
 							resultStart: skip + 1,
 							resultEnd: skip + vm.usersArr.data.length,
 							totalPages: Math.ceil(vm.paginationData.totalResultsRows / vm.paginationData.perPage),
 							currentPage: page,
 						}};  
-						
-						// vm.usersArr.data.map(async (value)  =>  {
-						// 	if(value.user != null){
-						// 		value.otherDetails = await vm.getOtherDetails(value); 
-						// 		value.transactionDetails = await vm.getTransactionDetails(value);
-						// 		let sideDetailsData = await vm.getSideDetails(value);
-						// 		value.sideDetails = sideDetailsData.information;
-						// 		value.imageDocs = sideDetailsData.docs;
-						// 		this.$forceUpdate();
-						// 	}else{
-						// 		value.user = {
-						// 			mobileNumber: 0
-						// 		}
-						// 	}
-						// })
-
-						// if query string object is passed, load, otherwise, no changes
-						if (queryStringObj!==undefined) {
-							vm.search.showResult = true
-							vm.search.totalRows = vm.users.length
-						}
 						vm.toggleLoader(false);
 					})
 					.catch((err)	=>	{
@@ -277,12 +249,20 @@
 			selectPage(page)  {
 				let vm = this
 				vm.paginationData.currentPage = page;
-				vm.getUserList(page);
+				if(vm.isSearchActive){
+					vm.submitFilter(page);
+				}else{
+					vm.getUserList(page);
+				}
 			},
 			changePage(opt)  {
 				let vm = this
 				vm.paginationData.currentPage = opt == 'prev' ? vm.paginationData.currentPage-1 : vm.paginationData.currentPage+1;
-				vm.getUserList(vm.paginationData.currentPage);
+				if(vm.isSearchActive){
+					vm.submitFilter(vm.paginationData.currentPage);
+				}else{
+					vm.getUserList(vm.paginationData.currentPage);
+				}
 			},
 			async getEachTotalUsers(){
 				let vm = this
@@ -303,7 +283,6 @@
 						url += `&status=${status}`;
 					}
 					let totalRows = await axios.get(url, vm.requestedHeaders)
-					// console.log(totalRows);
 					return totalRows.data.total;
 				} catch (err) {
 					console.log(err);

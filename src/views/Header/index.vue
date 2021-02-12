@@ -86,7 +86,7 @@
 								<img :src="'../assets/img/clock-icon.png'" class="w-full inline-block" alt="">
 							</div>
 							<div class="flex-1 text-sm">
-								{{ dateToday | moment("HH:MM:SS") }} WIB
+								{{ dateToday | moment("HH:mm:ss") }} WIB
 							</div>
 						</div>
 					</div>
