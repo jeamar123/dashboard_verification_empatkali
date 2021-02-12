@@ -1,0 +1,9 @@
+version: '3'
+services:
+  dashboard:
+    container_name: 'verification'
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    ports:
+      - 8087:80
