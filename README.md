@@ -1,24 +1,8 @@
-# version-2
 
-## Project setup
-```
-npm install
-```
+Install using Docker
+-----------------------
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. Install docker
+2. `docker build -t verification.empatkali.co.id:dev .`
+3. `docker run -v ${PWD}:/app -v /app/node_modules -p 8081:8080 --rm verification.empatkali.co.id:dev`
+4. Run `localhost:8081`
