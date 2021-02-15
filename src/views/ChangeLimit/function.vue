@@ -18,7 +18,7 @@
 					}
 				},
 				loader:	{
-					isShow: false,
+					isShow: true,
 					message: 'Preparing',
 				},
 				filter:	{
@@ -35,6 +35,7 @@
 					resultCount: 0
 				},
 				allUsers: [],
+				paginationCount: 10,
 				paginationData:	{
 					totalResultsRows: 1,
 					currentPage: 1,
@@ -45,7 +46,7 @@
 				},
 				adminData: {},
 				limitStatus: '',
-				usersArr: [],
+				usersArr: {},
 				search: {},
 			}
 		},
@@ -55,10 +56,27 @@
 
 			vm.setCurrentLimitStatus();
 			// await vm.getAllUsers()
-    	// await vm.totalUsers()
-			// await vm.getLimitRequests(1);
-			// await vm.getAdmin()
+    	await vm.totalUsers()
+			await vm.getLimitRequests(1);
+			await vm.getAdmin()
 		},
+		computed: {
+			paginateTotalPages: function() {
+				let vm = this
+				if(vm.paginationData.totalPages > vm.paginationCount){
+					let pagiArr = [];
+					let chunkArr = vm._.chunk([...Array(vm.paginationData.totalPages).keys()], 10);
+					pagiArr = chunkArr[vm._.findIndex(chunkArr, function(el) { return el.includes(vm.paginationData.currentPage-1)})];
+					pagiArr = pagiArr.map(v => v+1);
+					if(pagiArr[pagiArr.length - 1] < vm.paginationData.totalPages){
+						pagiArr.push( pagiArr[pagiArr.length - 1] + 1 );
+					}
+					return pagiArr;
+				}else{
+					return vm.paginationData.totalPages;
+				}
+			}
+    },
 		watch: {
     	async $route() {
 				// to, from
@@ -69,8 +87,8 @@
 				},
 				vm.setCurrentLimitStatus();
 				// await vm.getAllUsers()
-				// await vm.totalUsers()
-				// await vm.getLimitRequests(1);
+				await vm.totalUsers()
+				await vm.getLimitRequests(1);
 			}
 		},
 		methods: {
@@ -120,14 +138,14 @@
 			},
 			async getAllUsers() {
 				let vm = this
-				let url = `/api/users?skip=0&limit=3000`;
+				let url = `/api/users?skip=0&limit=10000`;
 				let results = await axios.get(url, vm.requestedHeaders);
 				vm.allUsers = results.data.data;
 			},
-			async totalUsers() {
+			async totalUsers(queryStringObj) {
 				let vm = this
 				try {
-					let url = `/api/users/getuserupdatecredit?skip=0&limit=3000`;
+					let url = `/api/users/getuserupdatecredit?skip=0&limit=10000${ (queryStringObj!==undefined)?`&${Object.keys(queryStringObj)}=${Object.values(queryStringObj)}`:'' }`;
 					if(vm.limitStatus != null){
 						url += `&status=${vm.limitStatus}`;
 					}
@@ -172,14 +190,7 @@
 						}};  
 						
 						vm.usersArr.data.map(async (value)  =>  {
-							if(value.user != null){
-								value.otherDetails = await vm.getOtherDetails(value); 
-								value.transactionDetails = await vm.getTransactionDetails(value);
-								let sideDetailsData = await vm.getSideDetails(value);
-								value.sideDetails = sideDetailsData.information;
-								value.imageDocs = sideDetailsData.docs;
-								this.$forceUpdate();
-							}else{
+							if(value.user == null){
 								value.user = {
 									mobileNumber: 0
 								}
@@ -199,60 +210,49 @@
 						vm.loader.isShow = false
 					})
 			},
-			/*
-			* get transactions values
-			*
-			*/
-			async getTransactionDetails(user)  {
-				let vm = this
-				let url = `/api/approvedtransactions/getusertransaction/${user.user._id}`;
-				let result = await axios.get(url, vm.requestedHeaders);
-				return result.data.data;
-			},
-			/*
-			* getdetails for left side modal
-			*
-			*/
-			async getSideDetails(user)  {
-				let vm = this
-				let url = `/api/users/getUserUpdateCreditDetail/${user._id}`;
-				let result = await axios.get(url, vm.requestedHeaders);
-				return result.data.data;
-			},
-			async getOtherDetails(user) {
-				let vm = this
-				return vm._.find(vm.allUsers, { _id: user.user._id }) ;
-			},
 			selectPage(page)  {
 				let vm = this
 				vm.paginationData.currentPage = page;
-				vm.getLimitRequests(page);
+				if(vm.isSearchActive){
+					vm.submitFilter(page);
+				}else{
+					vm.getLimitRequests(page);
+				}
+			},
+			changePage(opt)  {
+				let vm = this
+				vm.paginationData.currentPage = opt == 'prev' ? vm.paginationData.currentPage-1 : vm.paginationData.currentPage+1;
+				if(vm.isSearchActive){
+					vm.submitFilter(vm.paginationData.currentPage);
+				}else{
+					vm.getLimitRequests(vm.paginationData.currentPage);
+				}
 			},
 			goToVericationDetails(userData)	{
-				console.log(userData);
 				let vm = this
-				vm.$router.push({ name: 'User Limit Details', params: { id: 1 } });
-				// vm.$router.push({ name: 'User Verification Details', params: { id: userData._id } });
+				vm.$router.push({ name: 'User Limit Details', params: { id: userData._id } });
 			},
-			submitFilter() {
+			async submitFilter(page) {
 				let vm = this
-				console.log(vm.filter);
-
 				if (vm.filter.searchVal == '') {
 					vm.$swal('', 'Seems like you forgot to put something on the search input!', 'warning')
 					return false;
 				}
-
 				// Prepare end users input i.e. trim,etc.
 				let sanitizeQuery = vm.filter.searchVal.split(',').map(item=>item.trim())
-				console.log( sanitizeQuery )
-				let searchFilterObj = {}
-				searchFilterObj['name'] = sanitizeQuery
+				let searchFilterObj = {
+					// start: vm.$moment(vm.filter.startDate).format('YYYY-MM-DD'),
+					// end: vm.$moment(vm.filter.endDate).format('YYYY-MM-DD'),
+					name: sanitizeQuery,
+				}
 				vm.isSearchActive = true;
 				console.log(searchFilterObj);
-				// vm.getLimitRequests(1, searchFilterObj)
+				vm.toggleLoader(true, 'Loading data');
+				vm.paginationData.currentPage = page !== undefined ? vm.paginationData.currentPage : 1;
+				await vm.totalUsers(searchFilterObj);
+				await vm.getLimitRequests(vm.paginationData.currentPage, searchFilterObj)
 			},
-			removeFilter() {
+			async removeFilter() {
 				let vm = this
 				vm.isSearchActive = false;
 				vm.filter =	{
@@ -260,7 +260,9 @@
 					startDate: new Date(),
 					endDate: new Date(),
 				};
-				// vm.showUsersPerPage(1)
+				vm.toggleLoader(true, 'Loading data');
+				await vm.totalUsers();
+				await vm.getLimitRequests(1)
 			},
 			filterDateChanged()	{
 				let vm = this

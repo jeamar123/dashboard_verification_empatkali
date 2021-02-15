@@ -10,6 +10,9 @@
 			BanUserModal,
 			InsideSpinner
 		},
+		props:	{
+			headerOptions: Function,
+		},
 		data() {
 			return {
 				requestedHeaders: {
@@ -139,6 +142,11 @@
 					let url = `/api/users?status=2&skip=0&limit=10000${ (queryStringObj!==undefined)?`&${Object.keys(queryStringObj)}=${Object.values(queryStringObj)}`:'' }`;
 					let totalRows = await axios.get(url, vm.requestedHeaders)
 					vm.paginationData.totalResultsRows = totalRows.data.total;
+					vm.headerOptions({
+						startDate: new Date(),
+						endDate: new Date(),
+						resultCount: vm.paginationData.totalResultsRows
+					});
 				} catch (err) {
 					console.log(err);
 					this.$swal('Error!', err ,'error')

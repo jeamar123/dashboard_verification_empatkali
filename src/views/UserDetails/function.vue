@@ -37,9 +37,10 @@
 		created() {
 		},
 		methods: {
-			toggleLoader(opt){
+			toggleLoader(opt, msg){
 				let vm = this
 				vm.loader.isShow = opt;
+				vm.loader.message = msg ? msg : vm.loader.message;
 			},
     }
 	}

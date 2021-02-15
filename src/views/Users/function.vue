@@ -61,6 +61,10 @@
 				vm.loader.isShow = opt;
 				vm.loader.message = msg ? msg : vm.loader.message;
 			},
+			setHeaderOptions(options)	{
+				let vm = this
+				vm.headerOptions = options;
+			},
     }
 	}
 	export default Users

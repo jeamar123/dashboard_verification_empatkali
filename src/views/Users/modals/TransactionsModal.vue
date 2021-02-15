@@ -14,7 +14,7 @@
         <tr class="cursor-pointer" @click="toggleTransDrop(list)">
           <td class="border-b text-xs text-left py-3 pr-3">{{ list.transactionNumber ? list.transactionNumber : '---' }}</td>
           <td class="border-b text-xs text-left py-3 pr-3">{{ list.store ? list.store.name : '---' }}</td>
-          <td class="border-b text-xs text-left py-3 pr-3">Cicilan ke- {{ list.status == 1 ? '2nd' : list.status == 2 ? '3rd' : list.status == 3 ? '4th' : '1st' }}</td>
+          <td class="border-b text-xs text-left py-3 pr-3">Cicilan ke- {{ list.status == 1 ? '2nd' : list.status == 2 ? '3rd' : list.status == 3 || list.status == 4 ? '4th' : '1st' }}</td>
           <td class="border-b text-xs text-left py-3 pr-3">{{ list.total | currency }}</td>
           <td class="border-b text-right">
             <svg v-if="!list.showDrop" class="text-gray-500 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

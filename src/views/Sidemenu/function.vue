@@ -12,12 +12,14 @@
 				isShowUserChildMenu: false,
 				isShowLimitChildMenu: false,
 				pendingUsersCount: 0,
+				pendingLimitUsersCount: 0,
 			}
 		},
 		async created() {
 			let vm = this
 			this.initializeShowHideListener();
 			vm.pendingUsersCount = await this.getUserStatusCount(1); /* Get Pending Users Count */
+			vm.pendingLimitUsersCount = await this.getLimitStatusCount(0); /* Get Pending Users Count */
 		},
 		methods: {
 			toggleLoader(opt, msg){ /* Toggle Parent Loader */
@@ -68,6 +70,22 @@
 				let vm = this
 				try {
 					let url = `/api/users?skip=0&limit=10000`;
+					if(status != null){
+						url += `&status=${status}`;
+					}
+					let totalRows = await axios.get(url, vm.requestedHeaders)
+					// console.log(totalRows);
+					return totalRows.data.total;
+				} catch (err) {
+					console.log(err);
+					this.$swal('Error!', err ,'error')
+					vm.toggleLoader(false);
+				}
+			},
+			async getLimitStatusCount(status){
+				let vm = this
+				try {
+					let url = `/api/users/getuserupdatecredit?skip=0&limit=10000`
 					if(status != null){
 						url += `&status=${status}`;
 					}

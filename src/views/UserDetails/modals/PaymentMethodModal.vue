@@ -38,8 +38,8 @@
             <img v-if="false" :src="'../../assets/img/visa.png'" class="w-8 ml-2 block inline-block" alt="">
             <img v-if="true" :src="'../../assets/img/dana.png'" class="w-14 ml-2 block inline-block" alt="">
           </td>
-          <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">9007********7187</td>
-          <td v-if="selectedOpt == 'instant'" class="py-2 pr-2 text-sm" :class="{'border-b' : false}">Rp300.000</td>
+          <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">{{ true ? '---' : '9007********7187' }}</td>
+          <td v-if="selectedOpt == 'instant'" class="py-2 pr-2 text-sm" :class="{'border-b' : false}">{{true ? '---' : 'Rp300.000'}}</td>
           <td class="py-2 pr-2">
             <div 
               class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold text-sm"
@@ -54,7 +54,7 @@
             </div>
           </td>
         </tr>
-        <tr v-if="true">
+        <tr v-if="false">
           <td></td>
           <td :colspan="selectedOpt == 'card' ? 3 : 4">
             <div class="border-2 border-dangerBtn bg-dangerDiv px-3 py-1 rounded-xl my-2">
@@ -71,8 +71,8 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="pr-3 py-2 text-sm text-violet font-bold ">Lorem Ipsum</td>
-                    <td class="pr-3 py-2 text-sm">087888091699</td>
+                    <td class="pr-3 py-2 text-sm text-violet font-bold ">{{true ? '---' : 'Lorem Ipsum'}}</td>
+                    <td class="pr-3 py-2 text-sm">{{true ? '---' : '087888091699'}}</td>
                   </tr>
                 </tbody>
               </table>

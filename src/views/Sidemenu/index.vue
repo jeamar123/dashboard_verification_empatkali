@@ -146,7 +146,7 @@
 								<div 
 									class="count-badge rounded-2xl px-4 py-2 inline-block font-bold text-xxs ml-3 bg-v-status-pending text-white"
 								>
-									{{ '100' }}
+									{{ pendingLimitUsersCount }}
 								</div>
 							</div>
 						</div>

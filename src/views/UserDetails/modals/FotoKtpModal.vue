@@ -3,7 +3,7 @@
     <div class="shadow-lg-middle relative mb-5 ktp-wrapper">
       <img 
         v-viewer="viewerOptions" 
-        :src="'../../assets/img/full-passport.png'" 
+        :src="user.ktp.image || '/assets/img/no-image.png'" 
         class="rounded-lg h-full opacity-0 " hidden alt=""
         style="display: none !important;"
       >
@@ -18,6 +18,7 @@
 export default {
   props: {
     closeModal: Function,
+    user: Object
   },
   data() {
   	return {

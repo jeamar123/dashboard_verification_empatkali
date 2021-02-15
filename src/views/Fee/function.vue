@@ -23,7 +23,7 @@
 				},
 				feeArr: [],
 				loader:	{
-					isShow: false,
+					isShow: true,
 					message: 'Preparing',
 				},
 				isShowAddFeeModal	: false,
@@ -37,7 +37,7 @@
 		methods: {
 			getFees(){
 				let vm = this
-				vm.loader.isShow = false;
+				vm.loader.isShow = true;
 				axios.get(`${process.env.VUE_APP_API_URL}/api/fees`, vm.requestedHeaders)
 					.then(res => {
 						this.feeArr = res.data;

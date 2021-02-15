@@ -23,7 +23,7 @@
 				},
 				salaryArr: [],
 				loader:	{
-					isShow: false,
+					isShow: true,
 					message: 'Preparing',
 				},
 				isShowAddSalaryModal	: false,
@@ -37,7 +37,7 @@
 		methods: {
 			getSalary(){
 				let vm = this
-				vm.loader.isShow = false;
+				vm.loader.isShow = true;
 				axios.get(`${process.env.VUE_APP_API_URL}/api/usersalary`, vm.requestedHeaders)
 					.then(res => {
 						this.salaryArr = res.data;

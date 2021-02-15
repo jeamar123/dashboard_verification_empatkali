@@ -4,7 +4,7 @@
       <div class="shadow-lg-middle relative mb-5 mx-2 flex-1 ktp-wrapper">
         <img 
           v-viewer="viewerOptions" 
-          :src="'../../assets/img/full-passport.png'" 
+          :src="user.ktp.image || '/assets/img/no-image.png'" 
           class="rounded-lg h-full opacity-0 " hidden alt=""
           style="display: none !important;"
         >
@@ -13,7 +13,7 @@
       <div class="shadow-lg-middle relative mb-5 mx-2 flex-1 ktp-wrapper">
         <img 
           v-viewer="viewerOptions" 
-          :src="'../../assets/img/no-image.png'" 
+          :src="user.selfie || '/assets/img/no-image.png'" 
           class="rounded-lg h-full opacity-0 " hidden alt=""
           style="display: none !important;"
         >
@@ -29,6 +29,7 @@
 export default {
   props: {
     closeModal: Function,
+    user: Object
   },
   data() {
   	return {

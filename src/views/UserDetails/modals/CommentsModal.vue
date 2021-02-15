@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-if="false" class="text-center mb-5">
+    <div v-if="commentArr.length == 0" class="text-center mb-5">
       <img :src="'../../assets/img/message-icon.png'" class="w-28" alt="">
       <p class="text-center text-lg my-4">Belum ada yang<br>komentar sebelumnya</p>
     </div>
 
     <div class="mb-5">
-      <div class="flex flex-col p-4 mb-4 bg-gray-100 rounded-lg">
+      <div v-for="list in commentArr" :key="list.index" class="flex flex-col p-4 mb-4 bg-gray-100 rounded-lg">
         <div class="flex items-center">
           <div class="w-8 h-8">
             <img :src="'../../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="flex flex-col p-4 mb-4 bg-gray-100 bg-current-user rounded-lg">
+      <!-- <div class="flex flex-col p-4 mb-4 bg-gray-100 bg-current-user rounded-lg">
         <div class="flex items-center" v-bind:class="{'flex-row-reverse' : true}">
           <div class="w-8 h-8">
             <img :src="'../../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
@@ -44,7 +44,7 @@
             {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et hendrerit magna. Fusce vulputate tincidunt quam, at tempor felis. Pellentesque vulputate nulla sit amet dignissim vestibul.' }}
           </p>
         </div>
-      </div>
+      </div> -->
     </div>
 
 
@@ -66,13 +66,15 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   props: {
     closeModal: Function,
     requestSuccess: Function,
     toggleLoader: Function,
+    user: Object,
+    admin: Object,
   },
   data() {
   	return {
@@ -82,28 +84,53 @@ export default {
           'x-access-token': localStorage.getItem("auth_token")
         }
       },
+      commentVal: '',
+      commentArr: [],
   	}
   },
   created() {
+    let vm = this
+    vm.getCommentList();
   },
   methods: {
-    /**
-		 * Form Validator
-		 *
-		 * This will validate multiple forms
-		 * 
-		 * @param  String scope
-		 */
-		formValidator(scope) {
-			let vm = this
-
-			vm.$validator.validateAll(scope).then(result => {
-				if (result) {
-          console.log(result);
-				}
-			})
+    async getCommentList()  {
+      let vm = this
+      vm.toggleLoader(true, 'Loading data');
+      axios.get(`api/users/commentupdatecredit/${vm.user._id}`, vm.requestedHeaders)
+        .then(res => {
+          vm.commentArr = res.data.data;
+          vm.toggleLoader(false);
+        })
+        .catch(err => {
+          console.log(err)
+          vm.$swal('Error!', err.message, 'error');
+          vm.toggleLoader(false);
+        })
     },
+    submitComment() {
+      let vm = this
 
+      if( vm.commentVal == '' ){
+        vm.$swal('Error!', 'Comment is required.', 'error');
+        return false;
+      }
+      
+      let params  = {
+        comment: vm.commentVal,
+      }
+      axios.post(`api/users/commentupdatecredit/${vm.user._id}`, params, vm.requestedHeaders)
+        .then(() => {
+          // vm.dataPendukung = res.data
+          vm.commentVal = '';
+          vm.getCommentList();
+          vm.toggleLoader(false);
+        })
+        .catch(err => {
+          console.log(err)
+          vm.$swal('Error!', err.message, 'error');
+          vm.toggleLoader(false);
+        })
+    }
   }
 }
 </script>
