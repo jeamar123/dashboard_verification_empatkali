@@ -1,6 +1,7 @@
 <script>
 	import axios from 'axios'
 	import { Loader } from '../../components/Loader'
+	import { InsideSpinner } from '../../components/InsideSpinner'
 	import EditInformationModal from './modals/EditInformationModal.vue';
 	import CommentsModal from './modals/CommentsModal.vue';
 	import EmailModal from './modals/EmailModal.vue';
@@ -14,7 +15,8 @@
 			EmailModal,
 			TransactionsModal,
 			RequestConfirmModal,
-			Loader
+			Loader,
+			InsideSpinner,
 		},
 		data() {
 			return {

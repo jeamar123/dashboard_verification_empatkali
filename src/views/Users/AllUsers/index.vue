@@ -281,11 +281,11 @@
 						>{{ list }}</div>
 
 						<div 
-							v-if="paginationData.totalPages > 10 && (paginationData.totalPages % paginationCount > 1) || (paginationData.totalPages % paginationCount == 1 && paginationData.totalPages - paginationData.currentPage > 10)"
+							v-if="paginationData.totalPages > 10 && (paginationData.totalPages - paginationData.currentPage >= paginationData.totalPages % paginationCount)"
 							class="font-bold text-lg h-5 leading-none tracking-widest text-violet"
 						>...</div>
 						<div 
-							v-if="paginationData.totalPages > 10 && (paginationData.totalPages % paginationCount > 1) || (paginationData.totalPages % paginationCount == 1 && paginationData.totalPages - paginationData.currentPage > 10)"
+							v-if="paginationData.totalPages > 10 && (paginationData.totalPages - paginationData.currentPage >= paginationData.totalPages % paginationCount)"
 							class="font-bold px-1 h-5 cursor-pointer text-violet"
 							@click="selectPage(paginationData.totalPages)"
 						>{{ paginationData.totalPages }}</div>

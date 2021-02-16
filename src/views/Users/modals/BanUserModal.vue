@@ -53,7 +53,7 @@ export default {
       axios.post(`/api/users/banninguser`, data, vm.requestedHeaders)
         .then((res)	=>	{
           console.log(res);
-          vm.requestSuccess();
+          vm.requestSuccess('ban');
         })
         .catch((err)	=>	{
           console.log(err);

@@ -1,21 +1,32 @@
 <template>
 	<div>
-		<div v-if="false" class="bg-white p-4 rounded-xl shadow-md fixed right-10 top-14 z-50 w-68">
+		<div v-if="userReqAlert.isShow" class="bg-white p-4 rounded-xl shadow-md fixed right-10 top-14 z-50 w-68">
 			<div class="flex">
 				<div class="icon mr-4">
 					<img :src="'../assets/img/check-green-circle.png'" class="max-w-40px" alt="">
 				</div>
 				<div class="flex-1">
 					<p class="mb-1 text-sm font-bold">
-						{{ 'User Approved' }}
-						<!-- {{ 'User Rejected' }} -->
-						<!-- {{ 'User Incomplete' }} -->
+						User
+						{{ 
+							userReqAlert.type == 'approved' ? 
+								'Approved' 
+							: userReqAlert.type == 'rejected' ?
+								'Rejected'
+							:   
+								'Incomplete'
+						}}
 					</p>
 					<p class="text-sm">
-						{{ 'Kamu berhasil menyetujui Jeff Benzos. ' }}
-						<!-- {{ 'Kamu berhasil menolak Jeff Benzos. ' }} -->
-						<!-- {{ 'Kamu berhasil menjadikan Jeff Benzos Incomplete. . ' }} -->
+						<span v-if="userReqAlert.type == 'approved'">Kamu berhasil menyetujui {{ userReqAlert.name }}.</span>
+						<span v-if="userReqAlert.type == 'rejected'">Kamu berhasil menolak {{ userReqAlert.name }}.</span>
+						<span v-if="userReqAlert.type == 'incomplete'">Kamu berhasil menjadikan {{ userReqAlert.name }} Incomplete.</span>
 					</p>
+				</div>
+				<div class="w-1 relative">
+					<a href="#" @click.prevent="closeAlert" class="relative -top-3" >
+						<font-awesome-icon icon="times" class="mr-2" size="sm" />
+					</a>
 				</div>
 			</div>
 		</div>
@@ -98,28 +109,28 @@
 							<th class="border-b-2 py-3 text-sm">Aksi</th>
 						</tr>
 					</thead>
-					<tbody v-if="true">
-						<tr v-for="(list) in 10" :key="list.index">
+					<tbody >
+						<tr v-for="(list) in usersArr.data" :key="list.index">
 							<td class="border-b-2 py-3 pr-6 text-sm">
 								<p class="text-sm mb-1 font-bold text-violet">
-									{{ 'Jhon Doe' }}
+									{{ list.detail ? list.detail.name : '---' }}
 								</p>
 								<p class="text-gray-500 text-xs">
-									{{ 'jhondoe@empatkali.co.id' }}
+									{{ list.detail ? list.detail.email : '---' }}
 								</p>
 							</td>
 							<td class="border-b-2 py-3 pr-6 text-sm">
-								{{ '1234567891011' }}
+								{{ list.mobileNumber ? list.mobileNumber : '---' }}
 							</td>
 							<td class="border-b-2 py-3 pr-6 text-sm">
-								{{ '3178273819009817' }}
+								{{ list.nik ? list.nik : '---' }}
 							</td>
 							<td class="border-b-2 py-3 pr-6">
 								<div class="text-sm">
-									<span>{{ new Date() | moment('DD MMM YYYY') }}</span>
+									<span>{{ list.createdAt | moment('DD MMM YYYY') }}</span>
 								</div>
 								<div class="text-xs text-gray-500">
-									<span>{{ new Date() | moment('HH:mm:ss') }} WIB</span>
+									<span>{{ list.createdAt | moment('HH:mm:ss') }} WIB</span>
 								</div>
 							</td>
 							<td class="border-b-2 py-3 text-sm">
@@ -129,14 +140,14 @@
 					</tbody>
 				</table>
 
-				<div v-if="false" class="flex items-center w-full no-data-content " :class="{'isAllUsers' : false}">
+				<div v-if="usersArr.data && usersArr.data.length == 0" class="flex items-center w-full no-data-content ">
 					<div class="w-full h-full text-center relative">
 						<img :src="'../assets/img/no data results.png'" class="my-4 w-1/4" :class="{'h-6/10' : false}" alt="">
 						<p class="text-xl 2xl:text-2xl mt-5 2xl:mt-10">Pencarian kamu tidak ditemukan</p>
 					</div>
 				</div>
 
-				<div v-if="true" class="flex text-sm py-3">
+				<div v-if="usersArr.data && usersArr.data.length > 0" class="flex text-sm py-3">
 					<div class="flex-1 flex font-bold">
 						<span class="mr-1">Terlihat</span>
 						<span class="mr-1">{{ paginationData.resultStart }}-{{ paginationData.resultEnd }}</span> 
@@ -144,13 +155,45 @@
 						<span>{{ paginationData.totalResultsRows }}</span>
 					</div>
 					<div class="flex-1 flex justify-end pr-5">
+						<div v-if="paginationData.currentPage > 1" @click="changePage('prev')" class="cursor-pointer">
+							<svg class="w-5 text-violet" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+							</svg>
+						</div>
 						<div 
-							v-for="(list) in paginationData.totalPages" 
+							v-if="paginationData.currentPage > paginationCount"
+							class="font-bold px-1 h-5 cursor-pointer text-violet"
+							@click="selectPage(1)"
+						>1</div>
+						<div 
+							v-if="paginationData.currentPage > paginationCount"
+							class="font-bold text-lg h-5 leading-none tracking-widest text-violet"
+						>...</div>
+
+						<div 
+							v-for="list in paginateTotalPages" 
 							:key="list.index" 
-							class="font-bold px-2 cursor-pointer"
-							v-bind:class="{'text-violet' : list != paginationData.currentPage}" 
+							class="font-bold px-1 mx-1 h-5 cursor-pointer"
+							v-bind:class="{
+								'text-violet' : list != paginationData.currentPage,
+							}" 
 							@click="selectPage(list)"
 						>{{ list }}</div>
+
+						<div 
+							v-if="paginationData.totalPages > 10 && (paginationData.totalPages - paginationData.currentPage >= paginationData.totalPages % paginationCount)"
+							class="font-bold text-lg h-5 leading-none tracking-widest text-violet"
+						>...</div>
+						<div 
+							v-if="paginationData.totalPages > 10 && (paginationData.totalPages - paginationData.currentPage >= paginationData.totalPages % paginationCount)"
+							class="font-bold px-1 h-5 cursor-pointer text-violet"
+							@click="selectPage(paginationData.totalPages)"
+						>{{ paginationData.totalPages }}</div>
+						<div v-if="paginationData.currentPage < paginationData.totalPages" @click="changePage('next')" class="cursor-pointer">
+							<svg class="w-5 text-violet" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+							</svg>
+						</div>
 					</div>
 				</div>
 			</div>

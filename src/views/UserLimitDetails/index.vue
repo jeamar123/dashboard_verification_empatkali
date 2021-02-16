@@ -6,8 +6,9 @@
 			<div class="grid details-grid gap-3 h-full w-full">
 				<div class="row-span-2 card p-4">
 					<div class="flex mb-4">
-						<div class="flex-1">
-							<p class="sm-text font-bold">Informasi Personal</p>
+						<div class="flex-1 flex items-center">
+							<p class="sm-text font-bold mr-5">Informasi Personal</p>
+							<InsideSpinner v-if="!limitDetails.hasOwnProperty('sideDetails')" :options="{width: '15px', height: '15px',}" />
 						</div>
 						<div class="flex-1 text-right">
 							<button @click="toggleModals(true, 'editInfo')" class="btn rounded-sm font-bold py-1 px-4 text-violet xs-text">Edit</button>
@@ -130,7 +131,10 @@
 				<div class="card p-4">
 					<div class="flex mb-3">
 						<div class="flex-1">
-							<p class="sm-text font-bold mb-3">Total Transaksi</p>
+							<p class="sm-text font-bold mb-3 flex items-center">
+								<span class="mr-3">Total Transaksi</span>
+								<InsideSpinner v-if="!limitDetails.hasOwnProperty('transactionDetails')" :options="{width: '15px', height: '15px',}" />
+							</p>
 							<p class="xl-text font-bold">{{ limitDetails.transactionDetails ? (limitDetails.transactionDetails.total) : '---' }}</p>
 						</div>
 						<div class="flex-1 text-right">
@@ -221,7 +225,10 @@
 					</div>
 				</div>
 				<div class="card p-4 flex flex-col">
-					<p class="sm-text font-bold mb-4">Data Dokumen</p>
+					<p class="sm-text font-bold mb-4 flex items-center">
+						<span class="mr-3">Data Dokumen</span>
+						<InsideSpinner v-if="!limitDetails.hasOwnProperty('imageDocs')" :options="{width: '15px', height: '15px',}" />
+					</p>
 
 					<div class="flex mb-3 items-center">
 						<label for="" class="flex-none font-bold xs-text mr-3">Validasi KTP</label>
@@ -291,7 +298,10 @@
 					</div> -->
 				</div>
 				<div class="row-span-2 card p-4">
-					<p class="sm-text font-bold mb-4">AFPI</p>
+					<p class="sm-text font-bold mb-4 flex items-center">
+						<span class="mr-3">AFPI</span>
+						<InsideSpinner v-if="!responseAFPI.hasOwnProperty('income')" :options="{width: '15px', height: '15px',}" />
+					</p>
 
 					<div class="flex border-b-2 mb-2 pb-2">
 						<div class="flex-1">

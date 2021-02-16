@@ -1,13 +1,18 @@
 <template>
 	<div>
-		<div v-if="false" class="bg-white p-4 rounded-xl shadow-md fixed right-10 top-14 z-50 w-68">
+		<div v-if="isBanStatusAlertShow" class="bg-white p-4 rounded-xl shadow-md fixed right-10 top-14 z-50 w-68">
 			<div class="flex">
 				<div class="icon mr-4">
 					<img :src="'../assets/img/check-green-circle.png'" class="max-w-40px" alt="">
 				</div>
 				<div class="flex-1">
 					<p class="mb-1 text-sm font-bold">User Banned</p>
-					<p v-if="true" class="text-sm">Kamu berhasil banned user. </p>
+					<p class="text-sm">Kamu berhasil banned user. </p>
+				</div>
+				<div class="w-1 relative">
+					<a href="#" @click.prevent="closeAlert" class="relative -top-3" >
+						<font-awesome-icon icon="times" class="mr-2" size="sm" />
+					</a>
 				</div>
 			</div>
 		</div>
@@ -92,7 +97,7 @@
 							<th class="border-b-2 py-3 text-sm text-center">Aksi</th>
 						</tr>
 					</thead>
-					<tbody v-if="true">
+					<tbody>
 						<tr v-for="(list) in usersArr.data" :key="list.index">
 							<td class="border-b-2 py-3 pr-6 text-sm">
 								<p class="text-sm mb-1 font-bold text-violet">
@@ -129,12 +134,12 @@
 							</td>
 							<td class="border-b-2 py-3 text-sm text-center">
 								<div class="mr-5 inline-block">
-									<a v-if="$route.params.status != 'all'" href="#" @click.prevent="toggleModals(true, 'ban', list)">
+									<a href="#" @click.prevent="toggleModals(true, 'ban', list)">
 										<img :src="'../assets/img/banned.png'" alt="" class="w-6">
 									</a>
 								</div>
 								<div class="mr-5 inline-block">
-									<a v-if="$route.params.status != 'all'" href="#" @click.prevent="toggleModals(true, 'transaction', list)">
+									<a href="#" @click.prevent="toggleModals(true, 'transaction', list)">
 										<img :src="'../assets/img/transactions.png'" alt="" class="w-6">
 									</a>
 								</div>
@@ -144,7 +149,7 @@
 					</tbody>
 				</table>
 
-				<div v-if="usersArr.data && usersArr.data.length == 0" class="flex items-center w-full no-data-content " :class="{'isAllUsers' : false}">
+				<div v-if="usersArr.data && usersArr.data.length == 0" class="flex items-center w-full no-data-content ">
 					<div class="w-full h-full text-center relative">
 						<img :src="'../assets/img/no data results.png'" class="my-4 w-1/4" :class="{'h-6/10' : false}" alt="">
 						<p class="text-xl 2xl:text-2xl mt-5 2xl:mt-10">Pencarian kamu tidak ditemukan</p>
@@ -185,11 +190,11 @@
 						>{{ list }}</div>
 
 						<div 
-							v-if="paginationData.totalPages > 10 && (paginationData.totalPages % paginationCount > 1) || (paginationData.totalPages % paginationCount == 1 && paginationData.totalPages - paginationData.currentPage > 10)"
+							v-if="paginationData.totalPages > 10 && (paginationData.totalPages - paginationData.currentPage >= paginationData.totalPages % paginationCount)"
 							class="font-bold text-lg h-5 leading-none tracking-widest text-violet"
 						>...</div>
 						<div 
-							v-if="paginationData.totalPages > 10 && (paginationData.totalPages % paginationCount > 1) || (paginationData.totalPages % paginationCount == 1 && paginationData.totalPages - paginationData.currentPage > 10)"
+							v-if="paginationData.totalPages > 10 && (paginationData.totalPages - paginationData.currentPage >= paginationData.totalPages % paginationCount)"
 							class="font-bold px-1 h-5 cursor-pointer text-violet"
 							@click="selectPage(paginationData.totalPages)"
 						>{{ paginationData.totalPages }}</div>

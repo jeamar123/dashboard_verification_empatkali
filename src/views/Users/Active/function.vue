@@ -2,13 +2,11 @@
 	import TransactionsModal from '../modals/TransactionsModal.vue';
 	import BanUserModal from '../modals/BanUserModal.vue';
 	import axios from 'axios'
-	import { InsideSpinner } from '../../../components/InsideSpinner'
 
 	var Active = {
 		components:	{
 			TransactionsModal,
 			BanUserModal,
-			InsideSpinner
 		},
 		props:	{
 			headerOptions: Function,
@@ -44,6 +42,7 @@
 				isTransModalShow: false,
 				isBanUserModalShow: false,
 				selectedUser: null,
+				isBanStatusAlertShow: false,
 			}
 		},
 		async created() {
@@ -212,13 +211,25 @@
 					vm.selectedUser = data;
 				}
 			},
-			async refreshData()	{
+			async refreshData(opt)	{
 				let vm = this
 				vm.isBanUserModalShow = false;
 				vm.isTransModalShow = false;
+
+				if(opt && opt == 'ban'){
+					vm.isBanStatusAlertShow = true;
+					setTimeout(()	=>	{
+						vm.closeAlert();
+					},10000);
+				}
+
 				vm.toggleLoader(true);
 				await vm.totalUsers()
 				await vm.getUserList(1);
+			},
+			closeAlert(){
+				let vm = this
+				vm.isBanStatusAlertShow = false;
 			},
     }
 	}
