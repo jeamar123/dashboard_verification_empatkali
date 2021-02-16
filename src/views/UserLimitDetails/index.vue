@@ -400,7 +400,7 @@
 			</div>
 
 			<!-- v-if="limitDetails.status == 0"  -->
-			<div class="flex-1 text-right">
+			<div v-if="limitDetails.status == 0" class="flex-1 text-right">
 				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-28 2xl:w-36 xs-text text-white rounded-md font-bold bg-dangerBtn">
 					Reject
 				</button>
@@ -412,7 +412,7 @@
 				</button>
 			</div>
 			<!-- v-if="limitDetails.status != 0"  -->
-			<div v-if="false" class="flex-1 flex items-center">
+			<div v-if="limitDetails.status != 0" class="flex-1 flex items-center">
 				<div class="flex-1 flex truncate">
 					<label class="flex-none mr-3 mb-0 sm-text">
 						<b>
