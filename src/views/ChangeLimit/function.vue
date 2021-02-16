@@ -48,17 +48,20 @@
 				limitStatus: '',
 				usersArr: {},
 				search: {},
+				limitReqAlert: {
+					isShow: true,
+				},
 			}
 		},
 		async created() {
 			let vm = this
-			console.log(this.filter);
-
 			vm.setCurrentLimitStatus();
+			vm.checkLimitRequestTransactions();
 			// await vm.getAllUsers()
     	await vm.totalUsers()
 			await vm.getLimitRequests(1);
 			await vm.getAdmin()
+
 		},
 		computed: {
 			paginateTotalPages: function() {
@@ -82,7 +85,7 @@
 				// to, from
 				let vm = this
 				vm.loader =	{
-					isShow: false,
+					isShow: true,
 					message: 'Loading data',
 				},
 				vm.setCurrentLimitStatus();
@@ -92,6 +95,21 @@
 			}
 		},
 		methods: {
+			checkLimitRequestTransactions(){
+				let vm = this
+				let limitReq = JSON.parse(localStorage.getItem('emitLimitRequestStatus'));
+				console.log(limitReq);
+				vm.limitReqAlert = limitReq ? { isShow: true, ...limitReq } : { isShow: false };
+
+				setTimeout(()	=> {
+					vm.closeAlert();
+				}, 10000);
+			},
+			closeAlert(){
+				let vm = this
+				vm.limitReqAlert.isShow = false;
+				localStorage.setItem('emitLimitRequestStatus', null);
+			},
 			decodeJwt(paramToken) {
 				const b64DecodeUnicode = str =>
 				decodeURIComponent(

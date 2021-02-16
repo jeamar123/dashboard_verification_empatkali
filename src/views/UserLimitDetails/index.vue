@@ -14,114 +14,114 @@
 						</div>
 					</div>
 					
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.name : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.idNumber : '---' }}
 						</p>
 					</div>
 					
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Tempat/ Tgl Lahir <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.birthPlaceBirthday : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Jenis Kelamin <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.gender : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Golongan Darah <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.bloodType : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Alamat <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.address : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">RT/RW <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.rtrw : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Kelurahan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.village : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Kecamatan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.district : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Agama <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.religion : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Status Pernikahan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.maritalStatus : '---' }}
 						</p>
 					</div>
 					
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Kewarganegaraan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.sideDetails ? limitDetails.sideDetails.nationality : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.otherDetails ? limitDetails.otherDetails.mobileNumber : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Email <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.otherDetails ? limitDetails.otherDetails.detail.email : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Nomor NPWP <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ limitDetails.otherDetails ? limitDetails.otherDetails.npwp : '---' }}
 						</p>
 					</div>
 
-					<div class="flex xs-text mb-3">
+					<div class="flex xs-text mb-2.5">
 						<label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">
+						<p class="flex-5">
 							{{ '---' }}
 						</p>
 					</div>
@@ -399,7 +399,8 @@
 				</a>
 			</div>
 
-			<div v-if="limitDetails.status == 0" class="flex-1 text-right">
+			<!-- v-if="limitDetails.status == 0"  -->
+			<div class="flex-1 text-right">
 				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-28 2xl:w-36 xs-text text-white rounded-md font-bold bg-dangerBtn">
 					Reject
 				</button>
@@ -410,8 +411,8 @@
 					Approve
 				</button>
 			</div>
-
-			<div v-if="limitDetails.status != 0" class="flex-1 flex items-center">
+			<!-- v-if="limitDetails.status != 0"  -->
+			<div v-if="false" class="flex-1 flex items-center">
 				<div class="flex-1 flex truncate">
 					<label class="flex-none mr-3 mb-0 sm-text">
 						<b>
@@ -464,7 +465,7 @@
 			title="Edit Personal Information"
 			modal-class="modal-wrapper w-5/10 max-w-none"
 		>
-			<EditInformationModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<EditInformationModal :user="limitDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Comments Section Modal -->

@@ -4,18 +4,25 @@
 		<Header :headerOptions="changeLimitOptions" />
 
 		<div class="change-limit-content-container overflow-y-auto px-4 pb-4  relative">
-			<div v-if="false" class="bg-white p-4 rounded-xl shadow-md fixed right-10 top-14 z-50 w-107">
-				<div class="flex">
-					<div class="icon mr-4">
-						<img :src="'../assets/img/check-green-circle.png'" class="max-w-40px" alt="">
-					</div>
-					<div class="flex-1">
-						<p class="mb-1 text-sm font-bold">Change Limit Approved</p>
-						<p v-if="true" class="text-sm">Kamu berhasil menyetujui request {{ 'Jeff Benzos' }}.<br>User sudah memiliki limit baru.</p>
-        		<p v-if="false" class="text-sm">>Kamu berhasil tidak menyetujui request {{ 'Jeff Benzos' }}.</p>
+			<transition name="fade">
+				<div v-if="limitReqAlert.isShow" class="bg-white p-4 rounded-xl shadow-md fixed right-10 top-14 z-50 w-107">
+					<div class="flex">
+						<div class="icon mr-4">
+							<img :src="'../assets/img/check-green-circle.png'" class="max-w-40px" alt="">
+						</div>
+						<div class="flex-1">
+							<p class="mb-1 text-sm font-bold">Change Limit {{ limitReqAlert.type == 'reject' ? 'Rejected' : 'Approved' }}</p>
+							<p v-if="limitReqAlert.type != 'reject'" class="text-sm">Kamu berhasil menyetujui request <span class="capitalize">{{ limitReqAlert.name }}</span>. User sudah memiliki limit baru.</p>
+							<p v-if="limitReqAlert.type == 'reject'" class="text-sm">Kamu berhasil tidak menyetujui request <span class="capitalize">{{ limitReqAlert.name }}</span>.</p>
+						</div>
+						<div class="w-1 relative">
+							<a href="#" @click.prevent="closeAlert" class="relative -top-3" >
+								<font-awesome-icon icon="times" class="mr-2" size="sm" />
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
+			</transition>
 
 			<div class="card p-5">
 				<div class="filter-container flex mb-5">

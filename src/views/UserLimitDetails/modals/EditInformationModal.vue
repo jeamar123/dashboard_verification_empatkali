@@ -160,13 +160,14 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   props: {
     closeModal: Function,
     requestSuccess: Function,
     toggleLoader: Function,
+    user: Object
   },
   data() {
   	return {
@@ -180,6 +181,9 @@ export default {
   	}
   },
   created() {
+    let vm = this
+    console.log(vm.user.sideDetails);
+    vm.setEditInfo();
   },
   methods: {
     /**
@@ -195,8 +199,75 @@ export default {
 			vm.$validator.validateAll(scope).then(result => {
 				if (result) {
           console.log(result);
+          vm.updatePersonalInfo();
 				}
 			})
+    },
+    setEditInfo(){
+      let vm = this
+      vm.editInfoData = {
+        address: vm.user.sideDetails.address,
+        birthPlaceBirthday: vm.user.sideDetails.birthPlaceBirthday,
+        bloodType: vm.user.sideDetails.bloodType,
+        city: vm.user.sideDetails.city,
+        district: vm.user.sideDetails.district,
+        expiryDate: vm.user.sideDetails.expiryDate,
+        gender: vm.user.sideDetails.gender,
+        idNumber: vm.user.sideDetails.idNumber,
+        maritalStatus: vm.user.sideDetails.maritalStatus,
+        name: vm.user.sideDetails.name,
+        nationality: vm.user.sideDetails.nationality,
+        occupation: vm.user.sideDetails.occupation,
+        province: vm.user.sideDetails.province,
+        religion: vm.user.sideDetails.religion,
+        rtrw: vm.user.sideDetails.rtrw,
+        village: vm.user.sideDetails.village,
+        birthPlace: vm.user.sideDetails.birthPlaceBirthday.split(',')[0],
+        dob: vm.$moment(vm.user.sideDetails.birthPlaceBirthday.split(',')[1].replace(' ', ''), 'MM-DD-YYYY').format('YYYY-MM-DD'),
+      };
+      console.log(vm.editInfoData);
+    },
+    async updatePersonalInfo()  {
+      let vm = this
+      console.log(vm.editInfoData);
+
+      let params  = {
+        id: vm.user.user._id,
+        occupation: vm.editInfoData.occupation,
+        address: vm.editInfoData.address,
+        gender: vm.editInfoData.gender,
+        city: vm.editInfoData.city,
+        ktp: vm.editInfoData.idNumber,
+        bloodType: vm.editInfoData.bloodType,
+        birthPlaceBirthday: vm.editInfoData.birthPlace + ', ' + this.$moment(vm.editInfoData.dob).format('DD-MM-YYYY'),
+        religion: vm.editInfoData.religion,
+        expiryDate: this.$moment(vm.editInfoData.expiryDate).format('DD-MM-YYYY'),
+        rtrw: vm.editInfoData.rtrw,
+        province: vm.editInfoData.province,
+        nationality: vm.editInfoData.nationality,
+        district: vm.editInfoData.district,
+        name: vm.editInfoData.name,
+        village: vm.editInfoData.village,
+        maritalStatus: vm.editInfoData.maritalStatus
+      }
+      vm.toggleLoader(true);
+      await axios.put(`api/users/updateocr`, params, vm.requestedHeaders)
+      .then(async function (response) {
+        console.log(response);
+        if (response.data.status) {
+          vm.requestSuccess();
+          vm.$swal('Success!', response.data.message, 'success');
+        }else{
+          vm.$swal('Error!', response.data.message, 'error');
+        }
+        vm.toggleLoader(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+        console.log(error.response);
+        vm.$swal('Error!', error.response.data.message, 'error');
+        vm.toggleLoader(false);
+      })
     },
 
   }
@@ -204,5 +275,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  
+  .input-div input, .input-div select{
+    @apply px-2 rounded-md text-xxs;
+  }
 </style>

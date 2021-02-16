@@ -127,11 +127,12 @@
 				}
 			},
 			refreshData(data, type)	{
+				console.log(data);
 				let vm = this
 				vm.isEditInfoModalShow = false;
 
 				if(type == 'editInfo'){
-					console.log(data);
+					vm.getSideDetails();
 				}else{
 					console.log('else');
 				}

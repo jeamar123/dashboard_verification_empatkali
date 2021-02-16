@@ -204,6 +204,7 @@ export default {
         console.log(response);
         if (response.data.status) {
           vm.$router.go(-1);
+          localStorage.setItem('emitLimitRequestStatus', JSON.stringify({ type: vm.limitDetails.selectedOpt, name: vm.limitDetails.user.detail.name }));
         }else{
           vm.$swal('Error!', response.data.message, 'error');
         }
