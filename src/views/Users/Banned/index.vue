@@ -121,7 +121,12 @@
 									<span>{{ list.createdAt | moment('HH:mm:ss') }} WIB</span>
 								</div>
 							</td>
-							<td class="border-b-2 py-3 text-sm">
+							<td class="border-b-2 py-3 text-sm text-center">
+								<div class="mr-5 inline-block">
+									<a href="#" @click.prevent="toggleModals(true, 'ban', list)">
+										<img :src="'../assets/img/un-banned.png'" alt="" class="w-6">
+									</a>
+								</div>
 								<button @click="goToUserDetails(list)" class="btn border-2 font-bold border-violet font-bold py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
 							</td>
 						</tr>

@@ -127,7 +127,7 @@
 			},
 			goToUserDetails(data)	{
 				let vm = this
-				vm.$router.push({ name: 'User Details', params: { status: 'active', id: data._id } });
+				vm.$router.push({ name: 'User Details', params: { id: data._id } });
 			},
 			async getAllUsers() {
 				let vm = this

@@ -15,7 +15,7 @@
     </div>
 
     <div class="text-right mt-8">
-      <button @click.prevent="closeModal(false, 'comment')" class="btn px-4 py-2 mx-1 text-violet font-bold rounded-md text-sm">Batal</button>
+      <button @click.prevent="closeModal(false, 'ban')" class="btn px-4 py-2 mx-1 text-violet font-bold rounded-md text-sm">Batal</button>
       <button @click="unbanUser" class="btn px-6 py-3 mx-1 bg-violet font-bold text-white rounded-md text-sm">UnBanned</button>
     </div>
   </div>
@@ -44,13 +44,13 @@ export default {
   created() {
   },
   methods: {
-    banUser(){
+    unbanUser(){
       let vm = this
       let data = { 
         user: vm.user.mobileNumber 
       };
       vm.toggleLoader(true);
-      axios.post(`/api/users/banninguser`, data, vm.requestedHeaders)
+      axios.post(`/api/users/unbanuser`, data, vm.requestedHeaders)
         .then((res)	=>	{
           console.log(res);
           vm.requestSuccess('ban');

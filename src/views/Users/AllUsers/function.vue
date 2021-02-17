@@ -186,7 +186,7 @@
 				let status = vm.getStatusValue(data.status);
 				
 				if(status != ''){
-					vm.$router.push({ name: 'User Details', params: { status: status, id: data._id } });
+					vm.$router.push({ name: 'User Details', params: { id: data._id } });
 				}
 			},
 			async getAllUsers() {

@@ -2,8 +2,8 @@
   <div>
     <GmapMap
       :center="{
-        lat: -6.24072456693954,
-        lng: 106.804145698369
+        lat: parseFloat(user.registrationLoc ? user.registrationLoc.coordinates[1] : 0),
+        lng: parseFloat(user.registrationLoc ? user.registrationLoc.coordinates[0] : 0)
       }"
       :zoom="10"
       :options="{
@@ -19,8 +19,8 @@
     >
       <GmapMarker
           :position="{
-            lat: -6.24072456693954,
-            lng: 106.804145698369
+            lat: parseFloat(user.registrationLoc ? user.registrationLoc.coordinates[1] : 0),
+            lng: parseFloat(user.registrationLoc ? user.registrationLoc.coordinates[0] : 0)
           }"
         />
     </GmapMap>
@@ -35,6 +35,7 @@ export default {
     closeModal: Function,
     requestSuccess: Function,
     toggleLoader: Function,
+    user: Object
   },
   data() {
   	return {
