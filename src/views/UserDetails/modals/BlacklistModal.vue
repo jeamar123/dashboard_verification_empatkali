@@ -10,11 +10,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="list in 2" :key="list.index">
-          <td class="py-2 pr-2 text-sm border-b-2 font-bold">IDNumberAndName</td>
-          <td class="py-2 pr-2 text-sm border-b-2">Nov 2020</td>
-          <td class="py-2 pr-2 text-sm border-b-2">OVERDUE_DAYS_GREATER_THAN_90</td>
-          <td class="py-2 pr-2 text-sm border-b-2">CASH_LOAN</td>
+        <tr v-for="list in user.resultOfBlackList" :key="list.index">
+          <td class="py-2 pr-2 text-sm border-b-2 font-bold">{{ list.hitReason ? list.hitReason : '---' }}</td>
+          <td class="py-2 pr-2 text-sm border-b-2">{{ list.eventTime ? list.eventTime : '---' | moment('MMM DD') }}</td>
+          <td class="py-2 pr-2 text-sm border-b-2">{{ list.reasonCode ? list.reasonCode : '---' }}</td>
+          <td class="py-2 pr-2 text-sm border-b-2">{{ list.productType ? list.productType  : '---'}}</td>
         </tr>
       </tbody>
     </table>
@@ -47,6 +47,7 @@ export default {
     closeModal: Function,
     requestSuccess: Function,
     toggleLoader: Function,
+    user: Object
   },
   data() {
   	return {
@@ -61,22 +62,7 @@ export default {
   created() {
   },
   methods: {
-    /**
-		 * Form Validator
-		 *
-		 * This will validate multiple forms
-		 * 
-		 * @param  String scope
-		 */
-		formValidator(scope) {
-			let vm = this
-
-			vm.$validator.validateAll(scope).then(result => {
-				if (result) {
-          console.log(result);
-				}
-			})
-    },
+    
 
   }
 }

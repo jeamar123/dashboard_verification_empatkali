@@ -7,6 +7,7 @@
 	import EmergencyContactModal from '../modals/EmergencyContactModal.vue';
 	import PaymentMethodModal from '../modals/PaymentMethodModal.vue';
 	import LocationModal from '../modals/LocationModal.vue';
+	import BlacklistModal from '../modals/BlacklistModal.vue';
 	import FotoKtpModal from '../modals/FotoKtpModal.vue';
 	import SelfieKtpModal from '../modals/SelfieKtpModal.vue';
 	import CompareKTPModal from '../modals/CompareKTPModal.vue';
@@ -22,6 +23,7 @@
 			EmergencyContactModal,
 			PaymentMethodModal,
 			LocationModal,
+			BlacklistModal,
 			FotoKtpModal,
 			SelfieKtpModal,
 			CompareKTPModal,
@@ -46,6 +48,7 @@
 				isEmergencyContactModalShow: false,
 				isPaymentMethodModalShow: false,
 				isLocationModalShow: false,
+				isBlacklistModalShow: false,
 				isFotoKtpModalShow: false,
 				isSelfieKtpModalShow: false,
 				isCompareKTPModalShow: false,
@@ -55,17 +58,20 @@
 				userDetails: {},
 				responseAFPI: {},
 				adminData: {},
+				requestData: {},
 			}
 		},
 		async created() {
 			console.log(this.$route.params.id);
 			let vm = this
-			await vm.getUserDetails();
-			await vm.getUserOcrData();
-			await vm.getAllTypeUserSalary();
-			await vm.getAFPI();
-			
 			vm.getAdmin()
+			await vm.getUserDetails();
+			vm.getDanaBalance();
+			vm.getActivityMailUSer();
+			vm.getAI();
+			await vm.getAllTypeUserSalary();
+			vm.getAFPI();
+			
 			console.log(vm.userDetails);
 		},
 		methods: {
@@ -92,6 +98,7 @@
 				vm.isEmergencyContactModalShow = type == 'emergencyContact' ? opt : false;
 				vm.isPaymentMethodModalShow = type == 'paymentMethod' ? opt : false;
 				vm.isLocationModalShow = type == 'location' ? opt : false;
+				vm.isBlacklistModalShow = type == 'blacklist' ? opt : false;
 				vm.isFotoKtpModalShow = type == 'fotoKtp' ? opt : false;
 				vm.isSelfieKtpModalShow = type == 'selfieKtp' ? opt : false;
 				vm.isCompareKTPModalShow = type == 'compareKTP' ? opt : false;
@@ -100,36 +107,16 @@
 					vm.confirmTypeSelected = confirmType;
 					if(confirmType == 'approve'){
 						vm.confirmTitle = 'Approve Confirmation'
+						vm.requestData.type = 'approve';
 					}
-					if(confirmType == 'approve-w-limit'){
-						vm.confirmTitle = 'Approve dengan limit lain Confirmation'
+					if(confirmType == 'incomplete'){
+						vm.confirmTitle = 'Jadikan user Incomplete Confirmation'
+						vm.requestData.type = 'incomplete';
 					}
 					if(confirmType == 'reject'){
 						vm.confirmTitle = 'Reject Confirmation'
+						vm.requestData.type = 'reject';
 					}
-				}
-				if(type == 'editInfo'){
-					let obj	=	{
-						id: 1,
-						name: 'a',
-						idNumber: 'a',
-						birthPlace: 'a',
-						dob: new Date(),
-						gender: 'a',
-						occupation: 'a',
-						bloodType: 'a',
-						address: 'a',
-						rtrw: 'a',
-						city: 'a',
-						province: 'a',
-						village: 'a',
-						district: 'a',
-						religion: 'a',
-						maritalStatus: 'a',
-						nationality: 'a',
-						expiryDate: new Date(),
-					}
-					vm.editInfoData = opt ? obj : {};
 				}
 			},
 			refreshData(data, type)	{
@@ -163,21 +150,6 @@
 						vm.$swal('Error!', err, 'error')
 						vm.toggleLoader(false);
 					})
-			},
-			async getUserOcrData(){
-				let vm = this
-				// let url = `/api/users//${vm.$route.params.id}`
-				// await axios.get(url, vm.requestedHeaders)
-				// 	.then((res)	=>	{
-				// 		console.log(res);
-						vm.userDetails.ocrData = {};
-						vm.$forceUpdate();
-					// })
-					// .catch((err)	=>	{
-					// 	console.log(err);
-					// 	vm.$swal('Error!', err, 'error')
-					// 	vm.toggleLoader(false);
-					// })
 			},
 			async getAllTypeUserSalary() {
 				let vm = this
@@ -228,6 +200,279 @@
 					.catch(function (error) {
 						console.log(error);
 					})
+			},
+			async getAI() { // This is from the old dashboard existing api
+				let vm = this
+				let params = { 
+					userid: vm.$route.params.id 
+				}
+				await axios.post('https://minion.empatkali.co.id/advanceai.php', params )
+					.then(res => {
+						console.log(res)
+						console.log(res.data)
+						if (res.data[0]) {
+							let userData = res.data[0];
+							let fixName = 'empty'
+							if (userData.ocr) {
+								if ( JSON.parse(userData).data ) {
+									vm.userDetails.ocrData = JSON.parse(userData)
+									fixName = JSON.parse(userData).data.name
+								}else{
+									vm.userDetails.ocrData.code = JSON.parse(userData).code;
+								}
+							}
+
+							if (userData.ktp) {
+								let ktpCheck = JSON.parse(userData.ktp)
+								vm.userDetails.ktpValidation = ktpCheck;
+								if ( ktpCheck.status == "FOUND" ) {
+									if (ktpCheck.name_matches){
+										vm.userDetails.ktpValidation.isFoundMatch = true;
+									}else{
+										vm.userDetails.ktpValidation.isFoundNotMatch = true;
+									}
+								} else {
+									vm.userDetails.ktpValidation.isNotFound = true;
+								}
+							}
+
+							if (userData.npwp) {
+								if (typeof userData.npwp == 'number') {
+									vm.userDetails.npwpCheck = userData.npwp
+								}
+								else if (typeof userData.npwp == 'string') {
+									if (userData.npwp.length <= 16) {
+										vm.userDetails.npwpCheck = userData.npwp
+									}
+									else if (JSON.parse(userData.npwp).data.length > 0) {
+										if (userData.npwp.length > 16) {
+											vm.userDetails.npwpCheck = JSON.parse(userData.npwp).data[0].nama.toUpperCase()
+										}
+										else {
+											vm.userDetails.npwpCheck = userData.npwp
+										}
+									}
+									else {
+										if ( JSON.parse(userData.npwp).message ) {
+											vm.userDetails.npwpCheck = JSON.parse(userData.npwp).message
+										}
+										else {
+											vm.userDetails.npwpCheck = userData.npwp
+										}
+									}
+								}
+							}
+
+							vm.userDetails.gopay = userData.GOPAY ? JSON.parse(userData.GOPAY).result : '---'
+							vm.userDetails.ovo = userData.OVO ? JSON.parse(userData.OVO).result : '---'
+							vm.userDetails.linkaja = userData.LINKAJA ? JSON.parse(userData.LINKAJA).result : '---'
+
+
+							vm.userDetails.nameMatch = [
+								{ data: 'phone', value: 0 },
+								{ data: 'nameOcr', value: 0 },
+								{ data: 'tele_id', value: 0 },
+								{ data: 'nameNpwp', value: 0 }
+							]
+
+							let dataNameToBeCompare = {
+								phone: vm.userDetails.detail.name.toUpperCase(),
+								nameOcr: vm.userDetails.ocr && vm.userDetails.ocr.data ? vm.userDetails.ocr.data.name.toUpperCase() : '-',
+								// tele_id: vm.userDetails.tele_check.data.name ? vm.userDetails.tele_check.data.name.toUpperCase() : vm.userDetails.tele_check.data.name = '-',
+								// nameNpwp: vm.userDetails.npwpCheck ? vm.userDetails.npwpCheck.nama.toUpperCase() : '--'
+								nameNpwp: vm.userDetails.npwpCheck
+							}
+
+							if (fixName == dataNameToBeCompare.phone) {
+								vm.userDetails.nameMatch[0].value = 33
+							}
+							if (fixName == dataNameToBeCompare.nameOcr) {
+								if (fixName == '') {
+									vm.userDetails.nameMatch[1].value = 0
+									vm.userDetails.ocr.data.name = '-'
+								} else {
+									vm.userDetails.nameMatch[1].value = 33
+								}
+							}
+							if (fixName == dataNameToBeCompare.nameNpwp) {
+								if (fixName != '--') {
+									vm.userDetails.nameMatch[3].value = 33
+								}
+							}
+
+							const sumScoreNameMatch = datas => datas.reduce((sum, data) => {
+								return sum + data.value;
+							}, 0);
+							vm.userDetails.scoreNameMatch = {};
+							vm.userDetails.scoreNameMatch.score = sumScoreNameMatch(vm.userDetails.nameMatch)
+
+							if (vm.userDetails.scoreNameMatch.score >= 80) {
+								vm.userDetails.scoreNameMatch.colorScore = '#70AD47'
+							}else if (vm.userDetails.scoreNameMatch.score >= 60) {
+								vm.userDetails.scoreNameMatch.colorScore = 'yellow'
+							}else {
+								vm.userDetails.scoreNameMatch.colorScore = 'red'
+							}
+
+							if (userData.blacklist) {
+								vm.userDetails.blacklist = JSON.parse(userData.blacklist)
+								vm.userDetails.resultOfBlackList = vm.userDetails.blacklist.data.defaultListResult
+							}
+							if (userData['face blacklist']) vm.userDetails.face_blackList = JSON.parse(userData['face blacklist'])
+							if (userData['face comparison']) vm.userDetails.face_comparison = JSON.parse(userData['face comparison'])
+							if (userData['face search']) {
+									vm.userDetails.face_search = JSON.parse(userData['face search'])
+									vm.userDetails.faceSeacrhResult = vm.userDetails.face_search.data
+							}
+							if (userData['fraud score']) {
+								// console.log('fraud score', userData['fraud score'])
+							}
+							if (userData['trusting']) {
+								vm.userDetails.trusting_social = JSON.parse(userData['trusting'])
+								let trustingSocial = 0
+								if (vm.userDetails.trusting_social) {
+									// vm.userDetails.trusting_social = 650
+									trustingSocial = vm.userDetails.trusting_social
+								}
+								if (trustingSocial > 650) {
+									vm.userDetails.trusting_social.bgColor = '#70AD47';
+								} else if (trustingSocial >= 550) {
+									vm.userDetails.trusting_social.bgColor = 'yellow';
+								} else if (trustingSocial < 550) {
+									vm.userDetails.trusting_social.bgColor = 'red';
+									vm.userDetails.trusting_social.colorText = '#fff';
+								}
+							}
+							if (userData['multi platform']) {
+								if (JSON.parse(userData['multi platform']).data == null) {
+									vm.userDetails.multiPlatformResult = {}
+								} else {
+									vm.userDetails.multi_platform = JSON.parse(userData['multi platform'])
+									vm.userDetails.multiPlatformResult = vm.userDetails.multi_platform.data.statistics.statisticCustomerInfo.pop()
+								}
+
+							}
+							if (userData['tele check']) {
+									vm.userDetails.tele_check = JSON.parse(userData['tele check'])
+									let statusTeleCheck = ''
+									if (vm.userDetails.tele_check.data) {
+										statusTeleCheck = vm.userDetails.tele_check.data.status
+									}
+									switch (statusTeleCheck) {
+										case 1:
+										vm.userDetails.tele_check.data.status_msg = 'Called number has ringer'
+										break;
+										case 2:
+										vm.userDetails.tele_check.data.status_msg = 'Empty Number'
+										break;
+										case 3:
+										vm.userDetails.tele_check.data.status_msg = 'Busy Line'
+										break;
+										case 4:
+										vm.userDetails.tele_check.data.status_msg = 'Powered Off'
+										break;
+										case 5:
+										vm.userDetails.tele_check.data.status_msg = 'Not Available'
+										break;
+										case 6:
+										vm.userDetails.tele_check.data.status_msg = 'Temporarily unable to connect'
+										break;
+										case -1:
+										vm.userDetails.tele_check.data.status_msg = 'Abnormal line, unknown state'
+										break;
+										default:
+									}
+							}
+						}else {
+							console.log('advanceAI', 'data null')
+						}
+					})
+					.catch(err => {
+						console.log(err);
+						vm.$swal('Error!', err.message, 'error')
+						vm.toggleLoader(false);
+					})
+			},
+			checkEmergencyNumber(params) {
+				let vm = this;
+				axios.get(`api/users/${params}`, vm.requestedHeaders)
+				.then(function (response) {
+					if (response) {
+						if (response.data.isUsedAsEmergencyContact.length > 0) {
+							// console.log('checkEmergencyNumber', response.data)
+							vm.userDetails.checkEmergencyNumber = true
+							vm.userDetails.listOfCheckEmergencyNumber = response.data.isUsedAsEmergencyContact
+						}
+					}
+				})
+				.catch(function (error) {
+					console.log(error);
+				})
+			},
+			async getDanaBalance() {
+				let vm = this
+				const tokenAuth = vm.decodeJwt(vm.requestedHeaders.headers['x-access-token'])
+				let params = {
+					mobileNumber: vm.userDetails.mobileNumber,
+					'detail.email': vm.userDetails.detail.email,
+					'ktp.number': vm.userDetails.ktp.number,
+					npwp: vm.userDetails.npwp,
+					'detail.name': vm.userDetails.detail.name,
+					status: vm.userDetails.status,
+					adminLogin: {
+						_id: tokenAuth._id,
+						email: tokenAuth.email
+					}
+				}
+				await axios.post('https://minion.empatkali.co.id/jhon3.php', params)
+					.then(res => {
+						if (res.data){
+							const statusCheck = res.data.kontrak
+							const detailUser = vm.userDetails.status
+							vm.userDetails.danaData = {};
+							vm.userDetails.danaData.dana = res.data.dana
+							if (statusCheck == 'Sudah klik kontrak' && detailUser == 2){
+								vm.userDetails.danaData.kontrak = 'Sudah lihat dan menyetujui kontrak'
+							}else if (statusCheck == 'Sudah klik kontrak' && detailUser == 6){
+								vm.userDetails.danaData.kontrak = 'Sudah lihat kontrak'
+							}else{
+								vm.userDetails.danaData.kontrak = res.data.kontrak
+							}
+						}else{
+							vm.userDetails.danaData ={
+								kontrak: 'No Records',
+								dana: 'No Records'
+							}
+						}
+					})
+					.catch(err => {
+						console.log(err.response)
+					})
+			},
+			async getActivityMailUSer() { // This is from the old dashboard existing api
+				let vm = this;
+				const tokenAuth = vm.decodeJwt(vm.requestedHeaders.headers['x-access-token'])
+
+				let params = {
+					mobileNumber: vm.userDetails.mobileNumber,
+					'detail.email': vm.userDetails.detail.email,
+					'ktp.number': vm.userDetails.ktp.number,
+					npwp: vm.userDetails.npwp,
+					'detail.name': vm.userDetails.detail.name,
+					status: vm.userDetails.status,
+					adminLogin: {
+						_id: tokenAuth._id,
+						email: tokenAuth.email
+					}
+				}
+				axios.post('https://minion.empatkali.co.id/jhon2.php', params)
+					.then(res => {
+						vm.userDetails.emailLogs = JSON.parse(res.data.email)
+					})
+					.catch(err => {
+						console.log(err.response)
+					})
+
 			},
     }
 	}

@@ -9,7 +9,7 @@
       <div v-for="list in commentArr" :key="list.index" class="flex flex-col p-4 mb-4 bg-gray-100 rounded-lg">
         <div class="flex items-center" v-bind:class="{'flex-row-reverse' : list.commentBy == admin.displayName}">
           <div class="w-8 h-8">
-            <img :src="list.profile" class="w-full h-full rounded-full border" alt="">
+            <img :src="list.profile || '../../assets/img/users.png'" class="w-full h-full rounded-full border" alt="">
           </div>
           <p class="flex-1 text-base mx-3" v-bind:class="{'text-right' : list.commentBy == admin.displayName}">
             {{ list.commentBy }}
@@ -25,26 +25,6 @@
           </p>
         </div>
       </div>
-
-      <!-- <div class="flex flex-col p-4 mb-4 bg-gray-100 bg-current-user rounded-lg">
-        <div class="flex items-center" v-bind:class="{'flex-row-reverse' : true}">
-          <div class="w-8 h-8">
-            <img :src="'../../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
-          </div>
-          <p class="flex-1 text-base mx-3" v-bind:class="{'text-right' : true}">
-            {{ 'Jamie C' }}
-          </p>
-          <span class="text-sm text-gray-500">
-            {{ '2020-08-08' | moment('from', 'now') }}
-          </span>
-        </div>
-        <div class="flex">
-          <div v-if="false" class="w-8 mr-3"></div>
-          <p class="flex-1 text-sm mt-2">
-            {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et hendrerit magna. Fusce vulputate tincidunt quam, at tempor felis. Pellentesque vulputate nulla sit amet dignissim vestibul.' }}
-          </p>
-        </div>
-      </div> -->
     </div>
 
 
@@ -119,6 +99,7 @@ export default {
       let params  = {
         comment: vm.commentVal,
       }
+      vm.toggleLoader(true);
       axios.post(`api/users/commentupdatecredit/${vm.user._id}`, params, vm.requestedHeaders)
         .then(() => {
           // vm.dataPendukung = res.data

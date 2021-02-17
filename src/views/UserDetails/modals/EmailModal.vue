@@ -9,15 +9,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="list in 1" :key="list.index">
-          <td class="py-2 pr-2 text-sm border-b-2">{{ 'Lorem Ipsum dolor sit amet lorem' }} </td>
-          <td class="py-2 pr-2 text-sm border-b-2">{{ 'Delivered' }}</td>
+        <tr v-if="user.emailLogs.length == 0">
+          <td colspan="3" class="py-5 pr-2 text-sm text-center">No Record</td>
+        </tr>
+        <tr v-for="list in user.emailLogs" :key="list.index">
+          <td class="py-2 pr-2 text-sm border-b-2">{{ list.subject ? list.subject : '---' }} </td>
+          <td class="py-2 pr-2 text-sm border-b-2">{{ list.tipe ? list.tipe : '---' }}</td>
           <td class="py-2 pr-2 text-sm border-b-2">
             <div class="text-sm mb-1">
-              <span>{{ new Date() | moment('DD MMM YYYY') }}</span>
+              <span>{{ list.tgl | moment('DD MMM YYYY') }}</span>
             </div>
             <div class="text-xs text-gray-500">
-              <span>{{ new Date() | moment('HH:mm:ss') }} WIB</span>
+              <span>{{ list.tgl | moment('HH:mm:ss') }} WIB</span>
             </div>
           </td>
         </tr>
@@ -36,6 +39,7 @@ export default {
     closeModal: Function,
     requestSuccess: Function,
     toggleLoader: Function,
+    user: Object
   },
   data() {
   	return {
@@ -50,22 +54,7 @@ export default {
   created() {
   },
   methods: {
-    /**
-		 * Form Validator
-		 *
-		 * This will validate multiple forms
-		 * 
-		 * @param  String scope
-		 */
-		formValidator(scope) {
-			let vm = this
-
-			vm.$validator.validateAll(scope).then(result => {
-				if (result) {
-          console.log(result);
-				}
-			})
-    },
+    
 
   }
 }

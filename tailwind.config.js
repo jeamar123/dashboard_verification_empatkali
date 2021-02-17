@@ -37,6 +37,7 @@ module.exports = {
       },
       fontSize: {
         'xxs': '.65rem',
+        'xxxs': '.55rem',
       },
       maxHeight:  {
         'none': 'unset',

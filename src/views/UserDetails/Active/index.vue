@@ -7,8 +7,9 @@
 					<div class="corner-status absolute right-0 top-0 bg-v-status-active px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
 						Active
 					</div>
-					<div class="flex mb-3">
-						<p class="sm-text font-bold">Data Pribadi</p>
+					<div class="flex mb-3 flex items-center">
+						<p class="sm-text font-bold mr-3">Data Pribadi</p>
+						<InsideSpinner v-if="!userDetails.hasOwnProperty('detail')" :options="{width: '15px', height: '15px',}"  />
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -27,7 +28,7 @@
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ userDetails.nik ? userDetails.nik : '---' }}</p>
+						<p class="flex-4">{{ userDetails.ktpValidation ? userDetails.ktpValidation.nik : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Usia <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -47,29 +48,35 @@
 					</div>
 				</div>
 				<div class="card p-4 relative">
-					<div class="corner-status absolute right-0 top-0 bdg-status--info px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
+					<div v-if="!userDetails.blacklist" class="corner-status absolute right-0 top-0 bdg-status--info px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
 						Clear
 					</div>
+					<div v-if="userDetails.blacklist" class="corner-status absolute right-0 top-0 bdg-status--blacklist px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
+						Blacklist <img @click="toggleModals(true, 'blacklist')" :src="'../../assets/img/info-white.png'" class="h-3 ml-2 cursor-pointer relative" alt="" style="top: -1px;">
+					</div>
+
 					<div class="flex mb-3">
-						<p class="sm-text font-bold">Di cek oleh sistem</p>
+						<p class="sm-text font-bold mr-3">Di cek oleh sistem</p>
+						<InsideSpinner v-if="!userDetails.hasOwnProperty('ktp')" :options="{width: '15px', height: '15px',}"  />
 					</div>
 					<div class="flex xs-text items-center mb-2">
 						<label class="text-gray-500 flex-2 relative">NPWP <span class="absolute top-0 right-3 font-bold">:</span></label>
-						<p class="font-bold flex-1">{{ userDetails.npwp ? userDetails.npwp : '---' }}</p>
+						<p class="font-bold flex-1">{{ userDetails.npwp ? userDetails.npwpCheck : '---' }}</p>
 					</div>
 					<div class="flex xs-text items-center mb-2">
 						<label class="text-gray-500 flex-2 relative">Input NIK sama dengan NIK OCR <span class="absolute top-0 right-3 font-bold">:</span></label>
 						<div class="flex-1">
 							<div 
+								v-if="userDetails.ktpValidation && userDetails.nik"
 								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
-									'bdg-status--success' : true,
-									'bdg-status--warning' : false,
-									'bdg-status--danger' : false,
+									'bdg-status--success' : userDetails.ktpValidation && userDetails.nik && (userDetails.ktpValidation.nik == userDetails.nik),
+									'bdg-status--danger' : !userDetails.nik || userDetails.ktpValidation && userDetails.nik && (userDetails.ktpValidation.nik != userDetails.nik),
 								}"
 							>
-								{{ 'No' }}
+								{{ userDetails.ktpValidation && userDetails.nik && (userDetails.ktpValidation.nik == userDetails.nik) ? 'Yes' : 'No' }}
 							</div>
+							<div v-else class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold text-xxxs bdg-status--warning">No Record</div>
 						</div>
 					</div>
 					<div class="flex xs-text items-center mb-2">
@@ -78,19 +85,18 @@
 							<div 
 								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
-									'bdg-status--success' : false,
-									'bdg-status--warning' : false,
-									'bdg-status--danger' : true,
+									'bdg-status--success' : userDetails.isUsedAsEmergencyContact && userDetails.isUsedAsEmergencyContact.length == 0,
+									'bdg-status--danger' : userDetails.isUsedAsEmergencyContact && userDetails.isUsedAsEmergencyContact.length > 0,
 								}"
 							>
 								{{ userDetails.isUsedAsEmergencyContact && userDetails.isUsedAsEmergencyContact.length > 0 ? 'Yes' : 'No' }}
 							</div>
-							<img :src="'../../assets/img/info-circle-violet.png'" class="w-4 ml-3 cursor-pointer" @click="toggleModals(true, 'emergencyContact')" alt="">
+							<img v-if="userDetails.isUsedAsEmergencyContact && userDetails.isUsedAsEmergencyContact.length > 0" :src="'../../assets/img/info-circle-violet.png'" class="w-4 ml-3 cursor-pointer" @click="toggleModals(true, 'emergencyContact')" alt="">
 						</div>
 					</div>
 					<div class="flex xs-text items-center mb-2">
 						<label class="text-gray-500 flex-2 relative">User Tele ID <span class="absolute top-0 right-3 font-bold">:</span></label>
-						<p class="flex-1">{{ 'Busy Line' }}</p>
+						<p class="flex-1">{{ userDetails.tele_check ? userDetails.tele_check.data.status_msg : 'No Record' }}</p>
 					</div>
 					<div class="flex xs-text items-center mb-2">
 						<label class="text-gray-500 flex-2 relative">Nomor HP sama dengan Kontak Darurat <span class="absolute top-0 right-3 font-bold">:</span></label>
@@ -98,9 +104,8 @@
 							<div 
 								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
-									'bdg-status--success' : true,
-									'bdg-status--warning' : false,
-									'bdg-status--danger' : false,
+									'bdg-status--success' : userDetails.emergencyContact && userDetails.mobileNumber != userDetails.emergencyContact.mobileNumber,
+									'bdg-status--danger' : userDetails.emergencyContact && userDetails.mobileNumber == userDetails.emergencyContact.mobileNumber,
 								}"
 							>
 								{{ userDetails.emergencyContact && userDetails.mobileNumber == userDetails.emergencyContact.mobileNumber ? 'Yes' : 'No' }}
@@ -110,31 +115,36 @@
 					<div class="flex xs-text items-center mb-2">
 						<label class="text-gray-500 flex-2 relative">Total Pinjaman 3 bulan terakhir <span class="absolute top-0 right-3 font-bold">:</span></label>
 						<div class="flex-1">
+							<InsideSpinner v-if="!userDetails.hasOwnProperty('ktp')" :options="{width: '15px', height: '15px',}"  />
 							<div 
+								v-else-if="userDetails.multiPlatformResult"
 								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
-									'bdg-status--success' : false,
-									'bdg-status--warning' : true,
-									'bdg-status--danger' : false,
+									'bdg-status--success' : !userDetails.multiPlatformResult || (userDetails.multiPlatformResult && userDetails.multiPlatformResult.queryCount < 20),
+									'bdg-status--warning' : userDetails.multiPlatformResult && userDetails.multiPlatformResult.queryCount >= 20,
 								}"
 							>
-								{{ 'No' }}
+								{{ userDetails.multiPlatformResult ? userDetails.multiPlatformResult.queryCount : '0' }}
 							</div>
+							<div v-else class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold text-xxxs bdg-status--warning">No Record</div>
 						</div>
 					</div>
 					<div class="flex xs-text items-center mb-2">
 						<label class="text-gray-500 flex-2 relative">Trusting Social <span class="absolute top-0 right-3 font-bold">:</span></label>
 						<div class="flex-1">
+							<InsideSpinner v-if="!userDetails.hasOwnProperty('ktp')" :options="{width: '15px', height: '15px',}"  />
 							<div 
+								v-else-if="userDetails.trusting_social"
 								class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
 								:class="{
-									'bdg-status--success' : true,
-									'bdg-status--warning' : false,
-									'bdg-status--danger' : false,
+									'bdg-status--success' : userDetails.trusting_social >= 650,
+									'bdg-status--warning' : userDetails.trusting_social >= 550 && userDetails.trusting_social < 650,
+									'bdg-status--danger' : !userDetails.trusting_social || userDetails.trusting_social < 550,
 								}"
 							>
-								{{ '0' }}
+								{{ userDetails.trusting_social ? userDetails.trusting_social : '0' }}
 							</div>
+							<div v-else class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold text-xxxs bdg-status--warning">No Record</div>
 						</div>
 					</div>
 				</div>
@@ -142,7 +152,10 @@
 					<div class="flex flex-col flex-3">
 						<div class="flex flex-2">
 							<div class="card px-4 py-3 mr-2 mb-2 flex-5">
-								<p class="sm-text font-bold mb-1">Limit</p>
+								<p class="sm-text font-bold mb-1 flex items-center">
+									<span class="mr-3">Limit</span>
+									<InsideSpinner v-if="!userDetails.hasOwnProperty('credit')" :options="{width: '15px', height: '15px',}"  />
+								</p>
 								<p class="lg-text text-violet font-bold ff-medium mb-1">{{ userDetails.credit | currency }}</p>
 								<div class="flex">
 									<label class="text-gray-500 relative xs-text flex-none mr-6">Digunakan <span class="absolute top-0 -right-3 font-bold">:</span></label>
@@ -195,28 +208,46 @@
 									<div 
 										class="count-badge rounded-2xl px-5 py-2 text-center w-full inline-block text-white font-bold xs-text"
 										:class="{
-											'bdg-status--success' : userDetails.ktp && userDetails.ktp.image != null,
-											'bdg-status--warning' : false,
-											'bdg-status--danger' : userDetails.ktp && userDetails.ktp.image == null,
+											'bdg-status--success' : userDetails.ktpValidation ? userDetails.ktpValidation.isFoundMatch : '---',
+											'bdg-status--warning' : userDetails.ktpValidation ? userDetails.ktpValidation.isFoundNotMatch : '---',
+											'bdg-status--danger' : userDetails.ktpValidation ? userDetails.ktpValidation.isNotFound : '---',
+											'bdg-status--noRecord' : !userDetails.ktpValidation,
 										}"
 									>
 										<font-awesome-icon 
-											:icon="['fas', userDetails.ktp && userDetails.ktp.image != null ? 'check' : 'times']" 
+											:icon="[ 'fas', userDetails.ktpValidation && userDetails.ktpValidation.isFoundMatch ? 'check' : 'times' ]" 
 											class="mr-1" 
 										/>
-										{{ userDetails.ktp && userDetails.ktp.image != null ? 'Found - Match' : 'No Record' }}
+										{{ 
+											userDetails.ktpValidation && userDetails.ktpValidation.isFoundMatch ? 
+												'Found - Match' 
+											: userDetails.ktpValidation && userDetails.ktpValidation.isFoundNotMatch ?
+												'Found - Not Match' 
+											: userDetails.ktpValidation && userDetails.ktpValidation.isNotFound ?
+												'Not Found' 
+											: 'No Record' 
+										}}
 									</div>
 								</div>
 							</div>
 							<div class="card p-4 ml-1 mt-1 flex-3">
 								<p class="xs-text font-bold mb-2">Metode Pembayaran</p>
 								<img :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
-								<button @click="toggleModals(true, 'paymentMethod')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-1 shadow py-2">Info Lainnya</button>
+								<button 
+									:disabled="!userDetails.hasOwnProperty('danaData')" 
+									:class="{'opacity-40' : !userDetails.hasOwnProperty('danaData')}"
+									@click="toggleModals(true, 'paymentMethod')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-1 shadow py-2 flex justify-center">
+									<InsideSpinner v-if="!userDetails.hasOwnProperty('danaData')" :options="{width: '15px', height: '15px',}"  />
+									<span v-else>Info Lainnya</span>
+								</button>
 							</div>
 						</div>
 					</div>
 					<div class="card p-4 mt-3 flex-4">
-						<p class="sm-text font-bold mb-3">AFPI</p>
+						<p class="sm-text font-bold mb-3 flex items-center">
+							<span class="mr-3">AFPI</span>
+							<InsideSpinner v-if="!responseAFPI.hasOwnProperty('income')" :options="{width: '15px', height: '15px',}"  />
+						</p>
 
 						<div class="flex border-b-2 mb-2 pb-2">
 							<div class="flex-1">
@@ -382,8 +413,14 @@
 					<div class="flex flex-2">
 						<div class="flex-1 mr-1">
 							<div class="card px-4 py-3 h-full w-full">
-								<p class="sm-text font-bold mb-5">Komentar</p>
-								<button @click="toggleModals(true, 'comment')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Lihat & Komentar disini</button>
+								<p class="sm-text font-bold mb-5 flex items-center">
+									<span class="mr-3">Komentar</span>
+									<InsideSpinner v-if="!adminData.hasOwnProperty('displayName')" :options="{width: '15px', height: '15px',}"  />
+								</p>
+								<button 
+									:disabled="!adminData.hasOwnProperty('displayName')" 
+									:class="{'opacity-40' : !adminData.hasOwnProperty('displayName')}"
+									@click="toggleModals(true, 'comment')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Lihat & Komentar disini</button>
 							</div>
 						</div>	
 						
@@ -412,8 +449,14 @@
 								</GmapMap>
 							</div>
 							<div class="card px-4 py-3 ml-2 flex-1">
-								<p class="sm-text font-bold mb-5">Email</p>
-								<button @click="toggleModals(true, 'email')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Detail</button>
+								<p class="sm-text font-bold mb-5 flex items-center">
+									<span class="mr-3">Email</span>
+									<InsideSpinner v-if="!userDetails.hasOwnProperty('emailLogs')" :options="{width: '15px', height: '15px',}"  />
+								</p>
+								<button 
+									:disabled="!userDetails.hasOwnProperty('emailLogs')" 
+									:class="{'opacity-40' : !userDetails.hasOwnProperty('emailLogs')}"
+								@click="toggleModals(true, 'email')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Detail</button>
 							</div>
 						</div>
 					</div>
@@ -429,32 +472,8 @@
 				</a>
 			</div>
 
-			<div v-if="false" class="flex-1 text-right">
-				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-warningBtn">
-					Jadikan user Incomplete
-				</button>
-				<div class="w-5 border-r border-gray-300 h-9 align-middle inline-block"></div>
-				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-28 2xl:w-36 xs-text text-white rounded-md font-bold bg-dangerBtn">
-					Reject
-				</button>
-				<button @click="toggleModals(true, 'process', 'approve')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-successBtn">
-					Approve
-				</button>
-			</div>
-
-			<div v-if="true" class="flex-1 flex items-center">
-				<div class="flex-1 flex truncate">
-					<label class="flex-none mr-3 mb-0 sm-text">
-						<b>
-							Alasan :
-						</b>
-					</label>
-					<div class="flex-auto mr-2 truncate sm-text">
-						{{ '---' }}
-						<!-- {{ userDetails.reason ? userDetails.reason : '---' }} -->
-					</div>
-				</div>
-
+			<div class="flex-1 flex items-center">
+				<div class="flex-1"></div>
 				<div class="flex-none flex justify-end items-center ml-3">
 					<label class="mr-3 mb-0 sm-text">
 						<b>
@@ -496,7 +515,7 @@
 			title="Edit Personal Information"
 			modal-class="modal-wrapper w-5/10 max-w-none"
 		>
-			<EditInformationModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<EditInformationModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Comments Section Modal -->
@@ -514,7 +533,7 @@
 			title="Email"
 			modal-class="modal-wrapper max-w-none w-4/10"
 		>
-			<EmailModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<EmailModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 		
 		<!-- Emergency Contact Modal -->
@@ -532,7 +551,7 @@
 			title="Metode Pembayaran"
 			modal-class="modal-wrapper max-w-none w-5/10"
 		>
-			<PaymentMethodModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<PaymentMethodModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Location Modal -->
@@ -542,6 +561,15 @@
 			modal-class="modal-wrapper max-w-none w-6/10"
 		>
 			<LocationModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+		</Modal>
+
+		<!-- Blacklist Modal -->
+		<Modal 
+			v-model="isBlacklistModalShow" 
+			title="Blacklist Result"
+			modal-class="modal-wrapper max-w-none w-5/10"
+		>
+			<BlacklistModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 		
 		<!-- Foto KTP Modal -->
@@ -569,15 +597,6 @@
 			modal-class="modal-wrapper max-w-none w-8/10 h-552px"
 		>
 			<CompareKTPModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
-		</Modal>
-
-		<!-- Approve/Reject Confirmation Modal -->
-		<Modal 
-			v-model="isProcessModalShow" 
-			:title="confirmTitle"
-			modal-class="modal-wrapper"
-		>
-			<RequestConfirmModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 	</div>

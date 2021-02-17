@@ -10,14 +10,14 @@
       </thead>
       <tbody>
         <tr v-for="list in user.isUsedAsEmergencyContact" :key="list.index">
-          <td class="py-2 pr-2 text-sm border-b-2 font-bold text-violet">Lorem Ipsum</td>
-          <td class="py-2 pr-2 text-sm border-b-2">087888091699</td>
-          <td class="py-2 pr-2 text-sm border-b-2">loremipsum@gmail.com</td>
+          <td class="py-2 pr-2 text-sm border-b-2 font-bold text-violet">{{ list.detail ? list.detail.name : '---' }}</td>
+          <td class="py-2 pr-2 text-sm border-b-2">{{ list.mobileNumber ? list.mobileNumber : '---' }}</td>
+          <td class="py-2 pr-2 text-sm border-b-2">{{ list.detail ? list.detail.email : '---' }}</td>
         </tr>
       </tbody>
     </table>
 
-    <!-- <div class="flex text-sm py-3">
+    <div class="flex text-sm py-3">
       <div class="flex-1 flex font-bold">
         <span class="mr-1">Terlihat</span>
         <span class="mr-1">{{ 1 }}-{{ 1 }}</span> 
@@ -32,7 +32,7 @@
           v-bind:class="{'text-violet' : list != 1}" 
         >{{ list }}</div>
       </div>
-    </div> -->
+    </div>
     
   </div>
 </template>

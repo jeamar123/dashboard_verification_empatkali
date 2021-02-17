@@ -104,29 +104,6 @@
 					}
 					vm.limitDetails.selectedOpt = confirmType;
 				}
-				if(type == 'editInfo'){
-					let obj	=	{
-						id: 1,
-						name: 'a',
-						idNumber: 'a',
-						birthPlace: 'a',
-						dob: new Date(),
-						gender: 'a',
-						occupation: 'a',
-						bloodType: 'a',
-						address: 'a',
-						rtrw: 'a',
-						city: 'a',
-						province: 'a',
-						village: 'a',
-						district: 'a',
-						religion: 'a',
-						maritalStatus: 'a',
-						nationality: 'a',
-						expiryDate: new Date(),
-					}
-					vm.editInfoData = opt ? obj : {};
-				}
 			},
 			refreshData(data, type)	{
 				console.log(data);

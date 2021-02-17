@@ -32,14 +32,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="list in 1" :key="list.index">
+        <tr v-if="selectedOpt == 'card' && user.card.length == 0">
+          <td colspan="3" class="text-center py-8 pr-2 text-sm font-bold">No record</td>
+        </tr>
+        <tr v-for="list in (selectedOpt == 'card' ? user.card : 1)" :key="list.index">
           <td class="py-2 pr-2 text-sm font-bold">
-            Kartu Debit
-            <img v-if="false" :src="'../../assets/img/visa.png'" class="w-8 ml-2 block inline-block" alt="">
-            <img v-if="true" :src="'../../assets/img/dana.png'" class="w-14 ml-2 block inline-block" alt="">
+            {{ selectedOpt == 'card' ? 'Kartu Debit' : user.danaVerifiedAccount ? 'Pembayaran Instan' : 'User not yet validate DANA Account' }}
+            <img v-if="selectedOpt == 'card'" :src="'../../assets/img/visa.png'" class="w-8 ml-2 block inline-block" alt="">
+            <img v-if="selectedOpt != 'card' && user.danaVerifiedAccount" :src="'../../assets/img/dana.png'" class="w-14 ml-2 block inline-block" alt="">
           </td>
-          <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">{{ true ? '---' : '9007********7187' }}</td>
-          <td v-if="selectedOpt == 'instant'" class="py-2 pr-2 text-sm" :class="{'border-b' : false}">{{true ? '---' : 'Rp300.000'}}</td>
+          <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
+            {{ selectedOpt == 'card' ? 
+                (list.masked ? list.masked : '---') 
+              : user.mobileNumber
+            }}
+          </td>
+          <td v-if="selectedOpt == 'instant'" class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
+            {{ user.danaData.dana | currency }}
+          </td>
           <td class="py-2 pr-2">
             <div 
               class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold text-sm"
@@ -81,7 +91,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="flex text-sm py-3 border-t">
+    <div v-if="(selectedOpt == 'card' && user.card.length != 0) || (selectedOpt != 'card' && user.danaVerifiedAccount)" class="flex text-sm py-3 border-t">
       <div class="flex-1 flex font-bold">
         <span class="mr-1">Terlihat</span>
         <span class="mr-1">{{ 1 }}-{{ 1 }}</span> 
@@ -109,6 +119,7 @@ export default {
     closeModal: Function,
     requestSuccess: Function,
     toggleLoader: Function,
+    user: Object
   },
   data() {
   	return {
@@ -122,6 +133,7 @@ export default {
   	}
   },
   created() {
+    console.log(this.user);
   },
   methods: {
     /**

@@ -5,46 +5,27 @@
       <p class="text-center text-lg my-4">Belum ada yang<br>komentar sebelumnya</p>
     </div>
 
-    <div class="mb-5">
+    <div v-if="commentArr.length > 0" class="mb-5">
       <div v-for="list in commentArr" :key="list.index" class="flex flex-col p-4 mb-4 bg-gray-100 rounded-lg">
-        <div class="flex items-center">
+        <div class="flex items-center" v-bind:class="{'flex-row-reverse' : list.commentBy.toLowerCase() == admin.displayName.toLowerCase()}">
           <div class="w-8 h-8">
-            <img :src="'../../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
+            <img :src="list.profile || '../../assets/img/users.png'" class="w-full h-full rounded-full border" alt="">
           </div>
-          <p class="flex-1 text-base mx-3">
-            {{ 'Jamie C' }}
+          <p class="flex-1 text-base mx-3 capitalize" v-bind:class="{'text-right' : list.commentBy.toLowerCase() == admin.displayName.toLowerCase()}">
+            {{ list.commentBy }}
           </p>
-          <span class="text-sm text-gray-500" v-bind:class="{'text-right' : true}">
-            {{ '2020-08-08' | moment('from', 'now') }}
+          <span class="text-sm text-gray-500" v-bind:class="{'text-right' : list.commentBy.toLowerCase() != admin.displayName.toLowerCase()}">
+            {{ list.createdAt | moment('from', 'now') }}
           </span>
         </div>
         <div class="flex">
-          <div class="w-8 mr-3"></div>
+          <div v-if="list.commentBy.toLowerCase() != admin.displayName.toLowerCase()" class="w-8 mr-3"></div>
           <p class="flex-1 text-sm mt-2">
-            {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et hendrerit magna. Fusce vulputate tincidunt quam, at tempor felis. Pellentesque vulputate nulla sit amet dignissim vestibul.' }}
+            {{ list.text }}
           </p>
         </div>
       </div>
 
-      <!-- <div class="flex flex-col p-4 mb-4 bg-gray-100 bg-current-user rounded-lg">
-        <div class="flex items-center" v-bind:class="{'flex-row-reverse' : true}">
-          <div class="w-8 h-8">
-            <img :src="'../../assets/img/sample-avatar.png'" class="w-full h-full rounded-full border" alt="">
-          </div>
-          <p class="flex-1 text-base mx-3" v-bind:class="{'text-right' : true}">
-            {{ 'Jamie C' }}
-          </p>
-          <span class="text-sm text-gray-500">
-            {{ '2020-08-08' | moment('from', 'now') }}
-          </span>
-        </div>
-        <div class="flex">
-          <div v-if="false" class="w-8 mr-3"></div>
-          <p class="flex-1 text-sm mt-2">
-            {{ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et hendrerit magna. Fusce vulputate tincidunt quam, at tempor felis. Pellentesque vulputate nulla sit amet dignissim vestibul.' }}
-          </p>
-        </div>
-      </div> -->
     </div>
 
 
@@ -55,12 +36,13 @@
         class="comment-textarea" 
         style="resize: none;" 
         placeholder="Tulis disini"
+        v-model="commentVal"
       ></textarea>
     </div>
 
     <div class="text-right mt-5">
       <button @click.prevent="closeModal(false, 'comment')" class="btn px-4 py-2 mx-1 text-violet font-bold rounded-md text-sm">Kembali</button>
-      <button class="btn px-6 py-3 mx-1 bg-primaryBtn text-white rounded-md text-sm">Kirim Komentar</button>
+      <button @click="submitComment()" class="btn px-6 py-3 mx-1 bg-primaryBtn text-white rounded-md text-sm">Kirim Komentar</button>
     </div>
   </div>
 </template>
@@ -85,20 +67,22 @@ export default {
         }
       },
       commentVal: '',
-      commentArr: [],
+      commentArr: this.user.commentReviews,
   	}
   },
   created() {
-    let vm = this
-    vm.getCommentList();
+    // let vm = this
+    // vm.getCommentList();
+    console.log(this.user.commentReviews);
+    console.log(this.admin);
   },
   methods: {
     async getCommentList()  {
       let vm = this
       vm.toggleLoader(true, 'Loading data');
-      axios.get(`api/users/commentupdatecredit/${vm.user._id}`, vm.requestedHeaders)
+      axios.get(`api/users/${vm.user._id}`, vm.requestedHeaders)
         .then(res => {
-          vm.commentArr = res.data.data;
+          vm.commentArr = res.data.commentReviews;
           vm.toggleLoader(false);
         })
         .catch(err => {
@@ -116,9 +100,12 @@ export default {
       }
       
       let params  = {
-        comment: vm.commentVal,
+        user: vm.user._id,
+        text: vm.commentVal,
+        commentBy: vm.admin.username
       }
-      axios.post(`api/users/commentupdatecredit/${vm.user._id}`, params, vm.requestedHeaders)
+      vm.toggleLoader(true);
+      axios.post(`api/users/comment-review-status`, params, vm.requestedHeaders)
         .then(() => {
           // vm.dataPendukung = res.data
           vm.commentVal = '';

@@ -7,43 +7,44 @@
 					<div class="corner-status absolute right-0 top-0 bg-v-status-freeze px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
 						Freeze
 					</div>
-					<div class="flex mb-3">
-						<p class="sm-text font-bold">Data Pribadi</p>
+					<div class="flex mb-3 flex items-center">
+						<p class="sm-text font-bold mr-3">Data Pribadi</p>
+						<InsideSpinner v-if="!userDetails.hasOwnProperty('detail')" :options="{width: '15px', height: '15px',}"  />
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="font-bold flex-4">{{ 'Jeff Benzos' }}</p>
+						<p class="font-bold flex-4">{{ userDetails.detail ? userDetails.detail.name : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ '081188091678' }}</p>
+						<p class="flex-4">{{ userDetails.mobileNumber ? userDetails.mobileNumber : '---' }}</p>
 					</div>
 					<div class="flex items-center xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Email <span class="absolute top-0 right-2 font-bold">:</span></label>
 						<div class="flex-4 flex items-center">
-							<p>{{ 'jeff@afterpay.com' }}</p>
-							<img :src="'../../assets/img/secure.png'" class="w-4 ml-3" alt="">
+							<p>{{ userDetails.detail ? userDetails.detail.email : '---' }}</p>
+							<img v-if="userDetails.emailVerified" :src="'../../assets/img/secure.png'" class="w-4 ml-3" alt="">
 						</div>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ '317500482642819' }}</p>
+						<p class="flex-4">{{ userDetails.nik ? userDetails.nik : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Usia <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ '30 tahun' }}</p>
+						<p class="flex-4">{{  new Date() | moment('diff', userDetails.detail ? ( userDetails.detail.birthdate ) : new Date() , 'years') }} tahun</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Pekerjaan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Pemilik Perusahaan' }}</p>
+						<p class="flex-4">{{ userDetails.detail ? userDetails.detail.pekerjaan : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Industri <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Startup' }}</p>
+						<p class="flex-4">{{ userDetails.detail ? userDetails.detail.industri : '---' }}</p>
 					</div>
 					<div class="flex xs-text">
 						<label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Lebih dari Rp20.000.000' }}</p>
+						<p class="flex-4">{{ userDetails.detail ? userDetails.detail.penghasilan : '---' }}</p>
 					</div>
 				</div>
 				<div class="card p-4 relative">
@@ -51,11 +52,12 @@
 						Blacklist <img @click="toggleModals(true, 'blacklist')" :src="'../../assets/img/info-white.png'" class="h-3 ml-2 cursor-pointer relative" alt="" style="top: -1px;">
 					</div>
 					<div class="flex mb-3">
-						<p class="sm-text font-bold">Di cek oleh sistem</p>
+						<p class="sm-text font-bold mr-3">Di cek oleh sistem</p>
+						<InsideSpinner v-if="!userDetails.hasOwnProperty('npwp')" :options="{width: '15px', height: '15px',}"  />
 					</div>
 					<div class="flex xs-text items-center mb-2">
 						<label class="text-gray-500 flex-2 relative">NPWP <span class="absolute top-0 right-3 font-bold">:</span></label>
-						<p class="font-bold flex-1">{{ '99.999.999.9-999.999' }}</p>
+						<p class="font-bold flex-1">{{ userDetails.npwp ? userDetails.npwp : '---' }}</p>
 					</div>
 					<div class="flex xs-text items-center mb-2">
 						<label class="text-gray-500 flex-2 relative">Input NIK sama dengan NIK OCR <span class="absolute top-0 right-3 font-bold">:</span></label>
@@ -68,7 +70,7 @@
 									'bdg-status--danger' : false,
 								}"
 							>
-								{{ 'Yes' }}
+								{{ 'No' }}
 							</div>
 						</div>
 					</div>
@@ -83,7 +85,7 @@
 									'bdg-status--danger' : true,
 								}"
 							>
-								{{ 'Yes' }}
+								{{ userDetails.isUsedAsEmergencyContact && userDetails.isUsedAsEmergencyContact.length > 0 ? 'Yes' : 'No' }}
 							</div>
 							<img :src="'../../assets/img/info-circle-violet.png'" class="w-4 ml-3 cursor-pointer" @click="toggleModals(true, 'emergencyContact')" alt="">
 						</div>
@@ -103,7 +105,7 @@
 									'bdg-status--danger' : false,
 								}"
 							>
-								{{ 'No' }}
+								{{ userDetails.emergencyContact && userDetails.mobileNumber == userDetails.emergencyContact.mobileNumber ? 'Yes' : 'No' }}
 							</div>
 						</div>
 					</div>
@@ -118,7 +120,7 @@
 									'bdg-status--danger' : false,
 								}"
 							>
-								{{ 'Yes' }}
+								{{ 'No' }}
 							</div>
 						</div>
 					</div>
@@ -133,7 +135,7 @@
 									'bdg-status--danger' : false,
 								}"
 							>
-								{{ '650' }}
+								{{ '0' }}
 							</div>
 						</div>
 					</div>
@@ -142,11 +144,14 @@
 					<div class="flex flex-col flex-3">
 						<div class="flex flex-2">
 							<div class="card px-4 py-3 mr-2 mb-2 flex-5">
-								<p class="sm-text font-bold mb-1">Limit</p>
-								<p class="xl-text text-violet font-bold ff-medium mb-1">{{ '5000000' | currency }}</p>
+								<p class="sm-text font-bold mb-1 flex items-center">
+									<span class="mr-3">Limit</span>
+									<InsideSpinner v-if="!userDetails.hasOwnProperty('credit')" :options="{width: '15px', height: '15px',}"  />
+								</p>
+								<p class="lg-text text-violet font-bold ff-medium mb-1">{{ userDetails.credit | currency }}</p>
 								<div class="flex">
 									<label class="text-gray-500 relative xs-text flex-none mr-6">Digunakan <span class="absolute top-0 -right-3 font-bold">:</span></label>
-									<p class="flex-5 xs-text">{{ '0' | currency }}</p>
+									<p class="flex-5 xs-text">{{ ( userDetails.credit - userDetails.remainingCredit ) | currency }}</p>
 								</div>
 							</div>
 							<div class="card px-4 py-3 ml-1 mb-2 flex-3">
@@ -157,7 +162,7 @@
 										<img :src="'../../assets/img/calendar-icon.png'" class="w-full block" alt="">
 									</div>
 									<div class="flex-1 xs-text">
-										{{ new Date( ) | moment("DD MMM YYYY") }}
+										{{ userDetails.createdAt | moment("DD MMM YYYY") }}
 									</div>
 								</div>
 								<div class="flex items-center">
@@ -165,7 +170,7 @@
 										<img :src="'../../assets/img/clock-icon.png'" class="w-full block" alt="">
 									</div>
 									<div class="flex-1 xs-text">
-										{{ new Date( ) | moment("HH:MM:SS") }} WIB
+										{{ userDetails.createdAt | moment("HH:MM:SS") }} WIB
 									</div>
 								</div>
 							</div>
@@ -177,16 +182,16 @@
 										<div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
 											<!-- style="background-image: url('https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg');background-size: cover;" -->
 											<img 
-												:src="'../../assets/img/full-passport.png'" 
-												class="rounded-lg absolute object-cover h-full" alt=""
+												:src="userDetails.ktp ? userDetails.ktp.image : '/assets/img/no-image.png'" 
+												class="rounded-lg absolute object-cover w-full" alt=""
 											>
 										</div>
 									</div>
 									<div class="flex-1 ml-1">
 										<div @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
 											<img 
-												:src="'../../assets/img/no-image.png'" 
-												class="rounded-lg absolute object-cover h-full" alt=""
+												:src="userDetails.selfie || '/assets/img/no-image.png'" 
+												class="rounded-lg absolute object-cover w-full" alt=""
 											>
 										</div>
 									</div>
@@ -195,16 +200,16 @@
 									<div 
 										class="count-badge rounded-2xl px-5 py-2 text-center w-full inline-block text-white font-bold xs-text"
 										:class="{
-											'bdg-status--success' : true,
+											'bdg-status--success' : userDetails.ktp && userDetails.ktp.image != null,
 											'bdg-status--warning' : false,
-											'bdg-status--danger' : false,
+											'bdg-status--danger' : userDetails.ktp && userDetails.ktp.image == null,
 										}"
 									>
 										<font-awesome-icon 
-											:icon="['fas', true ? 'check' : 'times']" 
+											:icon="['fas', userDetails.ktp && userDetails.ktp.image != null ? 'check' : 'times']" 
 											class="mr-1" 
 										/>
-										{{ 'Found - Match' }}
+										{{ userDetails.ktp && userDetails.ktp.image != null ? 'Found - Match' : 'No Record' }}
 									</div>
 								</div>
 							</div>
@@ -216,67 +221,70 @@
 						</div>
 					</div>
 					<div class="card p-4 mt-3 flex-4">
-						<p class="sm-text font-bold mb-3">AFPI</p>
+						<p class="sm-text font-bold mb-3 flex items-center">
+							<span class="mr-3">AFPI</span>
+							<InsideSpinner v-if="!responseAFPI.hasOwnProperty('income')" :options="{width: '15px', height: '15px',}"  />
+						</p>
 
 						<div class="flex border-b-2 mb-2 pb-2">
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Income</p>
-								<p class="xs-text">{{ '550000000' | currency }}</p>
+								<p class="xs-text">{{ (responseAFPI.income ? (responseAFPI.income) : 0) | currency }}</p>
 							</div>
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Limit</p>
-								<p class="xs-text">{{ '550000000' | currency }}</p>
+								<p class="xs-text">{{ userDetails.remainingCredit | currency }}</p>
 							</div>
 						</div>
 
 						<div class="flex mb-2">
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Total number of loan</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ (responseAFPI.numloan ? (responseAFPI.numloan) : 0) }}</p>
 							</div>
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Total amount of loan</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ (responseAFPI.totloan ? responseAFPI.totloan : 0) | currency }}</p>
 							</div>
 						</div>
 
 						<div class="flex mb-2">
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Total paid</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ (responseAFPI.totpaid ? responseAFPI.totpaid : 0) | currency }}</p>
 							</div>
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Total outstanding</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ (responseAFPI.totout ? responseAFPI.totout : 0) | currency }}</p>
 							</div>
 						</div>
 
 						<div class="flex mb-2">
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Total default</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ (responseAFPI.totdefault ? responseAFPI.totdefault : 0 ) | currency }}</p>
 							</div>
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Current Capacity</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ ( responseAFPI.totout ? ((responseAFPI.totout / responseAFPI.income) * 100) : 0 ).toFixed(2) + '%' }}</p>
 							</div>
 						</div>
 
 						<div class="flex mb-2">
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Default Rate</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ responseAFPI.defrate ? parseFloat(responseAFPI.defrate).toFixed(2) : 0 + '%' }}</p>
 							</div>
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Total default (6 Months)</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ '---' }}</p>
 							</div>
 						</div>
 
 						<div class="flex mb-2">
 							<div class="flex-1">
 								<p class="text-gray-600 xs-text mb-1">Max DPD</p>
-								<p class="xs-text">n/a</p>
+								<p class="xs-text">{{ '---' }}</p>
 							</div>
 							<div class="flex-1">
 								<img :src="'../../assets/img/afpi.png'" class="h-2/5 mt-2" alt="">
@@ -286,8 +294,9 @@
 				</div>
 				<div class="card p-4 relative flex-1">
 					<div class="flex mb-3">
-						<div class="flex-1">
-							<p class="sm-text font-bold">OCR</p>
+						<div class="flex-1 flex items-center">
+							<p class="sm-text font-bold mr-5">OCR</p>
+							<InsideSpinner v-if="!userDetails.hasOwnProperty('ocrData')" :options="{width: '15px', height: '15px',}"  />
 						</div>
 						<div class="flex-1 text-right">
 							<button @click="toggleModals(true, 'editInfo')" class="btn rounded-sm font-bold py-1 px-4 text-violet xs-text">Edit</button>
@@ -295,39 +304,39 @@
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="font-bold flex-4">{{ '3203012503770011' }}</p>
+						<p class="font-bold flex-4">{{ userDetails.ocrData && userDetails.ocrData.idNumber ? userDetails.ocrData.idNumber : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Tempat/ Tanggal Lahir <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Jakarta/ 20 November 1990' }}</p>
+						<p class="flex-4">{{ userDetails.ocrData && userDetails.ocrData.birthPlaceBirthday ? userDetails.ocrData.birthPlaceBirthday : '---' }}</p>
 					</div>
 					<div class="flex items-center xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Jenis Kelamin <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Laki-laki' }}</p>
+						<p class="flex-4">{{ userDetails.ocrData && userDetails.ocrData.gender ? userDetails.ocrData.gender : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Alamat <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Recapital Building, Jl. Aditiyawarman No.55' }}</p>
+						<p class="flex-4">{{ userDetails.ocrData && userDetails.ocrData.address ? userDetails.ocrData.address : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">RT/RW <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ '004/005' }}</p>
+						<p class="flex-4">{{ userDetails.ocrData && userDetails.ocrData.rtrw ? userDetails.ocrData.rtrw : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Kelurahan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Melawai' }}</p>
+						<p class="flex-4">{{ userDetails.ocrData && userDetails.ocrData.village ? userDetails.ocrData.village : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Kecamatan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Kebayoran Baru' }}</p>
+						<p class="flex-4">{{ userDetails.ocrData && userDetails.ocrData.district ? userDetails.ocrData.district : '---' }}</p>
 					</div>
 					<div class="flex xs-text mb-3">
 						<label class="text-gray-500 flex-3 relative">Provinsi <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'DKI Jakarta' }}</p>
+						<p class="flex-4">{{ userDetails.ocrData && userDetails.ocrData.province ? userDetails.ocrData.province : '---' }}</p>
 					</div>
 					<div class="flex xs-text">
 						<label class="text-gray-500 flex-3 relative">Status Perkawinan <span class="absolute top-0 right-2 font-bold">:</span></label>
-						<p class="flex-4">{{ 'Menikah' }}</p>
+						<p class="flex-4">{{ userDetails.ocrData && userDetails.ocrData.maritalStatus ? userDetails.ocrData.maritalStatus : '---' }}</p>
 					</div>
 				</div>
 				<div class="flex flex-col">
@@ -336,30 +345,30 @@
 							<p class="sm-text font-bold mb-3">Date E-Wallet Lainnya</p>
 							<div class="flex xs-text mb-3">
 								<label class="text-gray-500 flex-3 relative">Gopay <span class="absolute top-0 right-2 font-bold">:</span></label>
-								<p class="flex-4">{{ 'Jeff Benzos(Verified)' }}</p>
+								<p class="flex-4">{{ true ? '---' : 'Jeff Benzos(Verified)' }}</p>
 							</div>
 							<div class="flex xs-text mb-3">
 								<label class="text-gray-500 flex-3 relative">OVO <span class="absolute top-0 right-2 font-bold">:</span></label>
-								<p class="flex-4">{{ 'J**f B****s' }}</p>
+								<p class="flex-4">{{ true ? '---' : 'J**f B****s' }}</p>
 							</div>
 							<div class="flex xs-text">
 								<label class="text-gray-500 flex-3 relative">LinkAja <span class="absolute top-0 right-2 font-bold">:</span></label>
-								<p class="flex-4">{{ 'Benzos J' }}</p>
+								<p class="flex-4">{{ true ? '---' : 'Benzos J' }}</p>
 							</div>
 						</div>	
 						<div class="card px-4 py-3 ml-2 flex-1">
 							<p class="sm-text font-bold mb-3">Kontak Darurat</p>
 							<div class="flex xs-text mb-3">
 								<label class="text-gray-500 flex-3 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
-								<p class="flex-4">{{ 'Jeff Benzos' }}</p>
+								<p class="flex-4">{{ true ? '---' : 'Jeff Benzos' }}</p>
 							</div>
 							<div class="flex xs-text mb-3">
 								<label class="text-gray-500 flex-3 relative">Hubungan <span class="absolute top-0 right-2 font-bold">:</span></label>
-								<p class="flex-4">{{ 'Kakak' }}</p>
+								<p class="flex-4">{{ true ? '---' : 'Kakak' }}</p>
 							</div>
 							<div class="flex xs-text mb-3">
 								<label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
-								<p class="flex-4">{{ '089977766554' }}</p>
+								<p class="flex-4">{{ true ? '---' : '089977766554' }}</p>
 							</div>
 							<div class="flex xs-text items-center">
 								<label class="text-gray-500 flex-3 relative">4X User <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -445,7 +454,7 @@
 			title="Komentar"
 			modal-class="modal-wrapper"
 		>
-			<CommentsModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<CommentsModal :user="userDetails" :admin="adminData" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Email Modal -->
@@ -463,7 +472,7 @@
 			title="Terdaftar sebagai Kontak Darurat user lain"
 			modal-class="modal-wrapper max-w-none w-4/10"
 		>
-			<EmergencyContactModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<EmergencyContactModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Payment Method Modal -->
@@ -483,14 +492,14 @@
 		>
 			<LocationModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
-
+		
 		<!-- Foto KTP Modal -->
 		<Modal 
 			v-model="isFotoKtpModalShow" 
 			title="Foto KTP"
 			modal-class="modal-wrapper max-w-none w-125 h-552px"
 		>
-			<FotoKtpModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<FotoKtpModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Selfie KTP Modal -->
@@ -499,7 +508,7 @@
 			title="Selfie KTP"
 			modal-class="modal-wrapper max-w-none w-125 h-552px"
 		>
-			<SelfieKtpModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<SelfieKtpModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
 		<!-- Compare KTP Modal -->
@@ -508,17 +517,9 @@
 			title=""
 			modal-class="modal-wrapper max-w-none w-8/10 h-552px"
 		>
-			<CompareKTPModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+			<CompareKTPModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
 		</Modal>
 
-		<!-- Blacklist Modal -->
-		<Modal 
-			v-model="isBlacklistModalShow" 
-			title="Blacklist Result"
-			modal-class="modal-wrapper max-w-none w-5/10"
-		>
-			<BlacklistModal :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
-		</Modal>
 
 	</div>
 </template>
