@@ -77,7 +77,7 @@
             </div>
             <div class="flex xs-text items-center mb-2">
               <label class="text-gray-500 flex-2 relative">NPWP <span class="absolute top-0 right-3 font-bold">:</span></label>
-              <p class="font-bold flex-1">{{ userDetails.npwp ? userDetails.npwpCheck : '---' }}</p>
+              <p class="font-bold flex-1">{{ userDetails.npwp ? userDetails.npwp : '---' }}</p>
             </div>
             <div class="flex xs-text items-center mb-2">
               <label class="text-gray-500 flex-2 relative">Input NIK sama dengan NIK OCR <span class="absolute top-0 right-3 font-bold">:</span></label>
@@ -133,7 +133,7 @@
               <div class="flex-1">
                 <InsideSpinner v-if="!userDetails.hasOwnProperty('ktp')" :options="{width: '15px', height: '15px',}"  />
                 <div 
-                  v-else-if="userDetails.multiPlatformResult"
+                  v-else-if="userDetails.multiPlatformResult && userDetails.multiPlatformResult.queryCount"
                   class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
                   :class="{
                     'bdg-status--success' : !userDetails.multiPlatformResult || (userDetails.multiPlatformResult && userDetails.multiPlatformResult.queryCount < 20),
@@ -335,7 +335,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="card p-4 mt-1 flex-2">
+                <div class="card p-4 mt-1 flex-3">
                   <p class="xs-text font-bold mb-2">Metode Pembayaran</p>
                   <img :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
                   <button 

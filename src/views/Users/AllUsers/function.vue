@@ -52,7 +52,7 @@
 			vm.toggleLoader(true);
 			// await vm.getAllUsers()
 			vm.getEachTotalUsers();
-    	await vm.totalUsers()
+    	// await vm.totalUsers()
 			await vm.getUserList(1);
 		},
 		computed: {
@@ -119,7 +119,7 @@
 					endDate: new Date(),
 				};
 				vm.toggleLoader(true, 'Loading data');
-				await vm.totalUsers();
+				// await vm.totalUsers();
 				await vm.getUserList(1)
 			},
 			filterDateChanged()	{
@@ -132,7 +132,7 @@
 				let vm = this
 				vm.activeStatus = opt == 'all' ? 'all' : vm.getStatusValue(opt);
 				vm.toggleLoader(true, 'Loading data');
-				await vm.totalUsers();
+				// await vm.totalUsers();
 				await vm.getUserList(1, undefined);
 			},
 			getStatusValue(status){
@@ -232,6 +232,7 @@
 						// vm._.remove(vm.usersArr.data, function(n) {
 						// 	return n.status == 7;
 						// });
+						vm.paginationData.totalResultsRows = res.data.total;
 						vm.paginationData = { ...vm.paginationData, ...{
 							resultStart: skip + 1,
 							resultEnd: skip + vm.usersArr.data.length,
@@ -278,7 +279,7 @@
 			async getUserStatusCount(status){
 				let vm = this
 				try {
-					let url = `/api/users?skip=0&limit=10000`;
+					let url = `/api/users?skip=0`;
 					if(status != null){
 						url += `&status=${status}`;
 					}

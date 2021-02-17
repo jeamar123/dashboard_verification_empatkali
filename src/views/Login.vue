@@ -140,7 +140,7 @@ export default {
             vm.loginError.isShow = false;
           },
           err => {
-            console.log(err);
+            console.log(err.message);
             // alert("Invalid Email/Password!");
             vm.loader.isShow = false;
             vm.$swal('Error!', 'Invalid Email/Password!', 'error' );

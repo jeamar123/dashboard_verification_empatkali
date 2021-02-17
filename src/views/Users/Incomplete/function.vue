@@ -40,7 +40,7 @@
 			let vm = this
 			vm.toggleLoader(true);
 			// await vm.getAllUsers()
-    	await vm.totalUsers()
+    	// await vm.totalUsers()
 			await vm.getUserList(1);
 		},
 		computed: {
@@ -95,7 +95,7 @@
 				console.log(searchFilterObj);
 				vm.toggleLoader(true, 'Loading data');
 				vm.paginationData.currentPage = page !== undefined ? vm.paginationData.currentPage : 1;
-				await vm.totalUsers(searchFilterObj);
+				// await vm.totalUsers(searchFilterObj);
 				await vm.getUserList(vm.paginationData.currentPage, searchFilterObj)
 			},
 			async removeFilter() {
@@ -107,7 +107,7 @@
 					endDate: new Date(),
 				};
 				vm.toggleLoader(true, 'Loading data');
-				await vm.totalUsers();
+				// await vm.totalUsers();
 				await vm.getUserList(1)
 			},
 			filterDateChanged()	{
@@ -162,6 +162,12 @@
 						// vm._.remove(vm.usersArr.data, function(n) {
 						// 	return n.status == 7;
 						// });
+						vm.paginationData.totalResultsRows = res.data.total;
+						vm.headerOptions({
+							startDate: new Date(),
+							endDate: new Date(),
+							resultCount: vm.paginationData.totalResultsRows
+						});
 						vm.paginationData = { ...vm.paginationData, ...{
 							resultStart: skip + 1,
 							resultEnd: skip + vm.usersArr.data.length,

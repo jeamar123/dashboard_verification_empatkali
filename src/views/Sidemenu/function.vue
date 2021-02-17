@@ -18,8 +18,13 @@
 		async created() {
 			let vm = this
 			this.initializeShowHideListener();
-			vm.pendingUsersCount = await this.getUserStatusCount(1); /* Get Pending Users Count */
-			vm.pendingLimitUsersCount = await this.getLimitStatusCount(0); /* Get Pending Users Count */
+			console.log(vm.$route.name);
+			if(vm.$route.name == 'Users'){
+				vm.pendingUsersCount = await this.getUserStatusCount(1); /* Get Pending Users Count */
+			}
+			if(vm.$route.name == 'Change Limit'){
+				vm.pendingLimitUsersCount = await this.getLimitStatusCount(0); /* Get Pending Users Count */
+			}
 		},
 		methods: {
 			toggleLoader(opt, msg){ /* Toggle Parent Loader */

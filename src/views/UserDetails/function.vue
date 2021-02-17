@@ -324,19 +324,6 @@
 							}
 							if (userData['trusting']) {
 								vm.userDetails.trusting_social = JSON.parse(userData['trusting'])
-								let trustingSocial = 0
-								if (vm.userDetails.trusting_social) {
-									// vm.userDetails.trusting_social = 650
-									trustingSocial = vm.userDetails.trusting_social
-								}
-								if (trustingSocial > 650) {
-									vm.userDetails.trusting_social.bgColor = '#70AD47';
-								} else if (trustingSocial >= 550) {
-									vm.userDetails.trusting_social.bgColor = 'yellow';
-								} else if (trustingSocial < 550) {
-									vm.userDetails.trusting_social.bgColor = 'red';
-									vm.userDetails.trusting_social.colorText = '#fff';
-								}
 							}
 							if (userData['multi platform']) {
 								if (JSON.parse(userData['multi platform']).data == null) {
@@ -388,22 +375,6 @@
 						vm.$swal('Error!', err.message, 'error')
 						vm.toggleLoader(false);
 					})
-			},
-			checkEmergencyNumber(params) {
-				let vm = this;
-				axios.get(`api/users/${params}`, vm.requestedHeaders)
-				.then(function (response) {
-					if (response) {
-						if (response.data.isUsedAsEmergencyContact.length > 0) {
-							// console.log('checkEmergencyNumber', response.data)
-							vm.userDetails.checkEmergencyNumber = true
-							vm.userDetails.listOfCheckEmergencyNumber = response.data.isUsedAsEmergencyContact
-						}
-					}
-				})
-				.catch(function (error) {
-					console.log(error);
-				})
 			},
 			async getDanaBalance() {
 				let vm = this
