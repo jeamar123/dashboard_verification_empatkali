@@ -67,14 +67,12 @@ export default {
         }
       },
       commentVal: '',
-      commentArr: this.user.commentReviews,
+      commentArr: [],
   	}
   },
   created() {
-    // let vm = this
-    // vm.getCommentList();
-    console.log(this.user.commentReviews);
-    console.log(this.admin);
+    let vm = this
+    vm.getCommentList();
   },
   methods: {
     async getCommentList()  {

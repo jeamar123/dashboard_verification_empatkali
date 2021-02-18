@@ -6,15 +6,15 @@
     </p>
     <div class="flex mb-3">
       <label for="" class="flex-1 text-sm text-gray-700 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
-      <p class="flex-2 text-sm font-bold">{{ 'Jeff Benzos' }}</p>
+      <p class="flex-2 text-sm font-bold">{{ user.detail ? user.detail.name : '---' }}</p>
     </div>
     <div class="flex mb-3">
       <label for="" class="flex-1 text-sm text-gray-700 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
-      <p class="flex-2 text-sm">{{ '081188091678' }}</p>
+      <p class="flex-2 text-sm">{{ user.mobileNumber ? user.mobileNumber : '---' }}</p>
     </div>
     <div class="flex mb-3">
       <label for="" class="flex-1 text-sm text-gray-700 relative">Email <span class="absolute top-0 right-2 font-bold">:</span></label>
-      <p class="flex-2 text-sm">{{ 'jeff@afterpay.com' }}</p>
+      <p class="flex-2 text-sm">{{ user.detail ? user.detail.email : '---' }}</p>
     </div>
 
     <div v-if="requestData.type == 'approve'" class="flex mb-3 items-center">
@@ -22,8 +22,9 @@
       <!-- <p class="flex-1 text-sm text-voilet">{{ '5000000' | currency }}</p> -->
       <div class="flex-2">
         <div class="relative select-limit-drop">
-          <div class="border-b w-36 py-1 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : true, 'border-dangerBtn' : false}" @click="toggleDrops('limit')">
-            Pilih Limit
+          <div class="border-b w-36 py-1 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : !confirmData.approvedLimit, 'border-dangerBtn' : errStatus == 'limit' || errStatus == 'all'}" @click="toggleDrops('limit')">
+            <span v-if="confirmData.approvedLimit != ''">{{ confirmData.approvedLimit | currency }}</span>
+            <span v-if="confirmData.approvedLimit == ''">{{ 'Pilih Limit' }}</span>
             <svg class="text-gray-500 w-4 absolute top-1.5 right-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
@@ -32,10 +33,10 @@
 
           <div v-if="isShowLimitDrop" class="w-36 absolute top-10 z-50 left-0 bg-gray-100 px-2 text-left">
             <ul>
-              <li class="cursor-pointer text-sm px-1 py-2 border-b">{{ '500000' | currency }}</li>
-              <li class="cursor-pointer text-sm px-1 py-2 border-b">{{ '1000000' | currency }}</li>
-              <li class="cursor-pointer text-sm px-1 py-2 border-b">{{ '1500000' | currency }}</li>
-              <li class="cursor-pointer text-sm px-1 py-2 border-b">{{ '2000000' | currency }}</li>
+              <li @click="selectLimitDrop(500000)" class="cursor-pointer text-sm px-1 py-2 border-b">{{ '500000' | currency }}</li>
+              <li @click="selectLimitDrop(1000000)" class="cursor-pointer text-sm px-1 py-2 border-b">{{ '1000000' | currency }}</li>
+              <li @click="selectLimitDrop(1500000)" class="cursor-pointer text-sm px-1 py-2 border-b">{{ '1500000' | currency }}</li>
+              <li @click="selectLimitDrop(2000000)" class="cursor-pointer text-sm px-1 py-2 border-b">{{ '2000000' | currency }}</li>
             </ul>
           </div>
         </div>
@@ -48,8 +49,8 @@
         <!-- <p class="flex-1 text-sm text-voilet">{{ '5000000' | currency }}</p> -->
         <div class="flex-2">
           <div class="relative select-fraud-drop">
-            <div class="border-b w-36 py-1 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : true, 'border-dangerBtn' : false}" @click="toggleDrops('fraud')">
-              Pilih Tipe Alasan
+            <div class="border-b w-36 py-1 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : confirmData.reasonType == '', 'border-dangerBtn' : errStatus == 'reason-type' || errStatus == 'both-reject'}" @click="toggleDrops('fraud')">
+              {{ confirmData.reasonType == '' ? 'Pilih Tipe Alasan' : confirmData.reasonType }}
               <svg class="text-gray-500 w-4 absolute top-1.5 right-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -58,8 +59,8 @@
 
             <div v-if="isShowFraudDrop" class="w-36 absolute top-10 z-50 left-0 bg-gray-100 px-2 text-left">
               <ul>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b">{{ 'FRAUD' }}</li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b">{{ 'Non FRAUD' }}</li>
+                <li @click="selectReasonTypeOpt('FRAUD')" class="cursor-pointer text-sm px-1 py-2 border-b">{{ 'FRAUD' }}</li>
+                <li @click="selectReasonTypeOpt('Non FRAUD')" class="cursor-pointer text-sm px-1 py-2 border-b">{{ 'Non FRAUD' }}</li>
               </ul>
             </div>
           </div>
@@ -71,8 +72,8 @@
         <!-- <p class="flex-1 text-sm text-voilet">{{ '5000000' | currency }}</p> -->
         <div class="flex-2">
           <div class="relative select-reason-drop">
-            <div class="border-b w-76 py-1 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : true, 'border-dangerBtn' : false}" @click="toggleDrops('reason')">
-              Pilih Alasan
+            <div class="border-b w-76 py-1 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : confirmData.reason == '', 'border-dangerBtn' : errStatus == 'reason' || errStatus == 'both-reject'}" @click="toggleDrops('reason')">
+              {{ confirmData.reason == '' ? 'Pilih Alasan' : confirmData.reason }}
               <svg class="text-gray-500 w-4 absolute top-1.5 right-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
@@ -93,6 +94,9 @@
                 <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R4 - Foto Selfie blur/tidak pantas')">
                   {{ 'R4 - Foto Selfie blur/tidak pantas' }}
                 </li>
+                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R16 - Lain-lain')">
+                  {{ 'R16 - Lain-lain' }}
+                </li>
               </ul>
             </div>
           </div>
@@ -100,14 +104,15 @@
       </div>
     </div>
 
-    <div v-if="confirmData.reason == 'R3 - Tidak ada Foto KTP/Selfie dengan KTP / Foto diluar ketentuan'" class="input-div">
+    <div v-if="confirmData.reason == 'R16 - Lain-lain'" class="input-div">
       <textarea 
         cols="30" 
         rows="2" 
         class="comment-textarea" 
         :class="{
-          'error' : false
+          'error' : errStatus == 'comment'
         }"
+        v-model="confirmData.comment"
         style="resize: none;" 
         placeholder="Tulis disini"
       ></textarea>
@@ -122,15 +127,17 @@
           'bg-dangerBtn' : requestData.type == 'reject',
           'bg-warningBtn' : requestData.type == 'incomplete',
         }"
+        @click.prevent="submitConfirm"
       >
         {{ requestData.type == 'approve' ? 'Approve' : requestData.type == 'reject' ? 'Reject' : 'Jadikan user Incomplete'}}
       </button>
     </div>
 
-    <div v-if="false" class="rounded-full p-3 absolute bg-white -bottom-24"
+    <div v-if="errStatus != 'none'" class="rounded-full p-3 absolute bg-white -bottom-24"
       :class="{
-        'w-130 -left-8 ' : false,
-        'w-68 left-16' : true,
+        'w-68 left-32' : errStatus == 'both-reject' || errStatus == 'reason',
+        'w-68 left-28' : errStatus == 'reason-type' || errStatus == 'comment',
+        'w-68 left-24' : errStatus == 'limit',
       }"
     >
       <div class="flex items-center">
@@ -139,9 +146,14 @@
         </div>
         <p class="text-sm">
           {{
-            true ? 
-            'Kamu belum memasukkan alasan' :
-            'Kamu belum memilih Limit yang disetujui dan menulis alasan.'
+            errStatus == 'limit' ?
+              'Kamu belum memilih limit'
+            : errStatus == 'comment' ?
+              'Kamu belum memasukkan alasan'
+            : errStatus == 'both-reject' || errStatus == 'reason' ?
+              'Kamu belum memilih alasan'
+            : 
+              'Kamu belum memilih tipe alasan'
           }}
         </p>
       </div>
@@ -150,7 +162,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   props: {
@@ -160,7 +172,9 @@ export default {
     requestData: {
       type: Object,
       required: false,
-    }
+    },
+    user: Object,
+    admin: Object,
   },
   data() {
   	return {
@@ -173,7 +187,14 @@ export default {
       isShowLimitDrop: false,
       isShowFraudDrop: false,
       isShowReasonDrop: false,
-      confirmData: {}
+      confirmData:  {
+        comment: '',
+        approvedLimit: '',
+        reasonType: '',
+        reason: '',
+      },
+      commentVal: '',
+      errStatus: 'none', // 'none', 'limit', 'reason', 'reason-type', 'both-reject', 'comment',  'all'
   	}
   },
   created() {
@@ -219,22 +240,6 @@ export default {
       }
       return parentMatch;
     },
-    /**
-		 * Form Validator
-		 *
-		 * This will validate multiple forms
-		 * 
-		 * @param  String scope
-		 */
-		formValidator(scope) {
-			let vm = this
-
-			vm.$validator.validateAll(scope).then(result => {
-				if (result) {
-          console.log(result);
-				}
-			})
-    },
     toggleDrops(type) {
       let vm = this
       vm.isShowLimitDrop = type == 'limit' & (vm.isShowLimitDrop ? false : true);
@@ -247,6 +252,142 @@ export default {
       vm.isShowReasonDrop = false;
       console.log(vm.confirmData);
       vm.$forceUpdate();
+    },
+    selectReasonTypeOpt(opt)	{
+      let vm = this;
+      vm.confirmData.reasonType = opt;
+      vm.isShowFraudDrop = false;
+      console.log(vm.confirmData);
+      vm.$forceUpdate();
+    },
+    selectLimitDrop(opt){
+      let vm = this
+      vm.confirmData.approvedLimit = opt;
+      vm.isShowLimitDrop = false;
+    },
+    submitConfirm(){
+      let vm = this
+      if(vm.requestData.type == 'approve'){
+        if(vm.confirmData.approvedLimit == ''){
+          vm.errStatus = 'limit';
+          return false;
+        }
+        vm.errStatus = 'none';
+        vm.approveUser();
+      }
+      if(vm.requestData.type == 'reject'){
+        if(vm.confirmData.reasonType == '' && vm.confirmData.reason == ''){
+          vm.errStatus = 'both-reject';
+          return false;
+        }
+        if(vm.confirmData.reasonType == ''){
+          vm.errStatus = 'reason-type';
+          return false;
+        }
+        if(vm.confirmData.reason == ''){
+          vm.errStatus = 'reason';
+          return false;
+        }
+        if(vm.confirmData.reason == 'R16 - Lain-lain'){
+          if(vm.confirmData.comment == ''){
+            vm.errStatus = 'comment';
+            return false;
+          }
+        }
+        vm.errStatus = 'none';
+        vm.rejectUser();
+      }
+      if(vm.requestData.type == 'incomplete'){
+        vm.incompleteUser(); 
+      }
+    },
+    updateUserStatus(text){
+      let vm = this
+      let params = {
+        user: vm.user._id,
+        text: text != 'Incomplete' ? text + ` by ${vm.admin.username}` : `Set to Incomplete by ${vm.admin.username}`,
+        commentBy: vm.admin.username
+      }
+      console.log(params);
+      axios.post(`api/users/comment-review-status`, params, vm.requestedHeaders)
+        .then((res) => {
+          console.log(res);
+          vm.toggleLoader(false);
+          vm.$router.go(-1);
+          localStorage.setItem('emitUserRequestStatus', JSON.stringify({ type: vm.requestData.type, name: vm.user.detail.name }));
+        })
+        .catch((err) => {
+          console.log(err);
+          vm.$swal('Error!', err, 'error')
+          vm.toggleLoader(false);
+        })
+    },
+    approveUser(){
+      let vm = this
+      let params = {
+        user: vm.user._id,
+        description: '',
+        limit: 0
+      }
+      let url = `/api/users/activatinguser`
+      vm.toggleLoader(true, 'Loading data');
+      axios.post(url, params, vm.requestedHeaders)
+        .then((res)	=>	{
+          console.log(res);
+          if (res.data.status == 6) {
+            vm.updateUserStatus('Approved');
+          }
+        })
+        .catch((err)	=>	{
+          console.log(err);
+          vm.$swal('Error!', err, 'error')
+          vm.toggleLoader(false);
+        })
+    },
+    rejectUser(){
+      let vm = this
+      let params = {
+        user: vm.user.mobileNumber,
+        description: vm.note,
+        type: '',
+        reason: '',
+      }
+      let url = `/api/users/reject`
+      vm.toggleLoader(true, 'Loading data');
+      axios.post(url, params, vm.requestedHeaders)
+        .then((res)	=>	{
+          console.log(res);
+          if (res.data.message == 'User has been rejected') {
+            vm.updateUserStatus('Rejected');
+          }
+        })
+        .catch((err)	=>	{
+          console.log(err);
+          vm.$swal('Error!', err, 'error')
+          vm.toggleLoader(false);
+        })
+    },
+    incompleteUser(){
+      let vm = this
+      // let params = {
+      //   user: vm.user._id,
+      //   description: '',
+      // }
+      // let url = `/api/users/reject`
+      // vm.toggleLoader(true, 'Loading data');
+      // axios.post(url, params, vm.requestedHeaders)
+      //   .then((res)	=>	{
+      //     console.log(res);
+          vm.$swal('No API yet.');
+          // vm.updateUserStatus('Incomplete');
+          vm.$router.go(-1);
+          localStorage.setItem('emitUserRequestStatus', JSON.stringify({ type: vm.requestData.type, name: vm.user.detail.name }));
+        // })
+        // .catch((err)	=>	{
+        //   console.log(err);
+        //   vm.$swal('Error!', err, 'error')
+        //   vm.toggleLoader(false);
+        // })
     },
   }
 }

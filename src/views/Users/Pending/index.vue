@@ -9,17 +9,17 @@
 					<p class="mb-1 text-sm font-bold">
 						User
 						{{ 
-							userReqAlert.type == 'approved' ? 
+							userReqAlert.type == 'approve' ? 
 								'Approved' 
-							: userReqAlert.type == 'rejected' ?
+							: userReqAlert.type == 'reject' ?
 								'Rejected'
 							:   
 								'Incomplete'
 						}}
 					</p>
 					<p class="text-sm">
-						<span v-if="userReqAlert.type == 'approved'">Kamu berhasil menyetujui {{ userReqAlert.name }}.</span>
-						<span v-if="userReqAlert.type == 'rejected'">Kamu berhasil menolak {{ userReqAlert.name }}.</span>
+						<span v-if="userReqAlert.type == 'approve'">Kamu berhasil menyetujui {{ userReqAlert.name }}.</span>
+						<span v-if="userReqAlert.type == 'reject'">Kamu berhasil menolak {{ userReqAlert.name }}.</span>
 						<span v-if="userReqAlert.type == 'incomplete'">Kamu berhasil menjadikan {{ userReqAlert.name }} Incomplete.</span>
 					</p>
 				</div>

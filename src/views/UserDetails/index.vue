@@ -249,7 +249,8 @@
                 </div>
                 <div class="card p-4 ml-1 mt-1 flex-3">
                   <p class="xs-text font-bold mb-2">Metode Pembayaran</p>
-                  <img :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
+                  <img v-if="userDetails.defaultPayment == 'card'" :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
+                  <img v-if="userDetails.defaultPayment != 'card'" :src="'../../assets/img/logo-dana-blue-sm.png'" class="w-18 block mb-2" alt="">
                   <button 
                     :disabled="!userDetails.hasOwnProperty('danaData')" 
                     :class="{'opacity-40' : !userDetails.hasOwnProperty('danaData')}"
@@ -337,7 +338,8 @@
                 </div>
                 <div class="card p-4 mt-1 flex-3">
                   <p class="xs-text font-bold mb-2">Metode Pembayaran</p>
-                  <img :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
+                  <img v-if="userDetails.defaultPayment == 'card'" :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
+                  <img v-if="userDetails.defaultPayment != 'card'" :src="'../../assets/img/logo-dana-blue-sm.png'" class="w-18 block mb-2" alt="">
                   <button 
                     :disabled="!userDetails.hasOwnProperty('danaData')" 
                     :class="{'opacity-40' : !userDetails.hasOwnProperty('danaData')}"
@@ -742,6 +744,22 @@
         modal-class="modal-wrapper max-w-none w-8/10 h-552px"
       >
         <CompareKTPModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
+      </Modal>
+
+      <!-- Approve/Reject Confirmation Modal -->
+      <Modal 
+        v-model="isProcessModalShow" 
+        :title="confirmTitle"
+        :modal-class="requestData.type != 'reject' ? 'modal-wrapper' : 'modal-wrapper max-w-none w-143'"
+      >
+        <RequestConfirmModal 
+          :user="userDetails" 
+          :admin="adminData"
+          :closeModal="toggleModals" 
+          :requestSuccess="refreshData" 
+          :toggleLoader="toggleLoader"
+          :requestData="requestData"
+        />
       </Modal>
 
     </div>
