@@ -85,16 +85,20 @@
 			},
 			async submitFilter(page) {
 				let vm = this
-				if (vm.filter.searchVal == '') {
-					vm.$swal('', 'Seems like you forgot to put something on the search input!', 'warning')
-					return false;
-				}
-				// Prepare end users input i.e. trim,etc.
-				let sanitizeQuery = vm.filter.searchVal.split(',').map(item=>item.trim())
+				// if (vm.filter.searchVal == '') {
+				// 	vm.$swal('', 'Seems like you forgot to put something on the search input!', 'warning')
+				// 	return false;
+				// }
 				let searchFilterObj = {
-					// start: vm.$moment(vm.filter.startDate).format('YYYY-MM-DD'),
-					// end: vm.$moment(vm.filter.endDate).format('YYYY-MM-DD'),
-					name: sanitizeQuery,
+					start: vm.$moment(vm.filter.startDate).format('YYYY-MM-DD'),
+					end: vm.$moment(vm.filter.endDate).format('YYYY-MM-DD'),
+				}
+				if(vm.filter.searchVal != ''){
+					// Prepare end users input i.e. trim,etc.
+					let sanitizeQuery = vm.filter.searchVal.split(',').map(item=>item.trim())
+					searchFilterObj.filter = {
+						name : sanitizeQuery
+					};
 				}
 				vm.isSearchActive = true;
 				console.log(searchFilterObj);
@@ -157,7 +161,10 @@
 					skip = (page - 1) * vm.paginationData.perPage
 				}
 				// if query string object is passed it'll be appended, otherwise no changes
-				let url = `/api/users?status=3&skip=${skip}&limit=${vm.paginationData.perPage}${ (queryStringObj!==undefined)?`&${Object.keys(queryStringObj)}=${Object.values(queryStringObj)}`:'' }`
+				let url = `/api/users?status=3&skip=${skip}&limit=${vm.paginationData.perPage}${ (queryStringObj && queryStringObj.searchFilterObj !==undefined)?`&${Object.keys(queryStringObj.searchFilterObj)}=${Object.values(queryStringObj.searchFilterObj)}`:'' }`
+				if(queryStringObj && queryStringObj.start && queryStringObj.end){
+					url += '&start=' + queryStringObj.start + '&end=' + queryStringObj.end;
+				}
 				vm.toggleLoader(true, 'Loading data');
 				// Limit display per page
 				await axios.get(url, vm.requestedHeaders)
@@ -222,7 +229,7 @@
 					},10000);
 				}
 				vm.toggleLoader(true);
-				await vm.totalUsers()
+				// await vm.totalUsers()
 				await vm.getUserList(1);
 			},
 			closeAlert(){

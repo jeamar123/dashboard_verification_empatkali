@@ -72,7 +72,7 @@
         <!-- <p class="flex-1 text-sm text-voilet">{{ '5000000' | currency }}</p> -->
         <div class="flex-2">
           <div class="relative select-reason-drop">
-            <div class="border-b w-76 py-1 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : confirmData.reason == '', 'border-dangerBtn' : errStatus == 'reason' || errStatus == 'both-reject'}" @click="toggleDrops('reason')">
+            <div class="border-b w-76 py-1 pr-4 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : confirmData.reason == '', 'border-dangerBtn' : errStatus == 'reason' || errStatus == 'both-reject'}" @click="toggleDrops('reason')">
               {{ confirmData.reason == '' ? 'Pilih Alasan' : confirmData.reason }}
               <svg class="text-gray-500 w-4 absolute top-1.5 right-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -295,7 +295,7 @@ export default {
           }
         }
         vm.errStatus = 'none';
-        vm.rejectUser();
+        // vm.rejectUser();
       }
       if(vm.requestData.type == 'incomplete'){
         vm.incompleteUser(); 

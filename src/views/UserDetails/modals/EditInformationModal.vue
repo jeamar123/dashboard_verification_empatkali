@@ -16,7 +16,7 @@
         </div>
         <div class="flex-1 ml-2">
           <div class="input-div">
-            <label for="" class="text-xs block mb-1">Tgl Lahir</label>
+            <label for="" class="text-xs block mb-1">Tanggal Lahir</label>
             <input type="date" class="text-xs" name="tgl Lahir" v-model="editInfoData.dob">
           </div>
         </div>
@@ -117,6 +117,7 @@ export default {
     closeModal: Function,
     requestSuccess: Function,
     toggleLoader: Function,
+    user: Object
   },
   data() {
   	return {
@@ -126,10 +127,24 @@ export default {
           'x-access-token': localStorage.getItem("auth_token")
         }
       },
-      editInfoData: {}
+      editInfoData: {},
   	}
   },
   created() {
+    let vm = this
+    vm.editInfoData = {
+      idNumber: '',
+      birthPlaceBirthday: '',
+      birthPlace: '',
+      dob: '',
+      gender: '',
+      address: '',
+      rtrw: '',
+      village: '',
+      district: '',
+      province: '',
+      maritalStatus: '',
+    }
   },
   methods: {
     /**
@@ -148,6 +163,48 @@ export default {
 				}
 			})
     },
+    updateOCRDetails(){
+      // let vm = this
+      // console.log(vm.editInfoData);
+      
+      // let params  = {
+      //   id: vm.user.user._id,
+      //   occupation: vm.editInfoData.occupation,
+      //   address: vm.editInfoData.address,
+      //   gender: vm.editInfoData.gender,
+      //   city: vm.editInfoData.city,
+      //   ktp: vm.editInfoData.idNumber,
+      //   bloodType: vm.editInfoData.bloodType,
+      //   birthPlaceBirthday: vm.editInfoData.birthPlace + ', ' + this.$moment(vm.editInfoData.dob).format('DD-MM-YYYY'),
+      //   religion: vm.editInfoData.religion,
+      //   expiryDate: this.$moment(vm.editInfoData.expiryDate).format('DD-MM-YYYY'),
+      //   rtrw: vm.editInfoData.rtrw,
+      //   province: vm.editInfoData.province,
+      //   nationality: vm.editInfoData.nationality,
+      //   district: vm.editInfoData.district,
+      //   name: vm.editInfoData.name,
+      //   village: vm.editInfoData.village,
+      //   maritalStatus: vm.editInfoData.maritalStatus
+      // }
+      // vm.toggleLoader(true);
+      // await axios.put(`api/users/updateocr`, params, vm.requestedHeaders)
+      // .then(async function (response) {
+      //   console.log(response);
+      //   if (response.data.status) {
+      //     vm.requestSuccess('editInfo');
+      //     vm.$swal('Success!', response.data.message, 'success');
+      //   }else{
+      //     vm.$swal('Error!', response.data.message, 'error');
+      //   }
+      //   vm.toggleLoader(false);
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      //   console.log(error.response);
+      //   vm.$swal('Error!', error.response.data.message, 'error');
+      //   vm.toggleLoader(false);
+      // })
+    }
 
   }
 }

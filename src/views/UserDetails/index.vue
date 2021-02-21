@@ -4,7 +4,7 @@
 
 		<div class="h-full">
 
-      <div class="verification-details-content p-4">
+      <div v-if="getStatusValue(userDetails.status) != 'incomplete'" class="verification-details-content p-4">
         <div class="grid details-grid gap-3 h-full w-full">
           <div class="card p-4 relative">
             <div 
@@ -215,7 +215,7 @@
                     <div class="flex-1 ml-1">
                       <div @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
                         <img 
-                          :src="userDetails.selfie || '/assets/img/no-image.png'" 
+                          :src="userDetails.selfie ? userDetails.selfie : '/assets/img/no-image.png'" 
                           class="rounded-lg absolute object-cover w-full" alt=""
                         >
                       </div>
@@ -588,9 +588,170 @@
         </div>
       </div>
 
+      <div v-if="getStatusValue(userDetails.status) == 'incomplete'" class="verification-details-content p-4">
+        <div class="grid details-grid incomplete-status gap-3 h-full w-full">
+          <div class="card px-4 py-6 flex items-center text-xl ff-thin font-bold">
+            Step 1
+          </div>
+          <div class="card px-4 py-6 flex items-center text-xl ff-thin font-bold">
+            Step 2
+          </div>
+          <div class="card px-4 py-6 flex items-center text-xl ff-thin font-bold">
+            Step 3
+          </div>
+          <div class="card p-4 relative">
+            <div class="corner-status absolute right-0 top-0 bg-v-status-incomplete px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
+              Incomplete
+            </div>
+            <p class="sm-text font-bold mb-4">Data Pribadi</p>
+
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.name : '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.mobileNumber ? userDetails.mobileNumber : '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Email <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.name : '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.ktpValidation ? userDetails.ktpValidation.nik : '---' }}</p>
+            </div>
+          </div>
+          <div class="card p-4">
+            <p class="sm-text font-bold mb-4">Pekerjaan</p>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Industri <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.industri : '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Jenis Pekerjaan <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.pekerjaan : '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Pendidikan <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.pendidikan : '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.penghasilan : '---' }}</p>
+            </div>
+          </div>
+          <div class="card p-4">
+            <p class="sm-text font-bold mb-4">Metode Pembayaran - Kartu Debit/ Kredit</p>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Tipe <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{  '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Nomor Kartu <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{  '---' }}</p>
+            </div>
+          </div>
+          <div class="card p-4 flex">
+            <div class="flex-1 flex flex-col mr-1">
+              <p class="sm-text font-bold mb-3">Foto KTP</p>
+              <div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+                <img 
+                  :src="userDetails.ktp ? userDetails.ktp.image : '../../assets/img/foto-ktp.png'" 
+                  class="rounded-lg absolute object-cover w-full" alt=""
+                >
+              </div>
+            </div>
+            <div class="flex-1 flex flex-col ml-1">
+                <p class="sm-text font-bold mb-3">Foto selfie dengan KTP</p>
+                <div @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+                  <img 
+                    :src="userDetails.selfie ? userDetails.selfie : '../../assets/img/selfie-foto-ktp.png'" 
+                    class="rounded-lg absolute object-cover w-full" alt=""
+                  >
+                </div>
+              </div>
+          </div>
+          <div class="card p-4">
+            <p class="sm-text font-bold mb-4">Kontak Darurat</p>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Nama <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.emergencyContact ? userDetails.emergencyContact.name : '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Nomor HP Kontak Darurat <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.emergencyContact ? userDetails.emergencyContact.mobileNumber : '---' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Hubungan <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ userDetails.emergencyContact ? userDetails.emergencyContact.type : '---' }}</p>
+            </div>
+          </div>
+          <div class="card p-4">
+            <p class="sm-text font-bold mb-4">Metode Pembayaran - Pembayaran Instan</p>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Tipe <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ '-' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ '-' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Saldo <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ '-' }}</p>
+            </div>
+          </div>
+          <div class="card col-span-2 relative">
+            <p class="sm-text font-bold mb-2 absolute top-3 left-4 z-10">Lokasi saat daftar</p>
+            <GmapMap
+              :center="{
+                lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
+                lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+              }"
+              :zoom="10"
+              :options="{
+                fullscreenControl: false,
+                disableDefaultUI: false,
+                zoomControl: true,
+                mapTypeControl: false,
+                scaleControl: false,
+                streetViewControl: false,
+                rotateControl: false,
+              }"
+        
+              style="height: 100%; border-radius: 12px;overflow: hidden;"
+            >
+              <GmapMarker
+                  :position="{
+                    lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
+                    lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                  }"
+                />
+            </GmapMap>
+          </div>
+          <div class="card p-4">
+            <p class="sm-text font-bold mb-4">Data Pendukung</p>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Status Kontrak <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ '-' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Log Email <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ '-' }}</p>
+            </div>
+            <div class="flex xs-text mb-3">
+              <label class="text-gray-500 flex-3 relative">Call <span class="absolute top-0 right-2 font-bold">:</span></label>
+              <p class="flex-4">{{ '-' }}</p>
+            </div>
+          </div>
+			  </div>
+      </div>
+      
+
       <div class="btn-options-wrapper flex items-center px-4 h-14 bg-white shadow-lg-reverse absolute w-full bottom-0 left-0">
         <div class="flex-none mr-10">
-          <a href="#" @click="$router.go(-1)" class="text-violet xs-text font-bold flex items-center">
+          <a href="#" @click.prevent="goBacktoUser()" class="text-violet xs-text font-bold flex items-center">
             <img :src="'../../assets/img/blue-arrow-left.png'" alt="" class="w-5 mr-2">
             Kembali ke list
           </a>

@@ -23,8 +23,8 @@
 				},
 				filter:	{
 					searchVal: '',
-					startDate: new Date(),
-					endDate: new Date(),
+					startDate: new Date(this.$moment().startOf('month')),
+					endDate: new Date(this.$moment()),
 				},
 				dateFormat: {
 					input: 'DD MMM YYYY',

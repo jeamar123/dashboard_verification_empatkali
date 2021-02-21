@@ -487,6 +487,12 @@
 				}
 				return typeof status == 'number' ? value : numVal;
 			},
+			goBacktoUser(){
+				let vm = this
+				let status = vm.getStatusValue(vm.userDetails.status);
+				console.log(status);
+				vm.$router.push({ name: 'Users', params : { status: status }});
+			},
     }
 	}
 	export default UserDetails

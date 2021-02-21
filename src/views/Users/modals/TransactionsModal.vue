@@ -106,7 +106,7 @@
                     <option value="BRI">BRI</option>
                   </select>
                 </div>
-                <button @click.prevent="generateVAforUnpaidInstallment(data, terms)" class="btn bg-violet rounded-md text-sm font-bold text-white mt-1 w-44 px-8 py-2">Generate VA</button>
+                <button @click.prevent="generateVAforUnpaidInstallment(list, terms)" class="btn bg-violet rounded-md text-sm font-bold text-white mt-1 w-44 px-8 py-2">Generate VA</button>
               </div>
               
             </div>
@@ -236,16 +236,16 @@ export default {
       }
 
       vm.toggleLoader(true, 'Generating');
-      axios
-        .post(`/api/approvedtransactions/injectva/${transaction._id}`, dataInput, vm.requestedHeaders)
+      axios.post(`/api/approvedtransactions/injectva/${transaction._id}`, dataInput, vm.requestedHeaders)
         .then(() => {
-          vm.getTransactionList(transaction.user._id)
+          vm.getTransactionList()
           vm.toggleLoader(false);
           vm.generateVAforUnpaidInstallmentBankInput[terminObj._id] = ''
           vm.$swal('Success!', 'Successfully generated!', 'success');
         })
         .catch(function (error) {
-          vm.$swal('Error!', error.response.data.message, 'error');
+          console.log(error);
+          vm.$swal('Error!', error.response, 'error');
           console.log(error.response);
           vm.toggleLoader(false);
         })
