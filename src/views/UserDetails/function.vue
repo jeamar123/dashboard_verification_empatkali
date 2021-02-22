@@ -224,7 +224,7 @@
 								vm.userDetails.ocrData = {};
 							}
 
-							if (userData.ktp) {
+							if (userData.ktp && userData.ktp.indexOf('error') == -1) {
 								let ktpCheck = JSON.parse(userData.ktp)
 								vm.userDetails.ktpValidation = ktpCheck;
 								if ( ktpCheck.status == "FOUND" ) {
@@ -311,8 +311,9 @@
 								vm.userDetails.scoreNameMatch.colorScore = 'red'
 							}
 
-							if (userData.blacklist) {
-								vm.userDetails.blacklist = JSON.parse(userData.blacklist)
+							if (userData.blacklist && JSON.parse(userData.blacklist).data) {
+								vm.userDetails.blacklist =  JSON.parse(userData.blacklist).data;
+								console.log(vm.userDetails.blacklist);
 								vm.userDetails.resultOfBlackList = vm.userDetails.blacklist.data.defaultListResult
 							}
 							if (userData['face blacklist']) vm.userDetails.face_blackList = JSON.parse(userData['face blacklist'])

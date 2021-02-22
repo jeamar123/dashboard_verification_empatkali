@@ -48,7 +48,8 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Usia <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{  new Date() | moment('diff', userDetails.detail ? ( userDetails.detail.birthdate ) : new Date() , 'years') }} tahun</p>
+              <p v-if="userDetails.detail" class="flex-4">{{  new Date() | moment('diff', userDetails.detail ? ( userDetails.detail.birthdate ) : new Date() , 'years') }} tahun</p>
+              <p else class="flex-4">{{ '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Pekerjaan <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -60,7 +61,7 @@
             </div>
             <div class="flex xs-text">
               <label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.penghasilan : '---' }}</p>
+              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.descriptionOfsalary : '---' }}</p>
             </div>
           </div>
           <div class="card p-4 relative">
@@ -638,7 +639,7 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.penghasilan : '---' }}</p>
+              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.descriptionOfsalary : '---' }}</p>
             </div>
           </div>
           <div class="card p-4">
