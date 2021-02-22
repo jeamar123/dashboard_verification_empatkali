@@ -69,11 +69,13 @@
 			let vm = this
 			vm.getAdmin()
 			await vm.getUserDetails();
-			vm.getDanaBalance();
-			vm.getActivityMailUSer();
-			vm.getAI();
-			await vm.getAllTypeUserSalary();
-			vm.getAFPI();
+			if(vm.getStatusValue(vm.userDetails.status) == 'incomplete' && vm.userDetails.detail || vm.getStatusValue(vm.userDetails.status) != 'incomplete'){
+				vm.getAI();
+				vm.getDanaBalance();
+				vm.getActivityMailUSer();
+				await vm.getAllTypeUserSalary();
+				vm.getAFPI();
+			}
 			console.log(vm.userDetails);
 		},
 		methods: {
