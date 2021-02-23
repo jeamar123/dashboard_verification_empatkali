@@ -74,6 +74,7 @@
 				vm.getDanaBalance();
 				vm.getActivityMailUSer();
 				await vm.getAllTypeUserSalary();
+				vm.getAllIndustry();
 				vm.getAFPI();
 			}
 			console.log(vm.userDetails);
@@ -495,6 +496,19 @@
 				let status = vm.getStatusValue(vm.userDetails.status);
 				console.log(status);
 				vm.$router.push({ name: 'Users', params : { status: status }});
+			},
+			getAllIndustry() {
+				let vm = this
+				// Industry
+				fetch('../__tmp-files/industry.json')
+					.then(resp => resp.json()) // Transform the data into JSON
+					.then(resIndustry => {
+						console.log(resIndustry);
+						if (vm.userDetails.detail) {
+							let findIndustry = resIndustry.filter(data => data._id == vm.userDetails.detail.industri)
+							vm.userDetails.detail.industri_label = findIndustry[0].label;
+						}
+					})
 			},
     }
 	}

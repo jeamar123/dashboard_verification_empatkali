@@ -80,77 +80,77 @@
             </div>
             <span class="text-sm text-right text-dangerMsg inline-block ml-3">wajib</span>
 
-            <div v-if="isShowReasonDrop" class="w-76 absolute -bottom-18 z-50 left-0 bg-gray-100 px-2 text-left">
+            <div v-if="isShowReasonDrop" class="w-76 max-h-80 absolute -bottom-18 z-50 left-0 bg-gray-100 px-2 text-left overflow-y-auto overflow-x-hidden">
               <ul v-if="confirmData.reasonType == 'Non Fraud'">
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R1 - Usia diluar ketentuan')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R1 - Usia diluar ketentuan')">
                   {{ 'R1 - Usia diluar ketentuan' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R2 - KTP tidak valid/KTP rusak/KTP tidak terbaca')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R2 - KTP tidak valid/KTP rusak/KTP tidak terbaca')">
                   {{ 'R2 - KTP tidak valid/KTP rusak/KTP tidak terbaca' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R3 - Tidak ada Foto KTP/Selfie dengan KTP / Foto diluar ketentuan')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R3 - Tidak ada Foto KTP/Selfie dengan KTP / Foto diluar ketentuan')">
                   {{ 'R3 - Tidak ada Foto KTP/Selfie dengan KTP / Foto diluar ketentuan' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R4 - Foto Selfie blur/tidak pantas')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R4 - Foto Selfie blur/tidak pantas')">
                   {{ 'R4 - Foto Selfie blur/tidak pantas' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R5 - Memiliki banyak pinjaman dalam waktu 90 hari')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R5 - Memiliki banyak pinjaman dalam waktu 90 hari')">
                   {{ 'R5 - Memiliki banyak pinjaman dalam waktu 90 hari' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R6 - Penilaian kredit rendah')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R6 - Penilaian kredit rendah')">
                   {{ 'R6 - Penilaian kredit rendah' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R7 - Data AFPI buruk')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R7 - Data AFPI buruk')">
                   {{ 'R7 - Data AFPI buruk' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R8 - Kapasitas diluar ketentuan')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R8 - Kapasitas diluar ketentuan')">
                   {{ 'R8 - Kapasitas diluar ketentuan' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R9 - Blacklist customer')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R9 - Blacklist customer')">
                   {{ 'R9 - Blacklist customer' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R10 - High risk job (TNI/POLRI/Pengacara/Hakim/Wartawan/Reporter/Dsb)')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R10 - High risk job (TNI/POLRI/Pengacara/Hakim/Wartawan/Reporter/Dsb)')">
                   {{ 'R10 - High risk job (TNI/POLRI/Pengacara/Hakim/Wartawan/Reporter/Dsb)' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R11 - High Risk Area')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R11 - High Risk Area')">
                   {{ 'R11 - High Risk Area' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R12 - Lokasi diluar Indonesia')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R12 - Lokasi diluar Indonesia')">
                   {{ 'R12 - Lokasi diluar Indonesia' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R13 - User tidak bekerja')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R13 - User tidak bekerja')">
                   {{ 'R13 - User tidak bekerja' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R14 - User tidak dapat dihubungi')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R14 - User tidak dapat dihubungi')">
                   {{ 'R14 - User tidak dapat dihubungi' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R15 - User memberikan informasi yang tidak benar')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R15 - User memberikan informasi yang tidak benar')">
                   {{ 'R15 - User memberikan informasi yang tidak benar' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R16 - Lain-lain')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R16 - Lain-lain')">
                   {{ 'R16 - Lain-lain' }}
                 </li>
               </ul>
               <ul v-if="confirmData.reasonType == 'Fraud'">
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R17 - Fraud - Dokumen - KTP Edit/Identitas selain E-KTP Asli/Foto diambil dari media lain/KTP cocok dengan orang lain')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R17 - Fraud - Dokumen - KTP Edit/Identitas selain E-KTP Asli/Foto diambil dari media lain/KTP cocok dengan orang lain')">
                   {{ 'R17 - Fraud - Dokumen - KTP Edit/Identitas selain E-KTP Asli/Foto diambil dari media lain/KTP cocok dengan orang lain' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R18 - Fraud - Selfie - Selfie edit/tidak selfie/Menggunakan KTP orang lain')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R18 - Fraud - Selfie - Selfie edit/tidak selfie/Menggunakan KTP orang lain')">
                   {{ 'R18 - Fraud - Selfie - Selfie edit/tidak selfie/Menggunakan KTP orang lain' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R19 - Fraud - Email - Email sementara/bounce email')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R19 - Fraud - Email - Email sementara/bounce email')">
                   {{ 'R19 - Fraud - Email - Email sementara/bounce email' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R20 - Fraud - Lokasi - Lokasi tidak cocok')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R20 - Fraud - Lokasi - Lokasi tidak cocok')">
                   {{ 'R20 - Fraud - Lokasi - Lokasi tidak cocok' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R21 - Fraud - Kontak darurat - Kontak darurat tidak valid')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R21 - Fraud - Kontak darurat - Kontak darurat tidak valid')">
                   {{ 'R21 - Fraud - Kontak darurat - Kontak darurat tidak valid' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R22 - Fraud - Ewallet - Ewallet terdaftar nama orang lain')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R22 - Fraud - Ewallet - Ewallet terdaftar nama orang lain')">
                   {{ 'R22 - Fraud - Ewallet - Ewallet terdaftar nama orang lain' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b" @click="selectReasonOpt('R23 - Fraud - Lain-lain (Muncul tombol untuk menambahkan Freetext)')">
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R23 - Fraud - Lain-lain (Muncul tombol untuk menambahkan Freetext)')">
                   {{ 'R23 - Fraud - Lain-lain (Muncul tombol untuk menambahkan Freetext)' }}
                 </li>
               </ul>
