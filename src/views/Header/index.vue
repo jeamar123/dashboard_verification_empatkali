@@ -101,7 +101,7 @@
 				<div class="flex-none ml-3 user-img relative user-header-toggle">
 					<div @click="isShowUserProfileMenu = isShowUserProfileMenu ? false : true" class="flex items-center cursor-pointer">
 						<div class="img-container flex-1 mr-3">
-							<img :src="adminData ? adminData.profileImageURL.profileImageURL : '../../assets/img/users.png'" class="h-9 w-9 border border-gray-300 rounded-full" alt="">
+							<img :src="adminData ? adminData.profileImageURL : '../../assets/img/users.png'" class="h-9 w-9 border border-gray-300 rounded-full" alt="">
 						</div>
 						<svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-gray-400"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
