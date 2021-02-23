@@ -10,12 +10,12 @@
 			</div>
 			<div class="flex flex-1 text-right items-center">
 				<div class="flex-1">
-					<p class="text-sm font-bold">Hi, Scarlett</p>
+					<p class="text-sm font-bold">Hi, {{ adminData.displayName }}</p>
 				</div>
-				<div class="flex-none ml-5 user-img relative user-header-toggle">
+				<div class="flex-none ml-3 user-img relative user-header-toggle">
 					<div @click="isShowUserProfileMenu = isShowUserProfileMenu ? false : true" class="flex items-center cursor-pointer">
 						<div class="img-container flex-1 mr-3">
-							<img :src="'../../assets/img/sample-user-img.png'" class="h-8 rounded" alt="">
+							<img :src="adminData ? adminData.profileImageURL : '../../assets/img/users.png'" class="h-9 w-9 border border-gray-300 rounded-full" alt="">
 						</div>
 						<svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-gray-400"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -86,7 +86,7 @@
 								<img :src="'../assets/img/clock-icon.png'" class="w-full inline-block" alt="">
 							</div>
 							<div class="flex-1 text-sm">
-								{{ dateToday | moment("HH:mm:ss") }} WIB
+								{{ timeNow }} WIB
 							</div>
 						</div>
 					</div>
@@ -96,12 +96,12 @@
 			</div>
 			<div class="flex flex-1 text-right items-center">
 				<div class="flex-1">
-					<p class="text-sm font-bold">Hi, Scarlett</p>
+					<p class="text-sm font-bold">Hi, {{ adminData.displayName }}</p>
 				</div>
-				<div class="flex-none ml-5 user-img relative user-header-toggle">
+				<div class="flex-none ml-3 user-img relative user-header-toggle">
 					<div @click="isShowUserProfileMenu = isShowUserProfileMenu ? false : true" class="flex items-center cursor-pointer">
 						<div class="img-container flex-1 mr-3">
-							<img :src="'../../assets/img/sample-user-img.png'" class="h-8 rounded" alt="">
+							<img :src="adminData ? adminData.profileImageURL.profileImageURL : '../../assets/img/users.png'" class="h-9 w-9 border border-gray-300 rounded-full" alt="">
 						</div>
 						<svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-gray-400"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -133,7 +133,7 @@
 			title=" "
 			modal-class="modal-wrapper w-3/10 mt-20"
 		>
-			<UpdateProfileModal :closeModal="toggleProfileModal" :toggleLoader="toggleLoader"/>
+			<UpdateProfileModal :admin="adminData" :closeModal="toggleProfileModal" :toggleLoader="toggleLoader"/>
 		</Modal>
 		<!-- <UpdateProfileModal /> -->
 	</div>

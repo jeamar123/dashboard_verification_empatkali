@@ -2,7 +2,7 @@
   <div>
     <form @submit.prevent="formValidator('frmUpdateProfile')" data-vv-scope="frmUpdateProfile">
       <div class="img-container text-center -mt-8 mb-8">
-        <img :src="'../assets/img/sample-user-img.png'" class="h-32 rounded" alt="">
+        <img :src="admin ? admin.profileImageURL : '../../assets/img/users.png'" class="h-32 w-32 rounded-full border border-gray-300" alt="">
 
         <div class="flex justify-center items-center mt-4">
           <div class="img-container mr-3">
@@ -43,6 +43,7 @@ export default {
   props: {
     closeModal: Function,
     toggleLoader: Function,
+    admin: Object
   },
   data() {
   	return {
@@ -56,6 +57,12 @@ export default {
   	}
   },
   created() {
+    let vm = this
+    vm.updateProfileData = {
+      username: vm.admin.username,
+      email: vm.admin.email,
+      _id: vm.admin._id,
+    }
   },
   methods: {
     /**

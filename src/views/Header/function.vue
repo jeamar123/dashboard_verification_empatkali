@@ -25,10 +25,14 @@
 				isShowUserProfileMenu: false,
 				headerContentName: 'default',
 				dateToday: new Date(),
+				timeNow: this.$moment().format('hh:mm:ss'),
 				isShowUpdateProfileModal: false,
+				adminData: {},
 			}
 		},
 		created() {
+			this.getAdmin();
+			this.liveClock();
 			this.initializeShowHideListener();
 			this.actionAdmin();
 			this.getHeaderContent();
@@ -150,7 +154,26 @@
 				}else{
 					this.$parent.showLoading();
 				}
-			}
+			},
+			liveClock(){
+				let vm = this
+				setInterval(() => {
+					vm.timeNow = this.$moment().format('hh:mm:ss');
+				}, 1000);
+			},
+			getAdmin() {
+				let vm = this;
+				const adminLogin = vm.decodeJwt(vm.requestedHeaders.headers['x-access-token'])
+				axios.get(`api/admins/${adminLogin._id}`, vm.requestedHeaders)
+					.then(function (response) {
+						if (response) {
+							vm.adminData = response.data
+						}
+					})
+					.catch(function (error) {
+						console.log(error);
+					})
+			},
     }
 	}
 	export default Header
