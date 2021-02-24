@@ -238,7 +238,7 @@ export default {
       vm.toggleLoader(true, 'Generating');
       axios.post(`/api/approvedtransactions/injectva/${transaction._id}`, dataInput, vm.requestedHeaders)
         .then(() => {
-          vm.getTransactionList()
+          // vm.getTransactionList()
           vm.toggleLoader(false);
           vm.generateVAforUnpaidInstallmentBankInput[terminObj._id] = ''
           vm.$swal('Success!', 'Successfully generated!', 'success');

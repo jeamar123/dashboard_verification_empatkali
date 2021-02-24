@@ -105,7 +105,6 @@
 					};
 				}
 				vm.isSearchActive = true;
-				console.log(searchFilterObj);
 				vm.toggleLoader(true, 'Loading data');
 				vm.paginationData.currentPage = page !== undefined ? vm.paginationData.currentPage : 1;
 				// await vm.totalUsers(searchFilterObj);

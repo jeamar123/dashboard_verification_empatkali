@@ -71,6 +71,11 @@
 				}
 				return parentMatch;
 			},
+			toggleDrop(opt){
+				let vm = this
+				vm.isShowUserChildMenu = opt == 'users' ? (vm.isShowUserChildMenu ? false : true) : false;
+				vm.isShowLimitChildMenu = opt == 'users' ? (vm.isShowLimitChildMenu ? false : true) : false;
+			},
 			async getUserStatusCount(status){
 				let vm = this
 				try {

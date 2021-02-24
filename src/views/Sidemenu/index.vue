@@ -11,7 +11,7 @@
 
 			<router-link 
 				:to="{ name: 'Home'}" 
-				class="w-full rounded-xl inline-block"
+				class="w-full rounded-xl inline-block mb-2"
 				v-bind:class="{
 					'bg-sidemenuActiveColor' : $route.name == 'Home'
 				}"
@@ -27,17 +27,24 @@
 			</router-link>
 
 			<div 
-				class="menu-item-w-child sidemenu-user-toggle rounded-xl "
+				class="menu-item-w-child sidemenu-user-toggle rounded-xl mb-2"
 				v-bind:class="{
-					'bg-sidemenuChildBgColor' : $route.name == 'Users'
+					'bg-sidemenuChildBgColor' : isShowUserChildMenu 
 				}"
 			>
-				<router-link 
+				<!-- <router-link 
 					:to="{ name: 'Users', params: { status: 'all' } }" 
 					class="w-full rounded-xl inline-block"
 					v-bind:class="{
 						'bg-sidemenuActiveColor' : $route.name == 'Users'
 					}"
+				> -->
+				<div 
+					class="w-full rounded-xl inline-block"
+					v-bind:class="{
+						'bg-sidemenuActiveColor' : isShowUserChildMenu || $route.name == 'Users'
+					}"
+					@click="toggleDrop('users')"
 				>
 					<div class="menu-item flex items-center px-4 py-5 cursor-pointer rounded-xl">
 						<div class="icon-container w-7 mr-3">
@@ -56,9 +63,10 @@
 							</svg>
 						</div>
 					</div>
-				</router-link>
+				</div>
+				<!-- </router-link> -->
 
-				<div v-if="$route.name == 'Users'" class="menu-child-items pt-2">
+				<div v-if="isShowUserChildMenu" class="menu-child-items pt-2">
 					<router-link :to="{ name: 'Users', params: { status: 'all' } }" >
 						<div class="child-item px-4 pt-4 pb-6 rounded mb-1 cursor-pointer">
 							<p class="text-md ff-medium font-bold" v-bind:class="{ 'text-sidemenuTextActiveColor' : $route.params.status == 'all' }">All Users</p>
@@ -111,7 +119,7 @@
 			</div>
 
 			<div 
-				class="menu-item-w-child sidemenu-limit-toggle rounded-xl"
+				class="menu-item-w-child sidemenu-limit-toggle rounded-xl mb-2"
 				v-bind:class="{
 					'bg-sidemenuChildBgColor' : $route.name == 'Change Limit'
 				}"
@@ -166,7 +174,7 @@
 
 			<router-link 
 				:to="{ name: 'Messages'}" 
-				class="w-full rounded-xl inline-block"
+				class="w-full rounded-xl inline-block mb-2"
 				v-bind:class="{
 					'bg-sidemenuActiveColor' : $route.name == 'Messages'
 				}"
@@ -183,7 +191,7 @@
 
 			<router-link 
 				:to="{ name: 'Settings'}" 
-				class="w-full rounded-xl inline-block"
+				class="w-full rounded-xl inline-block mb-2"
 				v-bind:class="{
 					'bg-sidemenuActiveColor' : $route.name == 'Email Template'
 				}"
