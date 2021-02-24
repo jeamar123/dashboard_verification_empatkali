@@ -358,35 +358,34 @@ export default {
         vm.incompleteUser(); 
       }
     },
-    updateUserStatus(text){
+    updateUserStatus(){
       let vm = this
-      let params = {
-        user: vm.user._id,
-        text: text != 'Incomplete' ? text + ` by ${vm.admin.username}` : `Set to Incomplete by ${vm.admin.username}`,
-        commentBy: vm.admin.username
-      }
-      console.log(params);
-      axios.post(`api/users/comment-review-status`, params, vm.requestedHeaders)
-        .then((res) => {
-          console.log(res);
-          vm.toggleLoader(false);
+      // let params = {
+      //   user: vm.user._id,
+      //   text: text != 'Incomplete' ? text + ` by ${vm.admin.username}` : `Set to Incomplete by ${vm.admin.username}`,
+      //   commentBy: vm.admin.username
+      // }
+      // console.log(params);
+      // axios.post(`api/users/comment-review-status`, params, vm.requestedHeaders)
+      //   .then((res) => {
+      //     console.log(res);
+      //     vm.toggleLoader(false);
           vm.$router.go(-1);
           localStorage.setItem('emitUserRequestStatus', JSON.stringify({ type: vm.requestData.type, name: vm.user.detail.name }));
-        })
-        .catch((err) => {
-          console.log(err);
-          vm.$swal('Error!', err, 'error')
-          vm.toggleLoader(false);
-        })
+        // })
+        // .catch((err) => {
+        //   console.log(err);
+        //   vm.$swal('Error!', err, 'error')
+        //   vm.toggleLoader(false);
+        // })
     },
     approveUser(){
       let vm = this
       let params = {
-        user: vm.user._id,
-        description: '',
-        limit: 0
+        userId: vm.user._id,
+        limit: vm.confirmData.approvedLimit
       }
-      let url = `/api/users/activatinguser`
+      let url = `/api/users/approveuser`
       vm.toggleLoader(true, 'Loading data');
       axios.post(url, params, vm.requestedHeaders)
         .then((res)	=>	{
@@ -404,14 +403,13 @@ export default {
     rejectUser(){
       let vm = this
       let params = {
-        user: vm.user.mobileNumber,
-        description: vm.note,
-        type: '',
-        reason: '',
+        userId: vm.user._id,
+        text: vm.confirmData.comment,
+        type: vm.confirmData.reasonType,
       }
-      let url = `/api/users/reject`
+      let url = `/api/users/rejectuser`
       vm.toggleLoader(true, 'Loading data');
-      axios.post(url, params, vm.requestedHeaders)
+      axios.put(url, params, vm.requestedHeaders)
         .then((res)	=>	{
           console.log(res);
           if (res.data.message == 'User has been rejected') {
@@ -426,25 +424,23 @@ export default {
     },
     incompleteUser(){
       let vm = this
-      // let params = {
-      //   user: vm.user._id,
-      //   description: '',
-      // }
-      // let url = `/api/users/reject`
-      // vm.toggleLoader(true, 'Loading data');
-      // axios.post(url, params, vm.requestedHeaders)
-      //   .then((res)	=>	{
-      //     console.log(res);
-          vm.$swal('No API yet.');
-          // vm.updateUserStatus('Incomplete');
-          vm.$router.go(-1);
-          localStorage.setItem('emitUserRequestStatus', JSON.stringify({ type: vm.requestData.type, name: vm.user.detail.name }));
-        // })
-        // .catch((err)	=>	{
-        //   console.log(err);
-        //   vm.$swal('Error!', err, 'error')
-        //   vm.toggleLoader(false);
-        // })
+      let params = {
+        userId: vm.user._id,
+      }
+      let url = `/api/users/makeincomplate`
+      vm.toggleLoader(true, 'Loading data');
+      axios.put(url, params, vm.requestedHeaders)
+        .then((res)	=>	{
+          console.log(res);
+          if (res.data.status) {
+            vm.updateUserStatus('Incomplete');
+          }
+        })
+        .catch((err)	=>	{
+          console.log(err);
+          vm.$swal('Error!', err, 'error')
+          vm.toggleLoader(false);
+        })
     },
   }
 }
