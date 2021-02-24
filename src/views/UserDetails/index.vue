@@ -539,7 +539,7 @@
                         'bdg-status--danger' : false,
                       }"
                     >
-                      {{ check4xUser(userDetails) ? 'Yes' : 'No' }}
+                      {{ userDetails.emergencyContact && userDetails.emergencyContact.mobileNumber ? (check4xUser(userDetails) ? 'Yes' : 'No') : 'No' }}
                     </div>
                   </div>
                 </div>

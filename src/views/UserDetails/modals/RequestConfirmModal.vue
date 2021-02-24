@@ -82,76 +82,19 @@
 
             <div v-if="isShowReasonDrop" class="w-76 max-h-80 absolute -bottom-18 z-50 left-0 bg-gray-100 px-2 text-left overflow-y-auto overflow-x-hidden">
               <ul v-if="confirmData.reasonType == 'Non Fraud'">
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R1 - Usia diluar ketentuan')">
-                  {{ 'R1 - Usia diluar ketentuan' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R2 - KTP tidak valid/KTP rusak/KTP tidak terbaca')">
-                  {{ 'R2 - KTP tidak valid/KTP rusak/KTP tidak terbaca' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R3 - Tidak ada Foto KTP/Selfie dengan KTP / Foto diluar ketentuan')">
-                  {{ 'R3 - Tidak ada Foto KTP/Selfie dengan KTP / Foto diluar ketentuan' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R4 - Foto Selfie blur/tidak pantas')">
-                  {{ 'R4 - Foto Selfie blur/tidak pantas' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R5 - Memiliki banyak pinjaman dalam waktu 90 hari')">
-                  {{ 'R5 - Memiliki banyak pinjaman dalam waktu 90 hari' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R6 - Penilaian kredit rendah')">
-                  {{ 'R6 - Penilaian kredit rendah' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R7 - Data AFPI buruk')">
-                  {{ 'R7 - Data AFPI buruk' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R8 - Kapasitas diluar ketentuan')">
-                  {{ 'R8 - Kapasitas diluar ketentuan' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R9 - Blacklist customer')">
-                  {{ 'R9 - Blacklist customer' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R10 - High risk job (TNI/POLRI/Pengacara/Hakim/Wartawan/Reporter/Dsb)')">
-                  {{ 'R10 - High risk job (TNI/POLRI/Pengacara/Hakim/Wartawan/Reporter/Dsb)' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R11 - High Risk Area')">
-                  {{ 'R11 - High Risk Area' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R12 - Lokasi diluar Indonesia')">
-                  {{ 'R12 - Lokasi diluar Indonesia' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R13 - User tidak bekerja')">
-                  {{ 'R13 - User tidak bekerja' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R14 - User tidak dapat dihubungi')">
-                  {{ 'R14 - User tidak dapat dihubungi' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R15 - User memberikan informasi yang tidak benar')">
-                  {{ 'R15 - User memberikan informasi yang tidak benar' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R16 - Lain-lain')">
-                  {{ 'R16 - Lain-lain' }}
+                <li 
+                  v-for="list in reasonTypes.non_fraud" :key="list.index"
+                  class="cursor-pointer text-sm px-1 py-2 border-b break-all" 
+                  @click="selectReasonOpt(list)">
+                  {{ list._id + ' - ' + list.label }}
                 </li>
               </ul>
               <ul v-if="confirmData.reasonType == 'Fraud'">
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R17 - Fraud - Dokumen - KTP Edit/Identitas selain E-KTP Asli/Foto diambil dari media lain/KTP cocok dengan orang lain')">
-                  {{ 'R17 - Fraud - Dokumen - KTP Edit/Identitas selain E-KTP Asli/Foto diambil dari media lain/KTP cocok dengan orang lain' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R18 - Fraud - Selfie - Selfie edit/tidak selfie/Menggunakan KTP orang lain')">
-                  {{ 'R18 - Fraud - Selfie - Selfie edit/tidak selfie/Menggunakan KTP orang lain' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R19 - Fraud - Email - Email sementara/bounce email')">
-                  {{ 'R19 - Fraud - Email - Email sementara/bounce email' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R20 - Fraud - Lokasi - Lokasi tidak cocok')">
-                  {{ 'R20 - Fraud - Lokasi - Lokasi tidak cocok' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R21 - Fraud - Kontak darurat - Kontak darurat tidak valid')">
-                  {{ 'R21 - Fraud - Kontak darurat - Kontak darurat tidak valid' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R22 - Fraud - Ewallet - Ewallet terdaftar nama orang lain')">
-                  {{ 'R22 - Fraud - Ewallet - Ewallet terdaftar nama orang lain' }}
-                </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R23 - Fraud - Lain-lain')">
-                  {{ 'R23 - Fraud - Lain-lain' }}
+                <li 
+                  v-for="list in reasonTypes.fraud" :key="list.index"
+                  class="cursor-pointer text-sm px-1 py-2 border-b break-all" 
+                  @click="selectReasonOpt(list)">
+                  {{ list._id + ' - ' + list.label }}
                 </li>
               </ul>
             </div>
@@ -160,7 +103,7 @@
       </div>
     </div>
 
-    <div v-if="confirmData.reason == 'R16 - Lain-lain' || confirmData.reason == 'R23 - Fraud - Lain-lain'" class="input-div">
+    <div v-if="confirmData.selectedReason._id == 'R16' || confirmData.selectedReason._id == 'R23'" class="input-div">
       <textarea 
         cols="30" 
         rows="2" 
@@ -248,15 +191,31 @@ export default {
         approvedLimit: '',
         reasonType: '',
         reason: '',
+        selectedReason: {},
       },
       commentVal: '',
-      errStatus: 'none', // 'none', 'limit', 'reason', 'reason-type', 'both-reject', 'comment',  'all'
+      errStatus: 'none', // 'none', 'limit', 'reason', 'reason-type', 'both-reject', 'comment',  'all',
+      reasonTypes: {},
   	}
   },
   created() {
     this.initializeShowHideListener();
+    this.getReasonTypes();
   },
   methods: {
+    getReasonTypes() {
+      let vm = this
+      fetch('../__tmp-files/reasonTypes.json')
+        .then(resp => resp.json()) 
+        .then(resReasonTypes => {
+          console.log(resReasonTypes);
+          vm.reasonTypes = resReasonTypes;
+          // if (vm.userDetails.detail) {
+          //   let findIndustry = resIndustry.filter(data => data._id == vm.userDetails.detail.industri)
+          //   vm.userDetails.detail.industri_label = findIndustry[0] ? findIndustry[0].label : '---';
+          // }
+        })
+    },
     async initializeShowHideListener()	{
       let vm = this
       document.addEventListener("click",async function(e){
@@ -302,9 +261,10 @@ export default {
       vm.isShowFraudDrop = type == 'fraud' & (vm.isShowFraudDrop ? false : true);
       vm.isShowReasonDrop = type == 'reason' & (vm.isShowReasonDrop ? false : true);
     },
-    selectReasonOpt(opt)	{
+    selectReasonOpt(reason)	{
       let vm = this;
-      vm.confirmData.reason = opt;
+      vm.confirmData.reason = reason._id + ' - ' + reason.label;
+      vm.confirmData.selectedReason = reason;
       vm.isShowReasonDrop = false;
       console.log(vm.confirmData);
       vm.$forceUpdate();
@@ -312,6 +272,7 @@ export default {
     selectReasonTypeOpt(opt)	{
       let vm = this;
       vm.confirmData.reason = vm.confirmData.reasonType == opt ? vm.confirmData.reason : '';
+      vm.confirmData.selectedReason = vm.confirmData.reasonType == opt ? vm.confirmData.selectedReason : {};
       vm.confirmData.reasonType = opt;
       vm.isShowFraudDrop = false;
       console.log(vm.confirmData);
@@ -345,7 +306,7 @@ export default {
           vm.errStatus = 'reason';
           return false;
         }
-        if(vm.confirmData.reason == 'R16 - Lain-lain' || vm.confirmData.reason == 'R23 - Fraud - Lain-lain'){
+        if(vm.confirmData.selectedReason._id == 'R16' || vm.confirmData.selectedReason._id == 'R23'){
           if(vm.confirmData.comment == ''){
             vm.errStatus = 'comment';
             return false;
@@ -387,16 +348,16 @@ export default {
       }
       let url = `/api/users/approveuser`
       vm.toggleLoader(true, 'Loading data');
-      axios.post(url, params, vm.requestedHeaders)
+      axios.put(url, params, vm.requestedHeaders)
         .then((res)	=>	{
           console.log(res);
-          if (res.data.status == 6) {
+          if (res.data.message == 'success') {
             vm.updateUserStatus('Approved');
           }
         })
         .catch((err)	=>	{
           console.log(err);
-          vm.$swal('Error!', err, 'error')
+          vm.$swal('Error!', err.message, 'error')
           vm.toggleLoader(false);
         })
     },
@@ -404,21 +365,21 @@ export default {
       let vm = this
       let params = {
         userId: vm.user._id,
-        text: vm.confirmData.comment,
-        type: vm.confirmData.reasonType,
+        text: vm.confirmData.selectedReason.label,
+        type: vm.confirmData.selectedReason._id,
       }
       let url = `/api/users/rejectuser`
       vm.toggleLoader(true, 'Loading data');
       axios.put(url, params, vm.requestedHeaders)
         .then((res)	=>	{
           console.log(res);
-          if (res.data.message == 'User has been rejected') {
+          if (res.data.message == 'success') {
             vm.updateUserStatus('Rejected');
           }
         })
         .catch((err)	=>	{
           console.log(err);
-          vm.$swal('Error!', err, 'error')
+          vm.$swal('Error!', err.message, 'error')
           vm.toggleLoader(false);
         })
     },
@@ -432,13 +393,13 @@ export default {
       axios.put(url, params, vm.requestedHeaders)
         .then((res)	=>	{
           console.log(res);
-          if (res.data.status) {
+          if (res.data.message == "user has been added to incomplate status") {
             vm.updateUserStatus('Incomplete');
           }
         })
         .catch((err)	=>	{
           console.log(err);
-          vm.$swal('Error!', err, 'error')
+          vm.$swal('Error!', err.message, 'error')
           vm.toggleLoader(false);
         })
     },
