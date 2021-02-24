@@ -315,7 +315,7 @@
 							if (userData.blacklist && JSON.parse(userData.blacklist).data) {
 								vm.userDetails.blacklist =  JSON.parse(userData.blacklist).data;
 								console.log(vm.userDetails.blacklist);
-								vm.userDetails.resultOfBlackList = vm.userDetails.blacklist.data.defaultListResult
+								vm.userDetails.resultOfBlackList = vm.userDetails.blacklist.data ? vm.userDetails.blacklist.data.defaultListResult : vm.userDetails.blacklist.defaultListResult; 
 							}
 							if (userData['face blacklist']) vm.userDetails.face_blackList = JSON.parse(userData['face blacklist'])
 							if (userData['face comparison']) vm.userDetails.face_comparison = JSON.parse(userData['face comparison'])

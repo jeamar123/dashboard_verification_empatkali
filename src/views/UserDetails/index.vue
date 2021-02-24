@@ -658,7 +658,7 @@
               <p class="sm-text font-bold mb-3">Foto KTP</p>
               <div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
                 <img 
-                  :src="userDetails.ktp ? userDetails.ktp.image : '../../assets/img/foto-ktp.png'" 
+                  :src="userDetails.ktp && userDetails.ktp.image ? userDetails.ktp.image : '../../assets/img/foto-ktp.png'" 
                   class="rounded-lg absolute object-cover w-full" alt=""
                 >
               </div>
