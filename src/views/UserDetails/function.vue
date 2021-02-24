@@ -160,7 +160,7 @@
 						// console.log(res); 
 						let userSalary = vm.userDetails.detail.penghasilan
 						let findSalary = res.data.filter(data => data.type == userSalary)
-						vm.userDetails.detail.descriptionOfsalary = findSalary[0].description //assign new object value of salary
+						vm.userDetails.detail.descriptionOfsalary = findSalary.length > 0 ? findSalary[0].description : '---'; //assign new object value of salary
 					})
 					.catch((err)	=>	{
 						console.log(err.message);
@@ -315,7 +315,6 @@
 
 							if (userData.blacklist && JSON.parse(userData.blacklist).data) {
 								vm.userDetails.blacklist =  JSON.parse(userData.blacklist).data;
-								console.log(vm.userDetails.blacklist);
 								vm.userDetails.resultOfBlackList = vm.userDetails.blacklist.data ? vm.userDetails.blacklist.data.defaultListResult : vm.userDetails.blacklist.defaultListResult; 
 							}
 							if (userData['face blacklist']) vm.userDetails.face_blackList = JSON.parse(userData['face blacklist'])
@@ -507,12 +506,17 @@
 				fetch('../__tmp-files/industry.json')
 					.then(resp => resp.json()) // Transform the data into JSON
 					.then(resIndustry => {
-						console.log(resIndustry);
+						// console.log(resIndustry);
 						if (vm.userDetails.detail) {
 							let findIndustry = resIndustry.filter(data => data._id == vm.userDetails.detail.industri)
 							vm.userDetails.detail.industri_label = findIndustry[0] ? findIndustry[0].label : '---';
 						}
 					})
+			},
+			check4xUser(user){
+				let vm = this
+				let status = vm._.findIndex(user.isUsedAsEmergencyContact, { 'mobileNumber': user.emergencyContact.mobileNumber }) >= 0 ? true : false ;
+				return status;
 			},
     }
 	}

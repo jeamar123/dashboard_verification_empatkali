@@ -99,40 +99,40 @@
 					</thead>
 					<tbody>
 						<tr v-for="(list) in usersArr.data" :key="list.index">
-							<td class="border-b-2 py-3 pr-6 text-sm">
-								<p class="text-sm mb-1 font-bold text-violet">
+							<td class="border-b-2 py-3 pr-6 text-xs 2xl:text-sm">
+								<p class="text-xs 2xl:text-sm mb-1 font-bold text-violet">
 									{{ list.detail ? list.detail.name : '---' }}
 								</p>
-								<p class="text-gray-500 text-xs">
+								<p class="text-gray-500 text-xxs 2xl:text-xs">
 									{{ list.detail ? list.detail.email : '---' }}
 								</p>
 							</td>
-							<td class="border-b-2 py-3 pr-6 text-sm">
+							<td class="border-b-2 py-3 pr-6 text-xs 2xl:text-sm">
 								{{ list.mobileNumber ? list.mobileNumber : '---' }}
 							</td>
-							<td class="border-b-2 py-3 pr-6 text-sm">
-								{{ list.nik ? list.nik : '---' }}
+							<td class="border-b-2 py-3 pr-6 text-xs 2xl:text-sm">
+								{{ list.ktp && list.ktp.number ? list.ktp.number : '---' }}
 							</td>
-							<td class="border-b-2 py-3 pr-6 text-sm font-bold">
+							<td class="border-b-2 py-3 pr-6 text-xs 2xl:text-sm font-bold">
 								{{ list.credit | currency }}
 							</td>
-							<td class="border-b-2 py-3 pr-6 text-sm">
-								<div class="flex mb-1 text-sm">
+							<td class="border-b-2 py-3 pr-6 text-xs 2xl:text-sm">
+								<div class="flex mb-1 text-xs 2xl:text-sm">
 									<span>{{ (list.credit - list.remainingCredit) | currency }}</span>
 								</div>
-								<div class="flex text-xs color--blue font-bold">
+								<div class="flex text-xxs 2xl:text-xs color--blue font-bold">
 									<label class="mr-1">Sisa :</label><span>{{ list.remainingCredit | currency }}</span>
 								</div>
 							</td>
 							<td class="border-b-2 py-3 pr-6">
-								<div class="text-sm">
+								<div class="text-xs 2xl:text-sm">
 									<span>{{ list.createdAt | moment('DD MMM YYYY') }}</span>
 								</div>
-								<div class="text-xs text-gray-500">
+								<div class="text-xxs 2xl:text-xs text-gray-500">
 									<span>{{ list.createdAt | moment('HH:mm:ss') }} WIB</span>
 								</div>
 							</td>
-							<td class="border-b-2 py-3 text-sm text-center">
+							<td class="border-b-2 py-3 text-xs 2xl:text-sm text-center">
 								<div class="mr-5 inline-block">
 									<a href="#" @click.prevent="toggleModals(true, 'ban', list)">
 										<img :src="'../assets/img/banned.png'" alt="" class="w-6">

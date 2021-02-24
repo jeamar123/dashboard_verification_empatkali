@@ -92,26 +92,14 @@
 			},
 			async submitFilter(page) {
 				let vm = this
-				// if (vm.filter.searchVal == '') {
-				// 	vm.$swal('', 'Seems like you forgot to put something on the search input!', 'warning')
-				// 	return false;
-				// }
 				let searchFilterObj = {
-					start: vm.$moment(vm.filter.startDate).format('YYYY-MM-DD'),
-					end: vm.$moment(vm.filter.endDate).format('YYYY-MM-DD'),
-				}
-				if(vm.filter.searchVal != ''){
-					// Prepare end users input i.e. trim,etc.
-					let sanitizeQuery = vm.filter.searchVal.split(',').map(item=>item.trim())
-					searchFilterObj.filter = {
-						name : sanitizeQuery
-					};
+					date_from: vm.$moment(vm.filter.startDate).format('YYYY-MM-DD'),
+					date_to: vm.$moment(vm.filter.endDate).format('YYYY-MM-DD'),
+					filter: vm.filter.searchVal != '' ? vm.filter.searchVal : null,
 				}
 				vm.isSearchActive = true;
-				console.log(searchFilterObj);
 				vm.toggleLoader(true, 'Loading data');
 				vm.paginationData.currentPage = page !== undefined ? vm.paginationData.currentPage : 1;
-				// await vm.totalUsers(searchFilterObj);
 				await vm.getUserList(vm.paginationData.currentPage, searchFilterObj)
 			},
 			async removeFilter() {
@@ -119,8 +107,8 @@
 				vm.isSearchActive = false;
 				vm.filter =	{
 					searchVal: '',
-					startDate: new Date(),
-					endDate: new Date(),
+					startDate: new Date(this.$moment().startOf('month')),
+					endDate: new Date(this.$moment()),
 				};
 				vm.toggleLoader(true, 'Loading data');
 				// await vm.totalUsers();
@@ -137,7 +125,11 @@
 				vm.activeStatus = opt == 'all' ? 'all' : vm.getStatusValue(opt);
 				vm.toggleLoader(true, 'Loading data');
 				// await vm.totalUsers();
-				await vm.getUserList(1, undefined);
+				if(vm.isSearchActive){
+					vm.submitFilter(1);
+				}else{
+					vm.getUserList(1);
+				}
 			},
 			getStatusValue(status){
 				let value = '';
@@ -223,12 +215,12 @@
 					skip = (page - 1) * vm.paginationData.perPage
 				}
 				// if query string object is passed it'll be appended, otherwise no changes
-				let url = `/api/users?&skip=${skip}&limit=${vm.paginationData.perPage}${ (queryStringObj && queryStringObj.searchFilterObj !==undefined)?`&${Object.keys(queryStringObj.searchFilterObj)}=${Object.values(queryStringObj.searchFilterObj)}`:'' }`
+				let url = `/api/users?&skip=${skip}&limit=${vm.paginationData.perPage}`
+				if(queryStringObj !== undefined){
+					Object.keys(queryStringObj).map(val => queryStringObj[val] != null && (url += `&${val}=${queryStringObj[val]}`) );
+				}
 				if(vm.activeStatus != 'all'){
 					url += `&status=${vm.getStatusValue(vm.activeStatus)}`;
-				}
-				if(queryStringObj && queryStringObj.start && queryStringObj.end){
-					url += '&start=' + queryStringObj.start + '&end=' + queryStringObj.end;
 				}
 				vm.toggleLoader(true, 'Loading data');
 				// Limit display per page

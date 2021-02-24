@@ -213,7 +213,7 @@
 								{{ list.mobileNumber ? list.mobileNumber : '---' }}
 							</td>
 							<td class="border-b-2 py-3 pr-6 text-sm">
-								{{ list.nik ? list.nik : '---' }}
+								{{ list.ktp && list.ktp.number ? list.ktp.number : '---' }}
 							</td>
 							<td class="border-b-2 py-3 pr-6">
 								<div class="text-sm">

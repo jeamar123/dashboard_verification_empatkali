@@ -4,7 +4,17 @@
 
 		<div class="h-full">
 
-      <div v-if="getStatusValue(userDetails.status) != 'incomplete'" class="verification-details-content p-4">
+      <div 
+        v-if="
+          getStatusValue(userDetails.status) == 'active' ||
+          getStatusValue(userDetails.status) == 'pending' ||
+          getStatusValue(userDetails.status) == 'banned' ||
+          getStatusValue(userDetails.status) == 'freeze' ||
+          getStatusValue(userDetails.status) == 'approved' ||
+          getStatusValue(userDetails.status) == 'rejected'
+        " 
+        class="verification-details-content p-4"
+      >
         <div class="grid details-grid gap-3 h-full w-full">
           <div class="card p-4 relative">
             <div 
@@ -39,7 +49,7 @@
               <label class="text-gray-500 flex-3 relative">Email <span class="absolute top-0 right-2 font-bold">:</span></label>
               <div class="flex-4 flex items-center">
                 <p>{{ userDetails.detail ? userDetails.detail.email : '---' }}</p>
-                <img v-if="userDetails.emailVerified" :src="'../../assets/img/secure.png'" class="w-4 ml-3" alt="">
+                <img v-if="userDetails.emailVerified" :src="'../../assets/img/secure.png'" class="w-5 ml-3" alt="">
               </div>
             </div>
             <div class="flex xs-text mb-3">
@@ -48,12 +58,12 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Usia <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p v-if="userDetails.detail" class="flex-4">{{  new Date() | moment('diff', userDetails.detail ? ( userDetails.detail.birthdate ) : new Date() , 'years') }} tahun</p>
+              <p v-if="userDetails.detail && userDetails.detail.birthdate" class="flex-4">{{  new Date() | moment('diff', userDetails.detail ? ( userDetails.detail.birthdate ) : new Date() , 'years') }} tahun</p>
               <p v-else class="flex-4">{{ '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Pekerjaan <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4 capitalize">{{ userDetails.detail && userDetails.detail.pekerjaan ? userDetails.detail.pekerjaan.replace('-', ' ') : '---' }}</p>
+              <p class="flex-4 capitalize">{{ userDetails.detail && userDetails.detail.pekerjaan ? userDetails.detail.pekerjaan.replace('---', ' ') : '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Industri <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -529,7 +539,7 @@
                         'bdg-status--danger' : false,
                       }"
                     >
-                      {{ 'No' }}
+                      {{ check4xUser(userDetails) ? 'Yes' : 'No' }}
                     </div>
                   </div>
                 </div>
@@ -620,7 +630,7 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.ktpValidation ? userDetails.ktpValidation.nik : '---' }}</p>
+              <p class="flex-4">{{ userDetails.ktp && userDetails.ktp.number ? userDetails.ktp.number : '---' }}</p>
             </div>
           </div>
           <div class="card p-4">
@@ -631,11 +641,11 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Jenis Pekerjaan <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.detail && userDetails.detail.pekerjaan ? userDetails.detail.pekerjaan.replace('-', ' ') : '---' }}</p>
+              <p class="flex-4">{{ userDetails.detail && userDetails.detail.pekerjaan ? userDetails.detail.pekerjaan.replace('---', ' ') : '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Pendidikan <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.pendidikan : '---' }}</p>
+              <p class="flex-4">{{ userDetails.detail && userDetails.detail.pendidikan ? userDetails.detail.pendidikan : '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -726,15 +736,15 @@
             <p class="sm-text font-bold mb-4">Metode Pembayaran - Pembayaran Instan</p>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Tipe <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ '-' }}</p>
+              <p class="flex-4">{{ '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ '-' }}</p>
+              <p class="flex-4">{{ '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Saldo <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ '-' }}</p>
+              <p class="flex-4">{{ '---' }}</p>
             </div>
           </div>
           <div class="card col-span-2 relative">
@@ -769,15 +779,15 @@
             <p class="sm-text font-bold mb-4">Data Pendukung</p>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Status Kontrak <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ '-' }}</p>
+              <p class="flex-4">{{ '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Log Email <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ '-' }}</p>
+              <p class="flex-4">{{ '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Call <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ '-' }}</p>
+              <p class="flex-4">{{ '---' }}</p>
             </div>
           </div>
 			  </div>
