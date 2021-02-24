@@ -150,8 +150,8 @@
                 <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R22 - Fraud - Ewallet - Ewallet terdaftar nama orang lain')">
                   {{ 'R22 - Fraud - Ewallet - Ewallet terdaftar nama orang lain' }}
                 </li>
-                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R23 - Fraud - Lain-lain (Muncul tombol untuk menambahkan Freetext)')">
-                  {{ 'R23 - Fraud - Lain-lain (Muncul tombol untuk menambahkan Freetext)' }}
+                <li class="cursor-pointer text-sm px-1 py-2 border-b break-all" @click="selectReasonOpt('R23 - Fraud - Lain-lain')">
+                  {{ 'R23 - Fraud - Lain-lain' }}
                 </li>
               </ul>
             </div>
@@ -160,7 +160,7 @@
       </div>
     </div>
 
-    <div v-if="confirmData.reason == 'R16 - Lain-lain'" class="input-div">
+    <div v-if="confirmData.reason == 'R16 - Lain-lain' || confirmData.reason == 'R23 - Fraud - Lain-lain'" class="input-div">
       <textarea 
         cols="30" 
         rows="2" 
@@ -311,6 +311,7 @@ export default {
     },
     selectReasonTypeOpt(opt)	{
       let vm = this;
+      vm.confirmData.reason = vm.confirmData.reasonType == opt ? vm.confirmData.reason : '';
       vm.confirmData.reasonType = opt;
       vm.isShowFraudDrop = false;
       console.log(vm.confirmData);
