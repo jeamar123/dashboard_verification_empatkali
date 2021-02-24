@@ -345,7 +345,7 @@ export default {
           vm.errStatus = 'reason';
           return false;
         }
-        if(vm.confirmData.reason == 'R16 - Lain-lain'){
+        if(vm.confirmData.reason == 'R16 - Lain-lain' || vm.confirmData.reason == 'R23 - Fraud - Lain-lain'){
           if(vm.confirmData.comment == ''){
             vm.errStatus = 'comment';
             return false;
