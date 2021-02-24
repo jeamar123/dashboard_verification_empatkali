@@ -183,6 +183,7 @@
 							return isNaN(acc) ? parseInt(val) : acc + parseInt(val) / 2
 						}, 0)
 						vm.responseAFPI = Object.assign(res.data, { income: getMedian })
+						vm.$forceUpdate();
 					})
 					.catch((err)	=>	{
 						console.log(err.message);
@@ -344,30 +345,33 @@
 									if (vm.userDetails.tele_check.data) {
 										statusTeleCheck = vm.userDetails.tele_check.data.status
 									}
-									switch (statusTeleCheck) {
-										case 1:
-										vm.userDetails.tele_check.data.status_msg = 'Called number has ringer'
-										break;
-										case 2:
-										vm.userDetails.tele_check.data.status_msg = 'Empty Number'
-										break;
-										case 3:
-										vm.userDetails.tele_check.data.status_msg = 'Busy Line'
-										break;
-										case 4:
-										vm.userDetails.tele_check.data.status_msg = 'Powered Off'
-										break;
-										case 5:
-										vm.userDetails.tele_check.data.status_msg = 'Not Available'
-										break;
-										case 6:
-										vm.userDetails.tele_check.data.status_msg = 'Temporarily unable to connect'
-										break;
-										case -1:
-										vm.userDetails.tele_check.data.status_msg = 'Abnormal line, unknown state'
-										break;
-										default:
+									if(vm.userDetails.tele_check.data != null){
+										switch (statusTeleCheck) {
+											case 1:
+											vm.userDetails.tele_check.data.status_msg = 'Called number has ringer'
+											break;
+											case 2:
+											vm.userDetails.tele_check.data.status_msg = 'Empty Number'
+											break;
+											case 3:
+											vm.userDetails.tele_check.data.status_msg = 'Busy Line'
+											break;
+											case 4:
+											vm.userDetails.tele_check.data.status_msg = 'Powered Off'
+											break;
+											case 5:
+											vm.userDetails.tele_check.data.status_msg = 'Not Available'
+											break;
+											case 6:
+											vm.userDetails.tele_check.data.status_msg = 'Temporarily unable to connect'
+											break;
+											case -1:
+											vm.userDetails.tele_check.data.status_msg = 'Abnormal line, unknown state'
+											break;
+											default:
+										}
 									}
+									
 							}
 						}else {
 							vm.userDetails.ocrData = {};

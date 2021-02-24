@@ -44,7 +44,7 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.ktpValidation ? userDetails.ktpValidation.nik : '---' }}</p>
+              <p class="flex-4">{{ userDetails.ktp && userDetails.ktp.number ? userDetails.ktp.number : '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Usia <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -111,9 +111,9 @@
                 <img :src="'../../assets/img/info-circle-violet.png'" class="w-4 ml-3 cursor-pointer" @click="toggleModals(true, 'emergencyContact')" alt="">
               </div>
             </div>
-            <div class="flex xs-text items-center mb-2">
+            <div v-if="getStatusValue(userDetails.status) != 'pending'" class="flex xs-text items-center mb-2">
               <label class="text-gray-500 flex-2 relative">User Tele ID <span class="absolute top-0 right-3 font-bold">:</span></label>
-              <p class="flex-1">{{ userDetails.tele_check ? userDetails.tele_check.data.status_msg : 'No Record' }}</p>
+              <p class="flex-1">{{ userDetails.tele_check && userDetails.tele_check.data != null ? userDetails.tele_check.data.status_msg : 'No Record' }}</p>
             </div>
             <div class="flex xs-text items-center mb-2">
               <label class="text-gray-500 flex-2 relative">Nomor HP sama dengan Kontak Darurat <span class="absolute top-0 right-3 font-bold">:</span></label>
@@ -129,7 +129,7 @@
                 </div>
               </div>
             </div>
-            <div class="flex xs-text items-center mb-2">
+            <div v-if="getStatusValue(userDetails.status) != 'pending'" class="flex xs-text items-center mb-2">
               <label class="text-gray-500 flex-2 relative">Total Pinjaman 3 bulan terakhir <span class="absolute top-0 right-3 font-bold">:</span></label>
               <div class="flex-1">
                 <InsideSpinner v-if="!userDetails.hasOwnProperty('ktp')" :options="{width: '15px', height: '15px',}"  />
@@ -146,7 +146,7 @@
                 <div v-else class="count-badge rounded-2xl py-1 text-center w-20 2xl:w-28 inline-block text-white font-bold xs-text bdg-status--warning">No Record</div>
               </div>
             </div>
-            <div class="flex xs-text items-center mb-2">
+            <div v-if="getStatusValue(userDetails.status) != 'pending'" class="flex xs-text items-center mb-2">
               <label class="text-gray-500 flex-2 relative">Trusting Social <span class="absolute top-0 right-3 font-bold">:</span></label>
               <div class="flex-1">
                 <InsideSpinner v-if="!userDetails.hasOwnProperty('ktp')" :options="{width: '15px', height: '15px',}"  />
@@ -352,8 +352,8 @@
               </div>
             </div>
             
-
-            <div class="card p-4 mt-3 flex-4">
+            <div class="card p-4 mt-3 flex-4" v-if="getStatusValue(userDetails.status) == 'pending'"></div>
+            <div v-if="getStatusValue(userDetails.status) != 'pending'" class="card p-4 mt-3 flex-4">
               <p class="sm-text font-bold mb-3 flex items-center">
                 <span class="mr-3">AFPI</span>
                 <InsideSpinner v-if="!responseAFPI.hasOwnProperty('income')" :options="{width: '15px', height: '15px',}"  />
@@ -656,22 +656,56 @@
           <div class="card p-4 flex">
             <div class="flex-1 flex flex-col mr-1">
               <p class="sm-text font-bold mb-3">Foto KTP</p>
-              <div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+              <div v-if="userDetails.ktp && userDetails.ktp.image" @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
                 <img 
                   :src="userDetails.ktp && userDetails.ktp.image ? userDetails.ktp.image : '../../assets/img/foto-ktp.png'" 
                   class="rounded-lg absolute object-cover w-full" alt=""
                 >
               </div>
+
+              <div v-else class="h-no-ktp">
+                <img 
+                  :src="'../../assets/img/foto-ktp.png'" 
+                  class="rounded-lg h-full" alt=""
+                >
+              </div>
             </div>
             <div class="flex-1 flex flex-col ml-1">
-                <p class="sm-text font-bold mb-3">Foto selfie dengan KTP</p>
-                <div @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+              <p class="sm-text font-bold mb-3">Foto selfie dengan KTP</p>
+              <div v-if="userDetails.selfie" @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+                <img 
+                  :src="userDetails.selfie ? userDetails.selfie : '../../assets/img/selfie-foto-ktp.png'" 
+                  class="rounded-lg absolute object-cover w-full" alt=""
+                >
+              </div>
+              <div v-else class="h-no-ktp">
+                <img 
+                  :src="'../../assets/img/foto-ktp.png'" 
+                  class="rounded-lg h-full" alt=""
+                >
+              </div>
+            </div>
+            <!-- <div class="flex h-full">
+              <div class="flex-1 flex flex-col mr-1">
+                <p class="sm-text font-bold mb-3">Foto KTP</p>
+                <div class="h-no-ktp">
                   <img 
-                    :src="userDetails.selfie ? userDetails.selfie : '../../assets/img/selfie-foto-ktp.png'" 
-                    class="rounded-lg absolute object-cover w-full" alt=""
+                    :src="'../../assets/img/foto-ktp.png'" 
+                    class="rounded-lg h-full" alt=""
                   >
                 </div>
               </div>
+              <div class="flex-1 flex flex-col ml-1">
+                <p class="sm-text font-bold mb-3">Foto selfie dengan KTP</p>
+                <div class="h-no-ktp">
+                  <img 
+                    :src="'../../assets/img/foto-ktp.png'" 
+                    class="rounded-lg h-full" alt=""
+                  >
+                </div>
+              </div>
+            </div> -->
+
           </div>
           <div class="card p-4">
             <p class="sm-text font-bold mb-4">Kontak Darurat</p>
@@ -929,6 +963,17 @@
 </template>
 
 <style lang="scss" scoped>
+  .h-no-ktp{
+    height: calc(100% - 30px);
+  }
+
+  @media (min-width: 1500px){
+    .h-no-ktp{
+      height: calc(100% - 40px);
+    }
+  }
+
+
 	@import "./style.scss";
 </style>
 
