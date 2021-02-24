@@ -506,7 +506,7 @@
 						console.log(resIndustry);
 						if (vm.userDetails.detail) {
 							let findIndustry = resIndustry.filter(data => data._id == vm.userDetails.detail.industri)
-							vm.userDetails.detail.industri_label = findIndustry[0].label;
+							vm.userDetails.detail.industri_label = findIndustry[0] ? findIndustry[0].label : '---';
 						}
 					})
 			},

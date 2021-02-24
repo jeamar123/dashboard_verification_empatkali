@@ -23,12 +23,12 @@
 					</div>
 					<div v-if="isShowUserProfileMenu" class="user-drop-container absolute right-0 top-10 z-50">
 						<div class="bg-white shadow-md border middle rounded-2xl w-40 p-4">
-							<div @click="toggleProfileModal(true)" class="flex items-center border-b-2 mb-3 pb-3 cursor-pointer">
+							<!-- <div @click="toggleProfileModal(true)" class="flex items-center border-b-2 mb-3 pb-3 cursor-pointer">
 								<div class="img-container mr-3">
 									<img :src="'../../assets/img/edit.png'" class="w-4" alt="">
 								</div>
 								<p class="text-sm">Ubah Profil</p>
-							</div>
+							</div> -->
 							<div @click.prevent="logout()" class="flex items-center cursor-pointer">
 								<div class="img-container mr-3">
 									<img :src="'../../assets/img/logout.png'" class="w-4" alt="">
@@ -109,12 +109,12 @@
 					</div>
 					<div v-if="isShowUserProfileMenu" class="user-drop-container absolute right-0 top-10 z-50">
 						<div class="bg-white shadow-md border middle rounded-2xl w-40 p-4">
-							<div @click="toggleProfileModal(true)" class="flex items-center border-b-2 mb-3 pb-3 cursor-pointer">
+							<!-- <div @click="toggleProfileModal(true)" class="flex items-center border-b-2 mb-3 pb-3 cursor-pointer">
 								<div class="img-container mr-3">
 									<img :src="'../../assets/img/edit.png'" class="w-4" alt="">
 								</div>
 								<p class="text-sm">Ubah Profil</p>
-							</div>
+							</div> -->
 							<div @click.prevent="logout()" class="flex items-center cursor-pointer">
 								<div class="img-container mr-3">
 									<img :src="'../../assets/img/logout.png'" class="w-4" alt="">

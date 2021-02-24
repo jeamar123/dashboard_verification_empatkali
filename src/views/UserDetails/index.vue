@@ -53,7 +53,7 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Pekerjaan <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4 capitalize">{{ userDetails.detail ? userDetails.detail.pekerjaan.replace('-', ' ') : '---' }}</p>
+              <p class="flex-4 capitalize">{{ userDetails.detail && userDetails.detail.pekerjaan ? userDetails.detail.pekerjaan.replace('-', ' ') : '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Industri <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -627,11 +627,11 @@
             <p class="sm-text font-bold mb-4">Pekerjaan</p>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Industri <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.industri : '---' }}</p>
+              <p class="flex-4">{{ userDetails.detail && userDetails.detail.industri_label ? userDetails.detail.industri_label : '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Jenis Pekerjaan <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.pekerjaan : '---' }}</p>
+              <p class="flex-4">{{ userDetails.detail && userDetails.detail.pekerjaan ? userDetails.detail.pekerjaan.replace('-', ' ') : '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Pendidikan <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -639,7 +639,7 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Penghasilan <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.detail ? userDetails.detail.descriptionOfsalary : '---' }}</p>
+              <p class="flex-4">{{ userDetails.detail && userDetails.detail.descriptionOfsalary ? userDetails.detail.descriptionOfsalary : '---' }}</p>
             </div>
           </div>
           <div class="card p-4">
