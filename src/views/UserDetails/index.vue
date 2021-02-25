@@ -683,10 +683,7 @@
           </div>
           <div class="card p-4 flex">
             <div class="flex-1 flex flex-col mr-1">
-              <p class="sm-text font-bold mb-3 flex items-center">
-                <span class="mr-3">Foto KTP</span>
-                <InsideSpinner v-if="userDetails.ktp && !userDetails.ktp.image" :options="{width: '15px', height: '15px',}"  />
-              </p>
+              <p class="sm-text font-bold mb-3">Foto KTP</p>
               <div v-if="userDetails.ktp && userDetails.ktp.image" @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
                 <img 
                   :src="userDetails.ktp && userDetails.ktp.image ? userDetails.ktp.image : '../../assets/img/foto-ktp.png'" 
@@ -702,10 +699,7 @@
               </div>
             </div>
             <div class="flex-1 flex flex-col ml-1">
-              <p class="sm-text font-bold mb-3 flex items-center">
-                <span class="mr-3">Foto selfie dengan KTP</span>
-                <InsideSpinner v-if="userDetails && !userDetails.selfie" :options="{width: '15px', height: '15px',}"  />
-              </p>
+              <p class="sm-text font-bold mb-3">Foto selfie dengan KTP</p>
               <div v-if="userDetails.selfie" @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
                 <img 
                   :src="userDetails.selfie ? userDetails.selfie : '../../assets/img/selfie-foto-ktp.png'" 
@@ -763,9 +757,10 @@
             <p class="sm-text font-bold mb-4">Metode Pembayaran - Pembayaran Instan</p>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Tipe <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <div class="flex-4">
+              <div v-if="userDetails.danaVerifiedAccount" class="flex-4">
                 <img :src="'../../assets/img/dana.png'" class="w-16 block inline-block" alt="">
               </div>
+              <p v-else class="flex-4">{{ '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -828,7 +823,7 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Call <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.tele_check && userDetails.tele_check.data != null ? userDetails.tele_check.data.status_msg : 'No' }}</p>
+              <p class="flex-4">{{ userDetails.tele_check && userDetails.tele_check.data != null ? userDetails.tele_check.data.status_msg : '---' }}</p>
             </div>
           </div>
 			  </div>
