@@ -44,7 +44,9 @@
 					freeze: null,
 					approved: null,
 					rejected: null,
-				}
+				},
+				isSearchActive: false,
+				isDatePickerActive: false,
 			}
 		},
 		async created() {
@@ -93,8 +95,8 @@
 			async submitFilter(page) {
 				let vm = this
 				let searchFilterObj = {
-					date_from: vm.$moment(vm.filter.startDate).format('YYYY-MM-DD'),
-					date_to: vm.$moment(vm.filter.endDate).format('YYYY-MM-DD'),
+					date_from: vm.isDatePickerActive ? vm.$moment(vm.filter.startDate).format('YYYY-MM-DD') : null,
+					date_to: vm.isDatePickerActive ? vm.$moment(vm.filter.endDate).format('YYYY-MM-DD') : null,
 					filter: vm.filter.searchVal != '' ? vm.filter.searchVal : null,
 				}
 				vm.isSearchActive = true;
@@ -110,15 +112,14 @@
 					startDate: new Date(this.$moment().startOf('month')),
 					endDate: new Date(this.$moment()),
 				};
+				vm.isDatePickerActive = false;
 				vm.toggleLoader(true, 'Loading data');
 				// await vm.totalUsers();
 				await vm.getUserList(1)
 			},
 			filterDateChanged()	{
 				let vm = this
-				console.log(vm.filter.startDate);
-				console.log(vm.filter.endDate);
-				// vm.getUserList(1)
+				vm.isDatePickerActive = true;
 			},
 			async selectUserStatus(opt)	{
 				let vm = this
