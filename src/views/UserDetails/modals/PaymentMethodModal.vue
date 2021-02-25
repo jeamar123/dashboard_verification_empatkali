@@ -36,8 +36,8 @@
         </tr>
         <tr v-for="list in user.card" :key="list.index">
           <td class="py-2 pr-2 text-sm font-bold">
-            Kartu Debit
-            <img :src="'../../assets/img/visa.png'" class="w-8 ml-2 block inline-block" alt="">
+            {{ list.type ? list.type : '---' }}
+            <img v-if="list.type" :src="'../../assets/img/visa.png'" class="w-8 ml-2 block inline-block" alt="">
           </td>
           <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
             {{ list.masked ? list.masked : '---' }}

@@ -389,7 +389,7 @@
 				let params = {
 					mobileNumber: vm.userDetails.mobileNumber,
 					'detail.email': vm.userDetails.detail.email,
-					'ktp.number': vm.userDetails.ktp.number,
+					'ktp.number': vm.userDetails.ktp ? vm.userDetails.ktp.number : '',
 					npwp: vm.userDetails.npwp,
 					'detail.name': vm.userDetails.detail.name,
 					status: vm.userDetails.status,
@@ -430,7 +430,7 @@
 				let params = {
 					mobileNumber: vm.userDetails.mobileNumber,
 					'detail.email': vm.userDetails.detail.email,
-					'ktp.number': vm.userDetails.ktp.number,
+					'ktp.number': vm.userDetails.ktp ? vm.userDetails.ktp.number : '',
 					npwp: vm.userDetails.npwp,
 					'detail.name': vm.userDetails.detail.name,
 					status: vm.userDetails.status,
