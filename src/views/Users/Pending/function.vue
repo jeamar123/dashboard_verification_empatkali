@@ -15,9 +15,9 @@
 					}
 				},
 				filter:	{
-					searchVal: '',
-					startDate: new Date(this.$moment()),
-					endDate: new Date(this.$moment()),
+					searchVal: null,
+					startDate: null,
+					endDate: null,
 				},
 				dateFormat: {
 					input: 'DD MMM YYYY',
@@ -101,10 +101,23 @@
 			},
 			async submitFilter(page) {
 				let vm = this
+
+				if(vm.filter.searchVal == null && vm.filter.startDate == null && vm.filter.endDate == null){
+					vm.$swal("Error!", "Seems like you forgot to put something on search filters!", 'error');
+					return false;
+				}
+				if(vm.filter.startDate == null && vm.filter.endDate){
+					vm.$swal("Error!", "Please select a Start Date.", 'error');
+					return false;
+				}
+				if(vm.filter.startDate && vm.filter.endDate == null){
+					vm.$swal("Error!", "Please select an End Date.", 'error');
+					return false;
+				}
 				let searchFilterObj = {
-					date_from: vm.isDatePickerActive ? vm.$moment(vm.filter.startDate).format('YYYY-MM-DD') : null,
-					date_to: vm.isDatePickerActive ? vm.$moment(vm.filter.endDate).format('YYYY-MM-DD') : null,
-					filter: vm.filter.searchVal != '' ? vm.filter.searchVal : null,
+					date_from: vm.filter.startDate ? vm.$moment(vm.filter.startDate).format('YYYY-MM-DD') : null,
+					date_to: vm.filter.endDate ? vm.$moment(vm.filter.endDate).format('YYYY-MM-DD') : null,
+					filter: vm.filter.searchVal,
 				}
 				vm.isSearchActive = true;
 				vm.toggleLoader(true, 'Loading data');
@@ -115,13 +128,12 @@
 				let vm = this
 				vm.isSearchActive = false;
 				vm.filter =	{
-					searchVal: '',
-					startDate: new Date(this.$moment()),
-					endDate: new Date(this.$moment()),
+					searchVal: null,
+					startDate: null,
+					endDate: null,
 				};
 				vm.isDatePickerActive = false;
 				vm.toggleLoader(true, 'Loading data');
-				// await vm.totalUsers();
 				await vm.getUserList(1)
 			},
 			filterDateChanged()	{

@@ -37,10 +37,10 @@
       async initializeShowHideListener()	{
 				let vm = this
 				document.addEventListener("click",async function(e){
-					if(vm.isShowUserChildMenu){
-						var parentMatchUser = await vm.checkParentMatch(e, 'sidemenu-user-toggle');
-						vm.isShowUserChildMenu = parentMatchUser;
-					}
+					// if(vm.isShowUserChildMenu){
+					// 	var parentMatchUser = await vm.checkParentMatch(e, 'sidemenu-user-toggle');
+					// 	vm.isShowUserChildMenu = parentMatchUser;
+					// }
 					if(vm.isShowLimitChildMenu){
 						var parentMatchLimit = await vm.checkParentMatch(e, 'sidemenu-limit-toggle');
 						vm.isShowLimitChildMenu = parentMatchLimit;

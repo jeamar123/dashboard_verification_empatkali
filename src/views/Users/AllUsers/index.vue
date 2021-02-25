@@ -150,6 +150,7 @@
 								<template v-slot="{ inputValue, inputEvents }">
 									<input
 										class="datepicker-input"
+										placeholder="Start Date"
 										:value="inputValue"
 										v-on="inputEvents"
 										readonly
@@ -175,6 +176,7 @@
 								<template v-slot="{ inputValue, inputEvents }">
 									<input
 										class="datepicker-input"
+										placeholder="End Date"
 										:value="inputValue"
 										v-on="inputEvents"
 										readonly

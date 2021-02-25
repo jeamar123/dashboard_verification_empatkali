@@ -12,7 +12,7 @@
         <tr v-for="list in user.isUsedAsEmergencyContact" :key="list.index">
           <td class="py-2 pr-2 text-sm border-b-2 font-bold text-violet">{{ list.detail ? list.detail.name : '---' }}</td>
           <td class="py-2 pr-2 text-sm border-b-2">{{ list.mobileNumber ? list.mobileNumber : '---' }}</td>
-          <td class="py-2 pr-2 text-sm border-b-2">{{ list.detail ? list.detail.email : '---' }}</td>
+          <td class="py-2 pr-2 text-sm border-b-2">{{ list.detail && list.detail.email ? list.detail.email : '---' }}</td>
         </tr>
       </tbody>
     </table>
@@ -55,27 +55,117 @@ export default {
           'x-access-token': localStorage.getItem("auth_token")
         }
       },
+      paginationData:	{
+        totalResultsRows: 1,
+        currentPage: 1,
+        perPage: 10,
+        resultStart: 1,
+        resultEnd: 1,
+        totalPages: 1,
+      },
+      paginationCount: 10,
+      emailArr: [
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+        {
+          detail: { name: 'A' }
+        },
+      ],
   	}
   },
   created() {
+    this.setPaginationValues();
+  },
+  computed: {
+    paginateTotalPages: function() {
+      let vm = this
+      if(vm.paginationData.totalPages > vm.paginationCount){
+        let pagiArr = [];
+        let chunkArr = vm._.chunk([...Array(vm.paginationData.totalPages).keys()], 10);
+        pagiArr = chunkArr[vm._.findIndex(chunkArr, function(el) { return el.includes(vm.paginationData.currentPage-1)})];
+        pagiArr = pagiArr.map(v => v+1);
+        if(pagiArr[pagiArr.length - 1] < vm.paginationData.totalPages){
+          pagiArr.push( pagiArr[pagiArr.length - 1] + 1 );
+        }
+        return pagiArr;
+      }else{
+        return vm.paginationData.totalPages;
+      }
+    }
   },
   methods: {
-    /**
-		 * Form Validator
-		 *
-		 * This will validate multiple forms
-		 * 
-		 * @param  String scope
-		 */
-		formValidator(scope) {
-			let vm = this
+    setPaginationValues(){
+      let vm = this;
+      console.log(vm.emailArr);
+      vm.paginationData.totalResultsRows = vm.emailArr.length;
+      vm.paginationData = { ...vm.paginationData, ...{
+        resultStart: vm.paginationData.currentPage,
+        resultEnd: vm.paginationData.currentPage * vm.paginationData.perPage,
+        totalPages: Math.ceil(vm.paginationData.totalResultsRows / vm.paginationData.perPage),
+        currentPage: 1,
+      }};  
 
-			vm.$validator.validateAll(scope).then(result => {
-				if (result) {
-          console.log(result);
-				}
-			})
-    },
+      console.log(vm.paginationData);
+    }
 
   }
 }
