@@ -222,6 +222,29 @@
 								}else{
 									vm.userDetails.ocrData.code = JSON.parse(userData).code;
 								}
+							}else if(res.data[0].ocrtongdun){
+								let ocrData = JSON.parse(res.data[0].ocrtongdun);
+								if ( ocrData.display && ocrData.display.data) {
+									vm.userDetails.ocrData = {
+										data: {
+											name: ocrData.display.data.result.name,
+											province: ocrData.display.data.result.province,
+											idNumber: ocrData.display.data.result.nik,
+											birthPlaceBirthday: ocrData.display.data.result.birthplace + ', ' + ocrData.display.data.result.birthday,
+											bloodType: ocrData.display.data.result.blood_type,
+											address: ocrData.display.data.result.address,
+											rtrw: ocrData.display.data.result.rt_rw,
+											village: ocrData.display.data.result.village,
+											district: ocrData.display.data.result.district,
+											religion: ocrData.display.data.result.religion,
+											maritalStatus: ocrData.display.data.result.marital_status,
+											occupation: ocrData.display.data.result.occupation,
+											expiryDate: ocrData.display.data.result.expiry_date,
+										}
+									}
+									fixName = vm.userDetails.ocrData.data.name;
+									console.log(vm.userDetails.ocrData);
+								}
 							}else{
 								vm.userDetails.ocrData = {};
 							}
