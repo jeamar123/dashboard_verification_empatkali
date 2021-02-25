@@ -16,7 +16,7 @@
 				},
 				filter:	{
 					searchVal: '',
-					startDate: new Date(this.$moment().startOf('month')),
+					startDate: new Date(this.$moment()),
 					endDate: new Date(this.$moment()),
 				},
 				dateFormat: {
@@ -97,7 +97,7 @@
 				vm.isSearchActive = false;
 				vm.filter =	{
 					searchVal: '',
-					startDate: new Date(this.$moment().startOf('month')),
+					startDate: new Date(this.$moment()),
 					endDate: new Date(this.$moment()),
 				};
 				vm.isDatePickerActive = false;
