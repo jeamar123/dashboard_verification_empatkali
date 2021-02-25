@@ -135,17 +135,17 @@
 								</div>
 							</td>
 							<td class="border-b-2 py-3 text-xs 2xl:text-sm text-center">
-								<div class="mr-5 inline-block">
+								<div class="mr-3 inline-block">
 									<a href="#" @click.prevent="toggleModals(true, 'ban', list)">
 										<img :src="'../assets/img/banned.png'" alt="" class="w-6">
 									</a>
 								</div>
-								<div class="mr-5 inline-block">
+								<div class="mr-3 inline-block">
 									<a href="#" @click.prevent="toggleModals(true, 'transaction', list)">
 										<img :src="'../assets/img/transactions.png'" alt="" class="w-6">
 									</a>
 								</div>
-								<button @click="goToUserDetails(list)" class="btn border-2 font-bold border-violet font-bold py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
+								<button @click="goToUserDetails(list)" class="btn border-2 font-bold border-violet font-bold py-2 px-3 rounded-md text-violet text-sm">Lihat Detail</button>
 							</td>
 						</tr>
 					</tbody>
