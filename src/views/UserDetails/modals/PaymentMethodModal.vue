@@ -22,32 +22,91 @@
       </div>
     </div>
 
-    <table class="w-full text-left">
+    <table v-if="selectedOpt == 'card'" class="w-full text-left">
       <thead>
         <tr>
           <th class="font-bold py-2 pr-2 text-sm border-b-2">Tipe</th>
-          <th class="font-bold py-2 pr-2 text-sm border-b-2">Nomor {{ selectedOpt == 'card' ? 'Kartu' : 'HP' }}</th>
-          <th v-if="selectedOpt == 'instant'" class="font-bold py-2 pr-2 text-sm border-b-2">Saldo</th>
+          <th class="font-bold py-2 pr-2 text-sm border-b-2">Nomor Kartu</th>
           <th class="font-bold py-2 pr-2 text-sm border-b-2">Sama dengan user lain</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-if="selectedOpt == 'card' && user.card.length == 0">
+        <tr v-if="user.card.length == 0">
           <td colspan="3" class="text-center py-8 pr-2 text-sm font-bold">No record</td>
         </tr>
-        <tr v-for="list in (selectedOpt == 'card' ? user.card : 1)" :key="list.index">
+        <tr v-for="list in user.card" :key="list.index">
           <td class="py-2 pr-2 text-sm font-bold">
-            {{ selectedOpt == 'card' ? 'Kartu Debit' : user.danaVerifiedAccount ? 'Pembayaran Instan' : 'User not yet validate DANA Account' }}
-            <img v-if="selectedOpt == 'card'" :src="'../../assets/img/visa.png'" class="w-8 ml-2 block inline-block" alt="">
-            <img v-if="selectedOpt != 'card' && user.danaVerifiedAccount" :src="'../../assets/img/dana.png'" class="w-14 ml-2 block inline-block" alt="">
+            Kartu Debit
+            <img :src="'../../assets/img/visa.png'" class="w-8 ml-2 block inline-block" alt="">
           </td>
           <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
-            {{ selectedOpt == 'card' ? 
-                (list.masked ? list.masked : '---') 
-              : user.mobileNumber
-            }}
+            {{ list.masked ? list.masked : '---' }}
           </td>
-          <td v-if="selectedOpt == 'instant'" class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
+          <td class="py-2 pr-2">
+            <div 
+              class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold text-sm"
+              :class="{
+                'border-b' : false,
+                'bdg-status--success' : true,
+                'bdg-status--danger' : false,
+              }"
+            >
+              {{ 'No' }}
+            </div>
+          </td>
+        </tr>
+        <tr v-if="false">
+          <td></td>
+          <td :colspan="selectedOpt == 'card' ? 3 : 4">
+            <div class="border-2 border-dangerBtn bg-dangerDiv px-3 py-1 rounded-xl my-2">
+              <table class="w-full">
+                <thead>
+                  <tr>
+                    <th class="pr-3 py-2 text-xs text-gray-500">
+                      Nama
+                    </th>
+                    <th class="pr-3 py-2 text-xs text-gray-500">
+                      Nomor HP
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="pr-3 py-2 text-sm text-violet font-bold ">{{true ? '---' : 'Lorem Ipsum'}}</td>
+                    <td class="pr-3 py-2 text-sm">{{true ? '---' : '087888091699'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+    <table v-if="selectedOpt == 'instant'" class="w-full text-left">
+      <thead>
+        <tr>
+          <th class="font-bold py-2 pr-2 text-sm border-b-2">Tipe</th>
+          <th class="font-bold py-2 pr-2 text-sm border-b-2">Nomor HP</th>
+          <th class="font-bold py-2 pr-2 text-sm border-b-2">Saldo</th>
+          <th class="font-bold py-2 pr-2 text-sm border-b-2">Sama dengan user lain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-if="!user.danaVerifiedAccount">
+          <td colspan="3" class="text-center py-8 pr-2 text-sm font-bold">No record</td>
+        </tr>
+        <tr v-if="user.danaVerifiedAccount">
+          <td class="py-2 pr-2 text-sm font-bold">
+            {{ user.danaVerifiedAccount ? 'Pembayaran Instan' : 'User not yet validate DANA Account' }}
+            <img v-if="user.danaVerifiedAccount" :src="'../../assets/img/dana.png'" class="w-14 ml-2 block inline-block" alt="">
+          </td>
+          <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
+            {{ user.mobileNumber }}
+          </td>
+          <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
             {{ user.danaData.dana | currency }}
           </td>
           <td class="py-2 pr-2">
@@ -90,8 +149,10 @@
           </td>
         </tr>
       </tbody>
-    </table>
-    <div v-if="(selectedOpt == 'card' && user.card.length != 0) || (selectedOpt != 'card' && user.danaVerifiedAccount)" class="flex text-sm py-3 border-t">
+    </table>  
+
+
+    <div v-if="(selectedOpt == 'card' && user.card.length != 0) || (selectedOpt == 'instant' && user.danaVerifiedAccount)" class="flex text-sm py-3 border-t">
       <div class="flex-1 flex font-bold">
         <span class="mr-1">Terlihat</span>
         <span class="mr-1">{{ 1 }}-{{ 1 }}</span> 

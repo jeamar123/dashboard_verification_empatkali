@@ -494,14 +494,14 @@
                   <p class="flex-4">
                     {{ userDetails.gopay ? userDetails.gopay.ewallet_account_name: '---' }}
                     <span v-if="userDetails.gopay && userDetails.gopay.kyc_status">
-                      ({{ userDetails.gopay ? userDetails.gopay.kyc_status : ''}})
+                    ({{ userDetails.gopay ? userDetails.gopay.kyc_status : ''}})
                     </span>
                   </p>
                 </div>
                 <div class="flex xs-text mb-3">
                   <label class="text-gray-500 flex-3 relative">OVO <span class="absolute top-0 right-2 font-bold">:</span></label>
                   <p class="flex-4">
-                    {{ userDetails.ovo ? userDetails.ovo.ewallet_account_name : '---' }}
+                    {{ userDetails.ovo && userDetails.ovo.ewallet_account_name ? userDetails.ovo.ewallet_account_name.replace(/X/g, '*') : '---' }}
                   </p>
                 </div>
                 <div class="flex xs-text">
