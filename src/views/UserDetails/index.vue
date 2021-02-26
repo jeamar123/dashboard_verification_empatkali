@@ -215,7 +215,8 @@
                 <div class="card px-4 py-3 mr-2 mt-1 flex-5 flex flex-col">
                   <div class="flex flex-1 mb-2">
                     <div class="flex-1 mr-1">
-                      <div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+                      <!-- @click="toggleModals(true, 'fotoKtp')"  -->
+                      <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <!-- style="background-image: url('https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg');background-size: cover;" -->
                         <img 
                           :src="userDetails.ktp ? userDetails.ktp.image : '/assets/img/no-image.png'" 
@@ -223,8 +224,9 @@
                         >
                       </div>
                     </div>
+                    <!-- @click="toggleModals(true, 'selfieKtp')"  -->
                     <div class="flex-1 ml-1">
-                      <div @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+                      <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <img 
                           :src="userDetails.selfie ? userDetails.selfie : '/assets/img/no-image.png'" 
                           class="rounded-lg absolute object-cover w-full" alt=""
@@ -233,7 +235,7 @@
                     </div>
                   </div>
                   <div class="flex-none">
-                    <div 
+                    <!-- <div 
                       class="count-badge rounded-2xl px-5 py-2 text-center w-full inline-block text-white font-bold xs-text"
                       :class="{
                         'bdg-status--success' : userDetails.ktpValidation ? userDetails.ktpValidation.isFoundMatch : '---',
@@ -255,7 +257,7 @@
                           'Not Found' 
                         : 'No Record' 
                       }}
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <div class="card p-4 ml-1 mt-1 flex-3">
@@ -277,8 +279,8 @@
             <div v-if="getStatusValue(userDetails.status) == 'pending' || getStatusValue(userDetails.status) == 'approved' || getStatusValue(userDetails.status) == 'rejected'" class="flex flex-3">
               <div class="flex flex-col flex-5 mr-2">
                 <div class="card px-4 py-3 flex-1 flex flex-col">
-                  <p class="sm-text font-bold mb-2">Validasi KTP</p>
-                  <div 
+                  <p class="sm-text font-bold mb-3">Validasi KTP</p>
+                  <!-- <div 
                     class="count-badge rounded-2xl px-5 py-2 text-center w-full inline-block text-white font-bold xs-text mb-3"
                     :class="{
                       'bdg-status--success' : userDetails.ktpValidation ? userDetails.ktpValidation.isFoundMatch : '---',
@@ -300,12 +302,13 @@
                         'Not Found' 
                       : 'No Record' 
                     }}
-                  </div>
+                  </div> -->
 
                   <div class="flex flex-1 mb-2">
                     <div class="flex-1 flex flex-col mr-1">
                       <p class="xs-text font-bold mb-3">Foto KTP</p>
-                      <div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+                      <!-- @click="toggleModals(true, 'fotoKtp')"  -->
+                      <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <img 
                           :src="userDetails.ktp ? userDetails.ktp.image : '/assets/img/no-image.png'" 
                           class="rounded-lg absolute object-cover w-full" alt=""
@@ -314,7 +317,8 @@
                     </div>
                     <div class="flex-1 flex flex-col ml-1">
                       <p class="xs-text font-bold mb-3">Selfie KTP</p>
-                      <div @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg border relative overflow-hidden">
+                      <!-- @click="toggleModals(true, 'selfieKtp')"  -->
+                      <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <img 
                           :src="userDetails.selfie || '/assets/img/no-image.png'" 
                           class="rounded-lg absolute object-cover w-full" alt=""
@@ -323,7 +327,7 @@
                     </div>
                   </div>
 
-                  <button @click="toggleModals(true, 'compareKTP')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-none shadow py-2">Bandingkan</button>
+                  <!-- <button @click="toggleModals(true, 'compareKTP')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-none shadow py-2">Bandingkan</button> -->
                 </div>
               </div>
               <div class="flex flex-col flex-3 ml-1">
@@ -586,7 +590,7 @@
                 <div class="card px-4 py-3 ml-2 flex-1">
                   <p class="sm-text font-bold mb-5 flex items-center">
                     <span class="mr-3">Email</span>
-                    <InsideSpinner v-if="!userDetails.hasOwnProperty('emailLogs')" :options="{width: '15px', height: '15px',}"  />
+                    <InsideSpinner v-if="userDetails && !userDetails.hasOwnProperty('emailLogs')" :options="{width: '15px', height: '15px',}"  />
                   </p>
                   <button 
                     :disabled="!userDetails.hasOwnProperty('emailLogs')" 
@@ -819,7 +823,8 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Log Email <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ '---' }}</p>
+              <p v-if="userDetails.emailLogs && userDetails.emailLogs.length == 0" class="flex-4">{{ '---' }}</p>
+              <button v-else @click="toggleModals(true, 'email')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Detail</button>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Call <span class="absolute top-0 right-2 font-bold">:</span></label>
