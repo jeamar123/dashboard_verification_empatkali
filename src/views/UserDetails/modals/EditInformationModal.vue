@@ -132,19 +132,26 @@ export default {
   },
   created() {
     let vm = this
+
     vm.editInfoData = {
-      idNumber: '',
-      birthPlaceBirthday: '',
-      birthPlace: '',
-      dob: '',
-      gender: '',
-      address: '',
-      rtrw: '',
-      village: '',
-      district: '',
-      province: '',
-      maritalStatus: '',
+      name: vm.user.ocrData.name,
+      province: vm.user.ocrData.province,
+      idNumber: vm.user.ocrData.idNumber,
+      birthPlaceBirthday: vm.user.ocrData.birthPlaceBirthday,
+      birthPlace: vm.user.ocrData.birthplace,
+      dob: vm.user.ocrData.dob,
+      bloodType: vm.user.ocrData.bloodType,
+      address: vm.user.ocrData.address,
+      rtrw: vm.user.ocrData.rtrw,
+      village: vm.user.ocrData.village,
+      district: vm.user.ocrData.district,
+      religion: vm.user.ocrData.religion,
+      maritalStatus: vm.user.ocrData.maritalStatus,
+      occupation: vm.user.ocrData.occupation,
+      expiryDate: vm.user.ocrData.expiryDate,
+      gender: vm.user.ocrData.gender,
     }
+    console.log(vm.editInfoData);
   },
   methods: {
     /**

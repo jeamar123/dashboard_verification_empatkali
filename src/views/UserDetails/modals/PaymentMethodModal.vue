@@ -96,7 +96,7 @@
       </thead>
       <tbody>
         <tr v-if="!user.danaVerifiedAccount">
-          <td colspan="3" class="text-center py-8 pr-2 text-sm font-bold">No record</td>
+          <td colspan="4" class="text-center py-8 pr-2 text-sm font-bold">No record</td>
         </tr>
         <tr v-if="user.danaVerifiedAccount">
           <td class="py-2 pr-2 text-sm font-bold">

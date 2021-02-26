@@ -9,6 +9,9 @@
         </tr>
       </thead>
       <tbody>
+        <tr v-if="user.isUsedAsEmergencyContact.length == 0">
+          <td colspan="3" class="text-center py-8 pr-2 text-sm font-bold">No record</td>
+        </tr>
         <tr v-for="list in paginateArray" :key="list.index">
           <td class="py-2 pr-2 text-sm border-b-2 font-bold text-violet">{{ list.detail ? list.detail.name : '---' }}</td>
           <td class="py-2 pr-2 text-sm border-b-2">{{ list.mobileNumber ? list.mobileNumber : '---' }}</td>

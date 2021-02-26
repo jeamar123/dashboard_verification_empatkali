@@ -439,7 +439,7 @@
             <div class="flex mb-3">
               <div class="flex-1 flex items-center">
                 <p class="sm-text font-bold mr-5">OCR</p>
-                <InsideSpinner v-if="!userDetails.hasOwnProperty('ocrData')" :options="{width: '15px', height: '15px',}"  />
+                <InsideSpinner v-if="userDetails && !userDetails.ocrData" :options="{width: '15px', height: '15px',}"  />
               </div>
               <div class="flex-1 text-right">
                 <button @click="toggleModals(true, 'editInfo')" class="btn rounded-sm font-bold py-1 px-4 text-violet xs-text">Edit</button>
