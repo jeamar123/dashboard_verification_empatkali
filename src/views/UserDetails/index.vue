@@ -216,7 +216,7 @@
                   <div class="flex flex-1 mb-2">
                     <div class="flex-1 mr-1">
                       <!-- @click="toggleModals(true, 'fotoKtp')"  -->
-                      <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
+                      <div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <!-- style="background-image: url('https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg');background-size: cover;" -->
                         <img 
                           :src="userDetails.ktp ? userDetails.ktp.image : '/assets/img/no-image.png'" 
@@ -225,7 +225,7 @@
                       </div>
                     </div>
                     <!-- @click="toggleModals(true, 'selfieKtp')"  -->
-                    <div class="flex-1 ml-1">
+                    <div @click="toggleModals(true, 'selfieKtp')" class="flex-1 ml-1">
                       <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <img 
                           :src="userDetails.selfie ? userDetails.selfie : '/assets/img/no-image.png'" 
@@ -308,7 +308,7 @@
                     <div class="flex-1 flex flex-col mr-1">
                       <p class="xs-text font-bold mb-3">Foto KTP</p>
                       <!-- @click="toggleModals(true, 'fotoKtp')"  -->
-                      <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
+                      <div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <img 
                           :src="userDetails.ktp ? userDetails.ktp.image : '/assets/img/no-image.png'" 
                           class="rounded-lg absolute object-cover w-full" alt=""
@@ -318,7 +318,7 @@
                     <div class="flex-1 flex flex-col ml-1">
                       <p class="xs-text font-bold mb-3">Selfie KTP</p>
                       <!-- @click="toggleModals(true, 'selfieKtp')"  -->
-                      <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
+                      <div @click="toggleModals(true, 'selfieKtp')" class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <img 
                           :src="userDetails.selfie || '/assets/img/no-image.png'" 
                           class="rounded-lg absolute object-cover w-full" alt=""
