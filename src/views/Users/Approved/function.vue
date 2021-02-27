@@ -99,6 +99,7 @@
 					date_from: vm.filter.startDate ? vm.$moment(vm.filter.startDate).format('YYYY-MM-DD') : null,
 					date_to: vm.filter.endDate ? vm.$moment(vm.filter.endDate).format('YYYY-MM-DD') : null,
 					filter: vm.filter.searchVal,
+					filterStatus: 6,
 				}
 				vm.isSearchActive = true;
 				vm.toggleLoader(true, 'Loading data');

@@ -112,6 +112,10 @@
 					date_to: vm.filter.endDate ? vm.$moment(vm.filter.endDate).format('YYYY-MM-DD') : null,
 					filter: vm.filter.searchVal,
 				}
+				if( vm.activeStatus != 'all' ){
+					searchFilterObj.filterStatus = vm.getStatusValue(vm.activeStatus);
+				}
+				console.log(searchFilterObj);
 				vm.isSearchActive = true;
 				vm.toggleLoader(true, 'Loading data');
 				vm.paginationData.currentPage = page !== undefined ? vm.paginationData.currentPage : 1;

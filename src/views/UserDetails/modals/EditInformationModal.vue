@@ -5,19 +5,31 @@
         <div class="flex-1 mr-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">NIK</label>
-            <input type="text" class="text-xs" name="NIK" v-model="editInfoData.idNumber">
+            <input type="text" class="text-xs" name="NIK" 
+                    v-model="editInfoData.idNumber"
+                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.NIK') }"
+                    v-validate="'required'">
+            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.NIK') }}</small>
           </div>
         </div>
         <div class="flex-1 mx-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tempat</label>
-            <input type="text" class="text-xs" name="Tempat" v-model="editInfoData.birthPlace">
+            <input type="text" class="text-xs" name="Tempat" 
+                    v-model="editInfoData.birthPlace"
+                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Tempat') }"
+                    v-validate="'required'">
+            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Tempat') }}</small>
           </div>
         </div>
         <div class="flex-1 ml-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tanggal Lahir</label>
-            <input type="date" class="text-xs" name="tgl Lahir" v-model="editInfoData.dob">
+            <input type="date" class="text-xs" name="Tanggal Lahir" 
+                    v-model="editInfoData.dob"
+                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Tanggal Lahir') }"
+                    v-validate="'required|date_format:mm/dd/yyyy'">
+            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Tanggal Lahir') }}</small>
           </div>
         </div>
       </div>
@@ -27,7 +39,10 @@
         <div class="flex-1 mr-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Jenis Kelamin</label>
-            <select class="text-xs" name="Jenis Kelamin" v-model="editInfoData.gender">
+            <select class="text-xs" name="Jenis Kelamin" 
+                    v-model="editInfoData.gender"
+                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Jenis Kelamin') }"
+                    v-validate="'required'">
               <option>LAKI-LAKI</option>
               <option>PEREMPUAN</option>
             </select>
@@ -94,7 +109,11 @@
         <div class="flex-1 mr-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Status Pernikahan</label>
-            <input type="text" class="text-xs" name="Status Pernikahan" v-model="editInfoData.maritalStatus">
+            <input type="text" class="text-xs" name="Status Pernikahan" 
+                    v-model="editInfoData.maritalStatus"
+                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Status Pernikahan') }"
+                    v-validate="'required'">
+            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Status Pernikahan') }}</small>
           </div>
         </div>
         <div class="flex-1 mx-2"></div>
@@ -167,6 +186,7 @@ export default {
 			vm.$validator.validateAll(scope).then(result => {
 				if (result) {
           console.log(result);
+          vm.$swal('Success', 'No API yet.', 'success');
 				}
 			})
     },

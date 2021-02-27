@@ -538,12 +538,11 @@
                     <div 
                       class="count-badge rounded-2xl px-5 py-1 text-center w-16 inline-block text-white font-bold xs-text"
                       :class="{
-                        'bdg-status--success' : true,
-                        'bdg-status--warning' : false,
-                        'bdg-status--danger' : false,
+                        'bdg-status--success' : !userDetails.emergencyContactIsUser,
+                        'bdg-status--danger' : userDetails.emergencyContactIsUser,
                       }"
                     >
-                      {{ userDetails.emergencyContact && userDetails.emergencyContact.mobileNumber ? (check4xUser(userDetails) ? 'Yes' : 'No') : 'No' }}
+                      {{ userDetails.emergencyContactIsUser ? 'Yes' : 'No' }}
                     </div>
                   </div>
                 </div>
