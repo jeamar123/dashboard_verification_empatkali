@@ -172,8 +172,6 @@ export default {
       expiryDate: vm.user.ocrData.expiryDate,
       gender: vm.user.ocrData.gender,
     }
-    console.log(vm.editInfoData);
-    console.log(vm.user.ocrData);
   },
   methods: {
     /**
@@ -183,25 +181,26 @@ export default {
 		 * 
 		 * @param  String scope
 		 */
-		formValidator(scope) {
+		formValidator() {
+      // (scope)
 			let vm = this
-      if(!vm.editInfoData.dob || vm.editInfoData.dob == ''){
-        vm.dateInputError = 'The Tanggal Lahir field is required';
-      }
-      if(!vm.editInfoData.rtrw){
-        vm.rtrwIsError = 'The RT/RW field is required';
-      }else{
-        let regex = /[0-9]?[0-9][0-9][/][0-9]?[0-9][0-9]/;
-        if(regex.test(vm.editInfoData.rtrw) == false){
-          vm.rtrwIsError = 'Format should be e.g 00/00';
-        }
-      }
-			vm.$validator.validateAll(scope).then(result => {
-				if (result) {
-          console.log(result);
+      // if(!vm.editInfoData.dob || vm.editInfoData.dob == ''){
+      //   vm.dateInputError = 'The Tanggal Lahir field is required';
+      // }
+      // if(!vm.editInfoData.rtrw){
+      //   vm.rtrwIsError = 'The RT/RW field is required';
+      // }else{
+      //   let regex = /[0-9]?[0-9][0-9][/][0-9]?[0-9][0-9]/;
+      //   if(regex.test(vm.editInfoData.rtrw) == false){
+      //     vm.rtrwIsError = 'Format should be e.g 00/00';
+      //   }
+      // }
+			// vm.$validator.validateAll(scope).then(result => {
+			// 	if (result) {
+      //     console.log(result);
           vm.$swal('Success', 'No API yet.', 'success');
-				}
-			})
+				// }
+			// })
     },
     updateOCRDetails(){
       // let vm = this
