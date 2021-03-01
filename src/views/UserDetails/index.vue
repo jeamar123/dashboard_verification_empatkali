@@ -447,7 +447,10 @@
                 <InsideSpinner v-if="userDetails && !userDetails.ocrData" :options="{width: '15px', height: '15px',}"  />
               </div>
               <div class="flex-1 text-right">
-                <button @click="toggleModals(true, 'editInfo')" class="btn rounded-sm font-bold py-1 px-4 text-violet xs-text">Edit</button>
+                <button @click="toggleModals(true, 'editInfo')" class="btn rounded-sm font-bold py-1 px-4 text-violet xs-text" 
+                  :disabled="userDetails && !userDetails.ocrData"
+                  :class="{'text-opacity-50' : userDetails && !userDetails.ocrData}"
+                >Edit</button>
               </div>
             </div>
             <div class="flex xs-text mb-3">

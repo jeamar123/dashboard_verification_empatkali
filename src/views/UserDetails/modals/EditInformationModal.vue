@@ -26,8 +26,9 @@
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tanggal Lahir</label>
             <input type="date" class="text-xs" name="Tanggal Lahir" 
-                    v-model="editInfoData.dob">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Tanggal Lahir') }}</small>
+                    v-model="editInfoData.dob"
+                    :class="{ 'border-dangerMsg': dateInputError != '' }">
+            <small class="text-dangerMsg mt-2 block">{{ dateInputError }}</small>
           </div>
         </div>
       </div>
@@ -61,10 +62,11 @@
           <div class="input-div">
             <label for="" class="text-xs block mb-1">RT/RW</label>
             <input type="text" class="text-xs" name="RT/RW" 
+                    placeholder="e.g 00/00"
                     v-model="editInfoData.rtrw"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.RT/RW') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.RT/RW') }}</small>
+                    v-on:keypress="filterRTRW($event)"
+                    :class="{ 'border-dangerMsg': rtrwIsError != '' }">
+            <small class="text-dangerMsg mt-2 block">{{ rtrwIsError }}</small>
           </div>
         </div>
       </div>
@@ -145,6 +147,8 @@ export default {
         }
       },
       editInfoData: {},
+      dateInputError: '',
+      rtrwIsError: '',
   	}
   },
   created() {
@@ -180,11 +184,21 @@ export default {
 		 */
 		formValidator(scope) {
 			let vm = this
-
+      if(!vm.editInfoData.dob || vm.editInfoData.dob == ''){
+        vm.dateInputError = 'The Tanggal Lahir field is required';
+      }
+      if(!vm.editInfoData.rtrw){
+        vm.rtrwIsError = 'The RT/RW field is required';
+      }else{
+        let regex = /[0-9]?[0-9][0-9][/][0-9]?[0-9][0-9]/;
+        if(regex.test(vm.editInfoData.rtrw) == false){
+          vm.rtrwIsError = 'Format should be e.g 00/00';
+        }
+      }
 			vm.$validator.validateAll(scope).then(result => {
 				if (result) {
           console.log(result);
-          vm.$swal('Error', 'No API yet.', 'error');
+          vm.$swal('Success', 'No API yet.', 'success');
 				}
 			})
     },
@@ -229,7 +243,14 @@ export default {
       //   vm.$swal('Error!', error.response.data.message, 'error');
       //   vm.toggleLoader(false);
       // })
-    }
+    },
+    filterRTRW(e){
+      console.log(e);
+      let char = String.fromCharCode(e.keyCode); // Get the character
+      console.log(char);
+      if(/^[0-9/]+$/.test(char)) return true; // Match with regex 
+      else e.preventDefault(); // If not match, don't add to input text
+    },
 
   }
 }

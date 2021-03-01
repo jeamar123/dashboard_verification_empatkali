@@ -34,3 +34,9 @@ Vue.filter('age', date => {
 Vue.filter('number', number => {
 	return number.toLocaleString()
 })
+
+
+/**
+ * Filter RT/RW input to only accept numbers and slash
+ */
+

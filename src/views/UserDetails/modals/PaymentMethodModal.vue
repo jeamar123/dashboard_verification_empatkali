@@ -109,7 +109,8 @@
             {{ user.mobileNumber }}
           </td>
           <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
-            {{ user.danaData.dana | currency }}
+            <span v-if="user.danaVerifiedAccount">{{ user.danaData.dana | currency }}</span>
+            <span v-if="user.gopayVerifiedAccount">{{ '---' }}</span>
           </td>
           <td class="py-2 pr-2">
             <div 
