@@ -882,7 +882,7 @@
               </b>
             </label>
             <div class="mr-2 sm-text">
-              {{ userDetails.commentReviews.length > 0 ? userDetails.commentReviews[0].commentBy : '---' }}
+              {{ getStatusValue(userDetails.status) == 'rejected' && userDetails.commentReviews.length > 0 ? userDetails.commentReviews[0].commentBy : '---' }}
             </div>
           </div>
           <div class="flex-none flex justify-end items-center border-l pl-3 ml-3 ">
@@ -894,7 +894,7 @@
                 <img :src="'../../assets/img/calendar-icon.png'" class="w-full block align-middle" alt="">
               </div>
               <div class="flex-1 sm-text">
-                <span v-if="userDetails.rejectDate && userDetails.rejectDate.isReject">{{ userDetails.rejectDate.date | moment("DD MMM YYYY") }}</span>
+                <span v-if="getStatusValue(userDetails.status) == 'rejected' && userDetails.commentReviews.length > 0">{{ userDetails.commentReviews[0].createdAt | moment("DD MMM YYYY") }}</span>
                 <span v-else>{{ '---' }}</span>
               </div>
             </div>
@@ -903,7 +903,7 @@
                 <img :src="'../../assets/img/clock-icon.png'" class="w-full block align-middle" alt="">
               </div>
               <div class="flex-1 sm-text">
-                <span v-if="userDetails.rejectDate && userDetails.rejectDate.isReject">{{ userDetails.rejectDate.date | moment("HH:mm:SS") }} WIB</span>
+                <span v-if="getStatusValue(userDetails.status) == 'rejected' && userDetails.commentReviews.length > 0">{{ userDetails.commentReviews[0].createdAt | moment("HH:mm:SS") }} WIB</span>
                 <span v-else>{{ '---' }}</span>
               </div>
             </div>
