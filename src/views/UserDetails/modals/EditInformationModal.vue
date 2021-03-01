@@ -26,9 +26,7 @@
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tanggal Lahir</label>
             <input type="date" class="text-xs" name="Tanggal Lahir" 
-                    v-model="editInfoData.dob"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Tanggal Lahir') }"
-                    v-validate="'required|date_format:mm/dd/yyyy'">
+                    v-model="editInfoData.dob">
             <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Tanggal Lahir') }}</small>
           </div>
         </div>
@@ -186,7 +184,7 @@ export default {
 			vm.$validator.validateAll(scope).then(result => {
 				if (result) {
           console.log(result);
-          vm.$swal('Success', 'No API yet.', 'success');
+          vm.$swal('Error', 'No API yet.', 'error');
 				}
 			})
     },

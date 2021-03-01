@@ -263,7 +263,8 @@
                 <div class="card p-4 ml-1 mt-1 flex-3">
                   <p class="xs-text font-bold mb-2">Metode Pembayaran</p>
                   <img v-if="userDetails.defaultPayment == 'card'" :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
-                  <img v-if="userDetails.defaultPayment != 'card'" :src="'../../assets/img/logo-dana-blue-sm.png'" class="w-18 block mb-2" alt="">
+                  <img v-if="userDetails.defaultPayment == 'dana'" :src="'../../assets/img/logo-dana-blue-sm.png'" class="w-18 block mb-2" alt="">
+                  <img v-if="userDetails.defaultPayment == 'gopay'" :src="'../../assets/img/gopay-logo.svg'" class="w-18 block mt-2 mb-4" alt="">
                   <button 
                     :disabled="!userDetails.hasOwnProperty('danaData')" 
                     :class="{'opacity-40' : !userDetails.hasOwnProperty('danaData')}"
@@ -863,7 +864,7 @@
               </b>
             </label>
             <div class="flex-auto mr-2 truncate sm-text">
-              {{ userDetails.reason ? userDetails.reason : '---' }}
+              {{ userDetails.commentReviews.length > 0 ? userDetails.commentReviews[0].text : '---' }}
             </div>
           </div>
           <div v-else class="flex-1"></div>
@@ -874,8 +875,7 @@
               </b>
             </label>
             <div class="mr-2 sm-text">
-              {{ '---' }}
-              <!-- {{ userDetails.sideDetails && userDetails.sideDetails.name ? userDetails.sideDetails.name : '---' }} -->
+              {{ userDetails.commentReviews.length > 0 ? userDetails.commentReviews[0].commentBy : '---' }}
             </div>
           </div>
           <div class="flex-none flex justify-end items-center border-l pl-3 ml-3 ">
@@ -887,7 +887,8 @@
                 <img :src="'../../assets/img/calendar-icon.png'" class="w-full block align-middle" alt="">
               </div>
               <div class="flex-1 sm-text">
-                {{ userDetails.updatedAt | moment("DD MMM YYYY") }}
+                <span v-if="userDetails.rejectDate && userDetails.rejectDate.isReject">{{ userDetails.rejectDate.date | moment("DD MMM YYYY") }}</span>
+                <span v-else>{{ '---' }}</span>
               </div>
             </div>
             <div class="flex items-center">
@@ -895,7 +896,8 @@
                 <img :src="'../../assets/img/clock-icon.png'" class="w-full block align-middle" alt="">
               </div>
               <div class="flex-1 sm-text">
-                {{ userDetails.updatedAt | moment("HH:mm:SS") }} WIB
+                <span v-if="userDetails.rejectDate && userDetails.rejectDate.isReject">{{ userDetails.rejectDate.date | moment("HH:mm:SS") }} WIB</span>
+                <span v-else>{{ '---' }}</span>
               </div>
             </div>
           </div>

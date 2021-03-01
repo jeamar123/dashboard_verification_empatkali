@@ -95,13 +95,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-if="!user.danaVerifiedAccount">
+        <tr v-if="!user.danaVerifiedAccount && !user.gopayVerifiedAccount">
           <td colspan="4" class="text-center py-8 pr-2 text-sm font-bold">No record</td>
         </tr>
-        <tr v-if="user.danaVerifiedAccount">
+        <tr v-if="user.danaVerifiedAccount || user.gopayVerifiedAccount">
           <td class="py-2 pr-2 text-sm font-bold">
-            {{ user.danaVerifiedAccount ? 'Pembayaran Instan' : 'User not yet validate DANA Account' }}
+            <span v-if="user.danaVerifiedAccount || user.gopayVerifiedAccount">{{ 'Pembayaran Instan' }}</span>
+            <span v-else>{{ `User not yet validate ${ user.defaultPayment == 'dana' ? 'DANA' : 'GOPAY' } Account` }}</span>
             <img v-if="user.danaVerifiedAccount" :src="'../../assets/img/dana.png'" class="w-14 ml-2 block inline-block" alt="">
+            <img v-if="user.gopayVerifiedAccount" :src="'../../assets/img/gopay-logo.svg'" class="w-14 ml-2 block inline-block" alt="">
           </td>
           <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
             {{ user.mobileNumber }}
