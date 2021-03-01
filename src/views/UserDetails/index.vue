@@ -75,10 +75,10 @@
             </div>
           </div>
           <div class="card p-4 relative">
-            <div v-if="!userDetails.blacklist" class="corner-status absolute right-0 top-0 bdg-status--info px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
+            <div v-if="!userDetails.blacklist || (userDetails.blacklist && !userDetails.blacklist.data)" class="corner-status absolute right-0 top-0 bdg-status--info px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
               Clear
             </div>
-            <div v-if="userDetails.blacklist" class="corner-status absolute right-0 top-0 bdg-status--blacklist px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
+            <div v-if="userDetails.blacklist && userDetails.blacklist.data" class="corner-status absolute right-0 top-0 bdg-status--blacklist px-6 py-1 text-white font-bold xs-text rounded-tr-xl rounded-bl-xl">
               Blacklist <img @click="toggleModals(true, 'blacklist')" :src="'../../assets/img/info-white.png'" class="h-3 ml-2 cursor-pointer relative" alt="" style="top: -1px;">
             </div>
 
@@ -94,14 +94,14 @@
               <label class="text-gray-500 flex-2 relative">Input NIK sama dengan NIK OCR <span class="absolute top-0 right-3 font-bold">:</span></label>
               <div class="flex-1">
                 <div 
-                  v-if="userDetails.ktpValidation && userDetails.nik"
+                  v-if="(userDetails.ktp && userDetails.ktp.number) && (userDetails.ocrData && userDetails.ocrData.idNumber)"
                   class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold xs-text"
                   :class="{
-                    'bdg-status--success' : userDetails.ktpValidation && userDetails.nik && (userDetails.ktpValidation.nik == userDetails.nik),
-                    'bdg-status--danger' : !userDetails.nik || userDetails.ktpValidation && userDetails.nik && (userDetails.ktpValidation.nik != userDetails.nik),
+                    'bdg-status--success' : userDetails.ktp.number == userDetails.ocrData.idNumber,
+                    'bdg-status--danger' : userDetails.ktp.number != userDetails.ocrData.idNumber,
                   }"
                 >
-                  {{ userDetails.ktpValidation && userDetails.nik && (userDetails.ktpValidation.nik == userDetails.nik) ? 'Yes' : 'No' }}
+                  {{ (userDetails.ktp.number == userDetails.ocrData.idNumber) ? 'Yes' : 'No' }}
                 </div>
                 <div v-else class="count-badge rounded-2xl py-1 text-center w-20 2xl:w-28 inline-block text-white font-bold xs-text bdg-status--warning">No Record</div>
               </div>
@@ -355,7 +355,8 @@
                 <div class="card p-4 mt-1 flex-3">
                   <p class="xs-text font-bold mb-2">Metode Pembayaran</p>
                   <img v-if="userDetails.defaultPayment == 'card'" :src="'../../assets/img/visa.png'" class="w-14 block mb-2" alt="">
-                  <img v-if="userDetails.defaultPayment != 'card'" :src="'../../assets/img/logo-dana-blue-sm.png'" class="w-18 block mb-2" alt="">
+                  <img v-if="userDetails.defaultPayment == 'dana'" :src="'../../assets/img/logo-dana-blue-sm.png'" class="w-18 block mb-2" alt="">
+                  <img v-if="userDetails.defaultPayment == 'gopay'" :src="'../../assets/img/gopay-logo.svg'" class="w-18 block mt-2 mb-4" alt="">
                   <button 
                     :disabled="!userDetails.hasOwnProperty('danaData')" 
                     :class="{'opacity-40' : !userDetails.hasOwnProperty('danaData')}"
@@ -764,14 +765,15 @@
             <p class="sm-text font-bold mb-4">Metode Pembayaran - Pembayaran Instan</p>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Tipe <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <div v-if="userDetails.danaVerifiedAccount" class="flex-4">
-                <img :src="'../../assets/img/dana.png'" class="w-16 block inline-block" alt="">
+              <div v-if="userDetails.danaVerifiedAccount || userDetails.gopayVerifiedAccount" class="flex-4">
+                <img v-if="userDetails.danaVerifiedAccount" :src="'../../assets/img/dana.png'" class="w-16 block inline-block" alt="">
+                <img v-if="userDetails.gopayVerifiedAccount" :src="'../../assets/img/gopay-logo.svg'" class="w-16 block inline-block" alt="">
               </div>
               <p v-else class="flex-4">{{ '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Nomor HP <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.danaVerifiedAccount ? userDetails.mobileNumber : '---' }}</p>
+              <p class="flex-4">{{ userDetails.danaVerifiedAccount || userDetails.gopayVerifiedAccount ? userDetails.mobileNumber : '---' }}</p>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Saldo <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -824,10 +826,12 @@
                 <span v-else>{{ '---' }}</span>
               </p>
             </div>
-            <div class="flex xs-text mb-3">
+            <div class="flex xs-text mb-3 items-center">
               <label class="text-gray-500 flex-3 relative">Log Email <span class="absolute top-0 right-2 font-bold">:</span></label>
               <p v-if="userDetails.emailLogs && userDetails.emailLogs.length == 0" class="flex-4">{{ '---' }}</p>
-              <button v-else @click="toggleModals(true, 'email')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold px-8 py-2 flex-1 shadow">Detail</button>
+              <div v-else class="flex-4">
+                <button @click="toggleModals(true, 'email')" class="btn xs-text text-violet border border-violet rounded-md font-bold px-8 py-2 shadow">Detail</button>
+              </div>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Call <span class="absolute top-0 right-2 font-bold">:</span></label>

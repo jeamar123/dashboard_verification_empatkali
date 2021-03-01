@@ -275,11 +275,10 @@
 										occupation: ocrData.display.data.result.occupation,
 										expiryDate: ocrData.display.data.result.expiry_date,
 										birthplace: ocrData.display.data.result.birthplace,
-										dob: ocrData.display.data.result.dob,
+										dob: this.$moment(ocrData.display.data.result.birthday, 'DD-MM-YYYY').format('YYYY-MM-DD'),
 										gender: ocrData.display.data.result.gender,
 									}
 									fixName = vm.userDetails.ocrData.name;
-									console.log(vm.userDetails.ocrData);
 								}
 							}else{
 								vm.userDetails.ocrData = {};

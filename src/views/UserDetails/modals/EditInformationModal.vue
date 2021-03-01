@@ -173,6 +173,7 @@ export default {
       gender: vm.user.ocrData.gender,
     }
     console.log(vm.editInfoData);
+    console.log(vm.user.ocrData);
   },
   methods: {
     /**
@@ -245,9 +246,7 @@ export default {
       // })
     },
     filterRTRW(e){
-      console.log(e);
       let char = String.fromCharCode(e.keyCode); // Get the character
-      console.log(char);
       if(/^[0-9/]+$/.test(char)) return true; // Match with regex 
       else e.preventDefault(); // If not match, don't add to input text
     },

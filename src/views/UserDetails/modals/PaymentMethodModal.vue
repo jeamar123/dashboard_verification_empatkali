@@ -98,19 +98,73 @@
         <tr v-if="!user.danaVerifiedAccount && !user.gopayVerifiedAccount">
           <td colspan="4" class="text-center py-8 pr-2 text-sm font-bold">No record</td>
         </tr>
-        <tr v-if="user.danaVerifiedAccount || user.gopayVerifiedAccount">
+
+        <!-- FOR DANA -->
+        <tr v-if="user.danaVerifiedAccount">
           <td class="py-2 pr-2 text-sm font-bold">
-            <span v-if="user.danaVerifiedAccount || user.gopayVerifiedAccount">{{ 'Pembayaran Instan' }}</span>
-            <span v-else>{{ `User not yet validate ${ user.defaultPayment == 'dana' ? 'DANA' : 'GOPAY' } Account` }}</span>
+            <span v-if="user.danaVerifiedAccount">{{ 'Pembayaran Instan' }}</span>
+            <span v-else>{{ `User not yet validate DANA Account` }}</span>
             <img v-if="user.danaVerifiedAccount" :src="'../../assets/img/dana.png'" class="w-14 ml-2 block inline-block" alt="">
-            <img v-if="user.gopayVerifiedAccount" :src="'../../assets/img/gopay-logo.svg'" class="w-14 ml-2 block inline-block" alt="">
           </td>
           <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
             {{ user.mobileNumber }}
           </td>
           <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
             <span v-if="user.danaVerifiedAccount">{{ user.danaData.dana | currency }}</span>
-            <span v-if="user.gopayVerifiedAccount">{{ '---' }}</span>
+            <span v-else>{{ '---' }}</span>
+          </td>
+          <td class="py-2 pr-2">
+            <div 
+              class="count-badge rounded-2xl py-1 text-center w-16 inline-block text-white font-bold text-sm"
+              :class="{
+                'border-b' : false,
+                'bdg-status--success' : true,
+                'bdg-status--warning' : false,
+                'bdg-status--danger' : false,
+              }"
+            >
+              {{ 'No' }}
+            </div>
+          </td>
+        </tr>
+        <tr v-if="false">
+          <td></td>
+          <td :colspan="selectedOpt == 'card' ? 3 : 4">
+            <div class="border-2 border-dangerBtn bg-dangerDiv px-3 py-1 rounded-xl my-2">
+              <table class="w-full">
+                <thead>
+                  <tr>
+                    <th class="pr-3 py-2 text-xs text-gray-500">
+                      Nama
+                    </th>
+                    <th class="pr-3 py-2 text-xs text-gray-500">
+                      Nomor HP
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="pr-3 py-2 text-sm text-violet font-bold ">{{true ? '---' : 'Lorem Ipsum'}}</td>
+                    <td class="pr-3 py-2 text-sm">{{true ? '---' : '087888091699'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+
+        <!-- FOR GOPAY -->
+        <tr v-if="user.gopayVerifiedAccount">
+          <td class="py-2 pr-2 text-sm font-bold">
+            <span v-if="user.gopayVerifiedAccount">{{ 'Pembayaran Instan' }}</span>
+            <span v-else>{{ `User not yet validate GOPAY Account` }}</span>
+            <img v-if="user.gopayVerifiedAccount" :src="'../../assets/img/gopay-logo.svg'" class="w-14 ml-2 block inline-block" alt="">
+          </td>
+          <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
+            {{ user.mobileNumber }}
+          </td>
+          <td class="py-2 pr-2 text-sm" :class="{'border-b' : false}">
+            <span>{{ '---' }}</span>
           </td>
           <td class="py-2 pr-2">
             <div 
