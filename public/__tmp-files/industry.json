@@ -1,90 +1,118 @@
 [
   {
-    "_id": "industri1",
-    "label": "Angkasa & Pertahanan"
+    "label": "Angkasa & Pertahanan",
+    "_id": "industri1"
   },
   {
-    "_id": "industri2",
-    "label": "Angkutan Udara & Logistik"
+    "label": "Angkutan Udara & Logistik",
+    "_id": "industri2"
   },
   {
-    "_id": "industri3",
-    "label": "Asuransi"
+    "label": "Asuransi",
+    "_id": "industri3"
   },
   {
-    "_id": "industri4",
-    "label": "Bahan Kimia"
+    "label": "Bahan Kimia",
+    "_id": "industri4"
   },
   {
-    "_id": "industri5",
-    "label": "Bahan Konstruksi"
+    "label": "Bahan Konstruksi",
+    "_id": "industri5"
   },
   {
-    "_id": "industri6",
-    "label": "Konstruksi & Teknik"
+    "label": "Banking",
+    "_id": "industri13"
   },
   {
-    "_id": "industri7",
-    "label": "Media"
+    "label": "Computer Games/ Hardware/ Software",
+    "_id": "industri23"
   },
   {
-    "_id": "industri13",
-    "label": "Banking"
+    "label": "Construction",
+    "_id": "industri19"
   },
   {
-    "_id": "industri23",
-    "label": "Computer Games/ Hardware/ Software"
+    "label": "Consulting",
+    "_id": "industri22"
   },
   {
-    "_id": "industri19",
-    "label": "Construction"
+    "label": "Consumer Goods",
+    "_id": "industri21"
   },
   {
-    "_id": "industri22",
-    "label": "Consulting"
+    "label": "Financial Services",
+    "_id": "industri24"
   },
   {
-    "_id": "industri21",
-    "label": "Consumer Goods"
+    "label": "Food and Beverages",
+    "_id": "industri20"
   },
   {
-    "_id": "industri24",
-    "label": "Financial Services"
+    "label": "Graphic Design",
+    "_id": "industri12"
   },
   {
-    "_id": "industri20",
-    "label": "Food and Beverages"
+    "label": "Hospital & Health Care",
+    "_id": "industri16"
   },
   {
-    "_id": "industri12",
-    "label": "Graphic Design"
+    "label": "Kelautan",
+    "_id": "industri10"
   },
   {
-    "_id": "industri16",
-    "label": "Hospital & Health Care"
+    "label": "Konstruksi & Teknik",
+    "_id": "industri6"
   },
   {
-    "_id": "industri10",
-    "label": "Kelautan"
+    "label": "Manufacture/Production",
+    "_id": "industri15"
   },
   {
-    "_id": "industri15",
-    "label": "Manufacture/Production"
+    "label": "Media",
+    "_id": "industri7"
   },
   {
-    "_id": "industri11",
-    "label": "Oil, Gas & Bahan Bakar"
+    "label": "Oil, Gas & Bahan Bakar",
+    "_id": "industri11"
   },
   {
-    "_id": "industri14",
-    "label": "Real Estate"
+    "label": "Real Estate",
+    "_id": "industri14"
   },
   {
-    "_id": "industri18",
-    "label": "Retail"
+    "label": "Retail",
+    "_id": "industri18"
   },
   {
-    "_id": "industri17",
-    "label": "Telecommunications"
+    "label": "Telecommunications",
+    "_id": "industri17"
+  },
+  {
+    "label": "Jasa IT",
+    "_id": "industri8"
+  },
+  {
+    "label": "Jasa Telekomunikasi Nirkabel",
+    "_id": "industri9"
+  },
+  {
+    "label": "Hukum/Perpajakan",
+    "_id": "industri25"
+  },
+  {
+    "label": "Pariwisata",
+    "_id": "industri26"
+  },
+  {
+    "label": "Perkebunan/Perikanan",
+    "_id": "industri27"
+  },
+  {
+    "label": "Pertambangan",
+    "_id": "industri28"
+  },
+  {
+    "label": "Transportasi",
+    "_id": "industri29"
   }
 ]
