@@ -596,7 +596,7 @@
 							address: res.data.display.data.result.address,
 							rtrw: res.data.display.data.result.rt_rw,
 							village: res.data.display.data.result.village,
-							district: res.data.display.data.result.district,
+							district: res.data.display.data.result.street,
 							religion: res.data.display.data.result.religion,
 							maritalStatus: res.data.display.data.result.marital_status,
 							occupation: res.data.display.data.result.occupation,
