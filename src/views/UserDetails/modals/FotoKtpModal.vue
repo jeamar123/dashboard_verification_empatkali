@@ -1,11 +1,11 @@
 <template>
   <div class="show-image-modal">
-    <div class="shadow-lg-middle relative mb-5 ktp-wrapper">
+    <div class="relative mb-5 ktp-wrapper">
       <img 
         v-viewer="viewerOptions" 
         :src="user.ktp.image || '/assets/img/no-image.png'" 
-        class="rounded-lg h-full opacity-0 " hidden alt=""
-        style="display: none !important;"
+        class="rounded-lg h-full"  alt=""
+        @viewed="viewed"
       >
     </div>
 
@@ -32,13 +32,19 @@ export default {
         transition: false, 
         fullscreen: false, 
         keyboard: false, 
-        backdrop: false,
-      }
+        backdrop: true,
+      },
   	}
   },
   created() {
   },
   methods: {
+    viewed(viewer){
+      this.$viewer = viewer;
+      console.log(this.$viewer);
+      // this.$viewer.srcElement.$viewer.canvas.clientHeight
+      // this.$viewer.detail.image.style.height = this.$viewer.srcElement.$viewer.canvas.clientHeight + "px";
+    },
   }
 }
 </script>

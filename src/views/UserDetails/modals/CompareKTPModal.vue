@@ -5,8 +5,7 @@
         <img 
           v-viewer="viewerOptions" 
           :src="user.ktp.image || '/assets/img/no-image.png'" 
-          class="rounded-lg h-full opacity-0 " hidden alt=""
-          style="display: none !important;"
+          class="rounded-lg h-full"  alt=""
         >
       </div>
 
@@ -14,8 +13,7 @@
         <img 
           v-viewer="viewerOptions" 
           :src="user.selfie || '/assets/img/no-image.png'" 
-          class="rounded-lg h-full opacity-0 " hidden alt=""
-          style="display: none !important;"
+          class="rounded-lg h-full"  alt=""
         >
       </div>
     </div>
@@ -43,7 +41,7 @@ export default {
         transition: false, 
         fullscreen: false, 
         keyboard: false, 
-        backdrop: false,
+        backdrop: true,
       }
   	}
   },

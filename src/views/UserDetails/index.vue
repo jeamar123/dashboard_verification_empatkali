@@ -328,7 +328,7 @@
                     </div>
                   </div>
 
-                  <!-- <button @click="toggleModals(true, 'compareKTP')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-none shadow py-2">Bandingkan</button> -->
+                  <button @click="toggleModals(true, 'compareKTP')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-none shadow py-2">Bandingkan</button>
                 </div>
               </div>
               <div class="flex flex-col flex-3 ml-1">
@@ -1044,34 +1044,43 @@
     }
     .viewer-container{
       overflow: visible;
-      position: relative;
-      max-height: 439px;
+  //     position: relative;
+  //     max-height: 439px;
     }
     .viewer-canvas{
-      overflow: visible;
-      position: relative;
-      max-height: 439px;
-			height: 100%;
-      text-align: center;
-			display: flex;
+      // overflow: visible;
+      --tw-shadow: 0 0px 6px 0px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+      box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  //     position: relative;
+  //     max-height: 439px;
+	// 		height: 100%;
+  //     text-align: center;
+	// 		display: flex;
 		}
     .viewer-footer{
       overflow: visible;
     }
     .viewer-title{
-      position: relative;
-      top: 78px;
+  //     position: relative;
+  //     top: 78px;
       color: #333;
-      padding-bottom: 5px;
+  //     padding-bottom: 5px;
+      position: absolute;
+      margin: 0;
+      width: 100%;
+      left: 0;
+      right: 0;
+      max-width: unset;
+      bottom: -28px;
     }
-    .viewer-canvas > img{
-      margin: auto !important;
-      height: auto !important;
-      width: auto !important;
-      position: relative !important;
-      max-height: 439px !important;
-			display: block !important;
-    }
+  //   .viewer-canvas > img{
+  //     margin: auto !important;
+  //     height: auto !important;
+  //     width: auto !important;
+  //     position: relative !important;
+  //     max-height: 439px !important;
+	// 		display: block !important;
+  //   }
     .viewer-toolbar > ul > li{
       background-color: #D8DAF4;
     }

@@ -129,7 +129,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   props: {
@@ -198,51 +198,50 @@ export default {
 			// vm.$validator.validateAll(scope).then(result => {
 			// 	if (result) {
       //     console.log(result);
-          vm.$swal('Success', 'No API yet.', 'success');
+            vm.updateOCRDetails();
 				// }
 			// })
     },
     updateOCRDetails(){
-      // let vm = this
-      // console.log(vm.editInfoData);
+      let vm = this
+      console.log(vm.editInfoData);
       
-      // let params  = {
-      //   id: vm.user.user._id,
-      //   occupation: vm.editInfoData.occupation,
-      //   address: vm.editInfoData.address,
-      //   gender: vm.editInfoData.gender,
-      //   city: vm.editInfoData.city,
-      //   ktp: vm.editInfoData.idNumber,
-      //   bloodType: vm.editInfoData.bloodType,
-      //   birthPlaceBirthday: vm.editInfoData.birthPlace + ', ' + this.$moment(vm.editInfoData.dob).format('DD-MM-YYYY'),
-      //   religion: vm.editInfoData.religion,
-      //   expiryDate: this.$moment(vm.editInfoData.expiryDate).format('DD-MM-YYYY'),
-      //   rtrw: vm.editInfoData.rtrw,
-      //   province: vm.editInfoData.province,
-      //   nationality: vm.editInfoData.nationality,
-      //   district: vm.editInfoData.district,
-      //   name: vm.editInfoData.name,
-      //   village: vm.editInfoData.village,
-      //   maritalStatus: vm.editInfoData.maritalStatus
-      // }
-      // vm.toggleLoader(true);
-      // await axios.put(`api/users/updateocr`, params, vm.requestedHeaders)
-      // .then(async function (response) {
-      //   console.log(response);
-      //   if (response.data.status) {
-      //     vm.requestSuccess('editInfo');
-      //     vm.$swal('Success!', response.data.message, 'success');
-      //   }else{
-      //     vm.$swal('Error!', response.data.message, 'error');
-      //   }
-      //   vm.toggleLoader(false);
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      //   console.log(error.response);
-      //   vm.$swal('Error!', error.response.data.message, 'error');
-      //   vm.toggleLoader(false);
-      // })
+      let params = {
+        birthday: vm.editInfoData.dob,
+        address: vm.editInfoData.address,
+        occupation: vm.editInfoData.occupation,
+        gender: vm.editInfoData.gender,
+        expiry_date: vm.editInfoData.expiryDate,
+        issue_location: 'NI5:3509119303870003',
+        religion: vm.editInfoData.religion,
+        nik: vm.editInfoData.idNumber,
+        marital_status: vm.editInfoData.maritalStatus,
+        nationality: vm.editInfoData.nationality,
+        birthplace: vm.editInfoData.birthplace,
+        issue_date: "08082012",
+        street: vm.editInfoData.district,
+        blood_type: vm.editInfoData.bloodType,
+        name: vm.editInfoData.name,
+        village: vm.editInfoData.village,
+        rt_rw: vm.editInfoData.rtrw
+      }
+
+      vm.toggleLoader(true);
+      axios.post(`http://sb-mon.empatkali.co.id/advance/postktp.php?id=${vm.user._id}`, params, vm.requestedHeaders)
+      .then(function (response) {
+        console.log(response);
+        // if (response.data.status) {
+        //   vm.requestSuccess('editInfo');
+        //   vm.$swal('Success!', response.data.message, 'success');
+        // }else{
+        //   vm.$swal('Error!', response.data.message, 'error');
+        // }
+        vm.toggleLoader(false);
+      })
+      .catch(function (error) {
+        vm.$swal('Error!', error.message, 'error');
+        vm.toggleLoader(false);
+      })
     },
     filterRTRW(e){
       let char = String.fromCharCode(e.keyCode); // Get the character

@@ -77,6 +77,7 @@
 				vm.getAllIndustry();
 				vm.getAFPI();
 			}
+			vm.getOCRdata();
 			console.log(vm.userDetails);
 		},
 		methods: {
@@ -576,6 +577,18 @@
 				let status = vm._.findIndex(user.isUsedAsEmergencyContact, { 'mobileNumber': user.emergencyContact.mobileNumber }) >= 0 ? true : false ;
 				return status;
 			},
+			getOCRdata(){
+				// let vm = this
+				// axios.get(`https://sb-mon.empatkali.co.id/advance/ktp.php?id=${vm.userDetails._id}`)
+				// 	.then((res)	=>	{
+				// 		console.log(res);
+				// 	})
+				// 	.catch((err)	=>	{
+				// 		console.log(err);
+				// 		vm.$swal('Error!', err, 'error')
+				// 		vm.toggleLoader(false);
+				// 	})
+			}
     }
 	}
 	export default UserDetails
