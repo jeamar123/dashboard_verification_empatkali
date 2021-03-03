@@ -16,7 +16,7 @@
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tempat</label>
             <input type="text" class="text-xs" name="Tempat" 
-                    v-model="editInfoData.birthPlace"
+                    v-model="editInfoData.birthplace"
                     :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Tempat') }"
                     v-validate="'required'">
             <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Tempat') }}</small>
@@ -159,7 +159,7 @@ export default {
       province: vm.user.ocrData.province,
       idNumber: vm.user.ocrData.idNumber,
       birthPlaceBirthday: vm.user.ocrData.birthPlaceBirthday,
-      birthPlace: vm.user.ocrData.birthplace,
+      birthplace: vm.user.ocrData.birthplace,
       dob: vm.user.ocrData.dob,
       bloodType: vm.user.ocrData.bloodType,
       address: vm.user.ocrData.address,
@@ -227,15 +227,13 @@ export default {
       }
 
       vm.toggleLoader(true);
-      axios.post(`http://sb-mon.empatkali.co.id/advance/postktp.php?id=${vm.user._id}`, params, vm.requestedHeaders)
+      axios.post(`http://minion.empatkali.co.id/advance/postktp.php?id=${vm.user._id}&t=sb`, params, vm.requestedHeaders)
       .then(function (response) {
         console.log(response);
-        // if (response.data.status) {
-        //   vm.requestSuccess('editInfo');
-        //   vm.$swal('Success!', response.data.message, 'success');
-        // }else{
-        //   vm.$swal('Error!', response.data.message, 'error');
-        // }
+        if (response.status) {
+          vm.requestSuccess('editInfo');
+          vm.$swal('Success!', 'updated.', 'success');
+        }
         vm.toggleLoader(false);
       })
       .catch(function (error) {

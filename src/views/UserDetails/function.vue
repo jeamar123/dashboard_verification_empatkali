@@ -125,10 +125,14 @@
 					}
 				}
 			},
-			refreshData()	{
+			refreshData(opt)	{
 				let vm = this
 				vm.isEditInfoModalShow = false;
-				vm.loader.isShow = false;
+				// vm.loader.isShow = false;
+
+				if(opt == 'editInfo'){
+					vm.getOCRdata();
+				}
 			},
 			/** Toggle Parent Loader */
 			toggleLoader(opt, msg){
@@ -216,74 +220,74 @@
 						if (res.data[0]) {
 							let userData = res.data[0];
 							let fixName = 'empty'
-							if (userData.ocr && JSON.parse(userData.ocr).data) {
-								vm.userDetails.ocrData = {};
-								if ( JSON.parse(userData.ocr).data ) {
-									vm.userDetails.ocrData = JSON.parse(userData.ocr)
-									fixName = JSON.parse(userData.ocr).data.name
-								}else{
-									vm.userDetails.ocrData = {
-										code : JSON.parse(userData.ocr).code
-									}
-								}
-							}else if(userData.ocr2){
-								vm.userDetails.ocrData = {};
-								let ocrData = JSON.parse(userData.ocr2);
-								console.log(ocrData);
-								if ( ocrData.data ) {
-									vm.userDetails.ocrData = ocrData.data;
+							// if (userData.ocr && JSON.parse(userData.ocr).data) {
+							// 	vm.userDetails.ocrData = {};
+							// 	if ( JSON.parse(userData.ocr).data ) {
+							// 		vm.userDetails.ocrData = JSON.parse(userData.ocr)
+							// 		fixName = JSON.parse(userData.ocr).data.name
+							// 	}else{
+							// 		vm.userDetails.ocrData = {
+							// 			code : JSON.parse(userData.ocr).code
+							// 		}
+							// 	}
+							// }else if(userData.ocr2){
+							// 	vm.userDetails.ocrData = {};
+							// 	let ocrData = JSON.parse(userData.ocr2);
+							// 	console.log(ocrData);
+							// 	if ( ocrData.data ) {
+							// 		vm.userDetails.ocrData = ocrData.data;
 
-									vm.userDetails.ocrData = {
-										name: ocrData.data.name,
-										province: ocrData.data.province,
-										idNumber: ocrData.data.idNumber,
-										birthPlaceBirthday: ocrData.data.birthPlaceBirthday,
-										bloodType: ocrData.data.blood_type,
-										address: ocrData.data.address,
-										rtrw: ocrData.data.rtrw,
-										village: ocrData.data.village,
-										district: ocrData.data.district,
-										religion: ocrData.data.religion,
-										maritalStatus: ocrData.data.maritalStatus,
-										occupation: ocrData.data.occupation,
-										expiryDate: ocrData.data.expiry_date,
-										birthplace: ocrData.data.birthPlaceBirthday.split(',')[0],
-										dob: this.$moment(ocrData.data.birthPlaceBirthday.split(',')[1].replace(' ', ''), 'MM-DD-YYYY').format('YYYY-MM-DD'),
-										gender: ocrData.data.gender,
-									}
-									fixName = vm.userDetails.ocrData.name;
-								}else{
-									vm.userDetails.ocrData = {
-										code : ocrData.code
-									}
-								}
-							}else if(userData.ocrtongdun){
-								vm.userDetails.ocrData = {};
-								let ocrData = JSON.parse(userData.ocrtongdun);
-								if ( ocrData.display && ocrData.display.data) {
-									vm.userDetails.ocrData = {
-										name: ocrData.display.data.result.name,
-										province: ocrData.display.data.result.province,
-										idNumber: ocrData.display.data.result.nik,
-										birthPlaceBirthday: ocrData.display.data.result.birthplace + ', ' + ocrData.display.data.result.birthday,
-										bloodType: ocrData.display.data.result.blood_type,
-										address: ocrData.display.data.result.address,
-										rtrw: ocrData.display.data.result.rt_rw,
-										village: ocrData.display.data.result.village,
-										district: ocrData.display.data.result.district,
-										religion: ocrData.display.data.result.religion,
-										maritalStatus: ocrData.display.data.result.marital_status,
-										occupation: ocrData.display.data.result.occupation,
-										expiryDate: ocrData.display.data.result.expiry_date,
-										birthplace: ocrData.display.data.result.birthplace,
-										dob: this.$moment(ocrData.display.data.result.birthday, 'DD-MM-YYYY').format('YYYY-MM-DD'),
-										gender: ocrData.display.data.result.gender,
-									}
-									fixName = vm.userDetails.ocrData.name;
-								}
-							}else{
-								vm.userDetails.ocrData = {};
-							}
+							// 		vm.userDetails.ocrData = {
+							// 			name: ocrData.data.name,
+							// 			province: ocrData.data.province,
+							// 			idNumber: ocrData.data.idNumber,
+							// 			birthPlaceBirthday: ocrData.data.birthPlaceBirthday,
+							// 			bloodType: ocrData.data.blood_type,
+							// 			address: ocrData.data.address,
+							// 			rtrw: ocrData.data.rtrw,
+							// 			village: ocrData.data.village,
+							// 			district: ocrData.data.district,
+							// 			religion: ocrData.data.religion,
+							// 			maritalStatus: ocrData.data.maritalStatus,
+							// 			occupation: ocrData.data.occupation,
+							// 			expiryDate: ocrData.data.expiry_date,
+							// 			birthplace: ocrData.data.birthPlaceBirthday.split(',')[0],
+							// 			dob: this.$moment(ocrData.data.birthPlaceBirthday.split(',')[1].replace(' ', ''), 'MM-DD-YYYY').format('YYYY-MM-DD'),
+							// 			gender: ocrData.data.gender,
+							// 		}
+							// 		fixName = vm.userDetails.ocrData.name;
+							// 	}else{
+							// 		vm.userDetails.ocrData = {
+							// 			code : ocrData.code
+							// 		}
+							// 	}
+							// }else if(userData.ocrtongdun){
+							// 	vm.userDetails.ocrData = {};
+							// 	let ocrData = JSON.parse(userData.ocrtongdun);
+							// 	if ( ocrData.display && ocrData.display.data) {
+							// 		vm.userDetails.ocrData = {
+							// 			name: ocrData.display.data.result.name,
+							// 			province: ocrData.display.data.result.province,
+							// 			idNumber: ocrData.display.data.result.nik,
+							// 			birthPlaceBirthday: ocrData.display.data.result.birthplace + ', ' + ocrData.display.data.result.birthday,
+							// 			bloodType: ocrData.display.data.result.blood_type,
+							// 			address: ocrData.display.data.result.address,
+							// 			rtrw: ocrData.display.data.result.rt_rw,
+							// 			village: ocrData.display.data.result.village,
+							// 			district: ocrData.display.data.result.district,
+							// 			religion: ocrData.display.data.result.religion,
+							// 			maritalStatus: ocrData.display.data.result.marital_status,
+							// 			occupation: ocrData.display.data.result.occupation,
+							// 			expiryDate: ocrData.display.data.result.expiry_date,
+							// 			birthplace: ocrData.display.data.result.birthplace,
+							// 			dob: this.$moment(ocrData.display.data.result.birthday, 'DD-MM-YYYY').format('YYYY-MM-DD'),
+							// 			gender: ocrData.display.data.result.gender,
+							// 		}
+							// 		fixName = vm.userDetails.ocrData.name;
+							// 	}
+							// }else{
+							// 	vm.userDetails.ocrData = {};
+							// }
 
 							if (userData.ktp && userData.ktp.indexOf('error') == -1) {
 								let ktpCheck = JSON.parse(userData.ktp)
@@ -432,7 +436,7 @@
 									
 							}
 						}else {
-							vm.userDetails.ocrData = {};
+							// vm.userDetails.ocrData = {};
 							console.log('advanceAI', 'data null')
 						}
 					})
@@ -578,17 +582,37 @@
 				return status;
 			},
 			getOCRdata(){
-				// let vm = this
-				// axios.get(`https://sb-mon.empatkali.co.id/advance/ktp.php?id=${vm.userDetails._id}`)
-				// 	.then((res)	=>	{
-				// 		console.log(res);
-				// 	})
-				// 	.catch((err)	=>	{
-				// 		console.log(err);
-				// 		vm.$swal('Error!', err, 'error')
-				// 		vm.toggleLoader(false);
-				// 	})
-			}
+				let vm = this
+				axios.get(`http://minion.empatkali.co.id/advance/ktp.php?id=${vm.userDetails._id}&t=sb`)
+					.then((res)	=>	{
+						console.log(res);
+
+						vm.userDetails.ocrData = {
+							name: res.data.display.data.result.name,
+							province: res.data.display.data.result.province,
+							idNumber: res.data.display.data.result.nik,
+							birthPlaceBirthday: res.data.display.data.result.birthplace && res.data.display.data.result.birthday ? res.data.display.data.result.birthplace + ', ' + res.data.display.data.result.birthday : '',
+							bloodType: res.data.display.data.result.blood_type,
+							address: res.data.display.data.result.address,
+							rtrw: res.data.display.data.result.rt_rw,
+							village: res.data.display.data.result.village,
+							district: res.data.display.data.result.district,
+							religion: res.data.display.data.result.religion,
+							maritalStatus: res.data.display.data.result.marital_status,
+							occupation: res.data.display.data.result.occupation,
+							expiryDate: res.data.display.data.result.expiry_date,
+							birthplace: res.data.display.data.result.birthplace,
+							dob: this.$moment(res.data.display.data.result.birthday, 'DD-MM-YYYY').format('YYYY-MM-DD'),
+							gender: res.data.display.data.result.gender,
+						}
+						vm.$forceUpdate();
+					})
+					.catch((err)	=>	{
+						console.log(err);
+						vm.$swal('Error!', err, 'error')
+						vm.toggleLoader(false);
+					})
+			},
     }
 	}
 	export default UserDetails
