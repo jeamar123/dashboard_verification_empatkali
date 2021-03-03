@@ -583,7 +583,7 @@
 			},
 			getOCRdata(){
 				let vm = this
-				axios.get(`http://minion.empatkali.co.id/advance/ktp.php?id=${vm.userDetails._id}&t=sb`)
+				axios.get(`https://minion.empatkali.co.id/advance/ktp.php?id=${vm.userDetails._id}&t=sb`)
 					.then((res)	=>	{
 						console.log(res);
 
