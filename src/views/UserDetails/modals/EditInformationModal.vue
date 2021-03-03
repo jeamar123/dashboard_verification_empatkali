@@ -6,29 +6,24 @@
           <div class="input-div">
             <label for="" class="text-xs block mb-1">NIK</label>
             <input type="text" class="text-xs" name="NIK" 
-                    v-model="editInfoData.idNumber"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.NIK') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.NIK') }}</small>
+                    v-model="editInfoData.idNumber">
+            <!-- <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.NIK') }}</small> -->
           </div>
         </div>
         <div class="flex-1 mx-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tempat</label>
             <input type="text" class="text-xs" name="Tempat" 
-                    v-model="editInfoData.birthplace"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Tempat') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Tempat') }}</small>
+                    v-model="editInfoData.birthplace">
+            <!-- <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Tempat') }}</small> -->
           </div>
         </div>
         <div class="flex-1 ml-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Tanggal Lahir</label>
             <input type="date" class="text-xs" name="Tanggal Lahir" 
-                    v-model="editInfoData.dob"
-                    :class="{ 'border-dangerMsg': dateInputError != '' }">
-            <small class="text-dangerMsg mt-2 block">{{ dateInputError }}</small>
+                    v-model="editInfoData.dob">
+            <!-- <small class="text-dangerMsg mt-2 block">{{ dateInputError }}</small> -->
           </div>
         </div>
       </div>
@@ -39,23 +34,19 @@
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Jenis Kelamin</label>
             <select class="text-xs" name="Jenis Kelamin" 
-                    v-model="editInfoData.gender"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Jenis Kelamin') }"
-                    v-validate="'required'">
+                    v-model="editInfoData.gender">
               <option>LAKI-LAKI</option>
               <option>PEREMPUAN</option>
             </select>
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Jenis Kelamin') }}</small>
+            <!-- <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Jenis Kelamin') }}</small> -->
           </div>
         </div>
         <div class="flex-1 mx-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Alamat</label>
             <input type="text" class="text-xs" name="Alamat" 
-                    v-model="editInfoData.address"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Alamat') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Alamat') }}</small>
+                    v-model="editInfoData.address">
+            <!-- <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Alamat') }}</small> -->
           </div>
         </div>
         <div class="flex-1 ml-2">
@@ -66,7 +57,7 @@
                     v-model="editInfoData.rtrw"
                     v-on:keypress="filterRTRW($event)"
                     :class="{ 'border-dangerMsg': rtrwIsError != '' }">
-            <small class="text-dangerMsg mt-2 block">{{ rtrwIsError }}</small>
+            <!-- <small class="text-dangerMsg mt-2 block">{{ rtrwIsError }}</small> -->
           </div>
         </div>
       </div>
@@ -76,46 +67,30 @@
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Kelurahan</label>
             <input type="text" class="text-xs" name="Kelurahan" 
-                    v-model="editInfoData.village"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Kelurahan') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Kelurahan') }}</small>
+                    v-model="editInfoData.village">
+            <!-- <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Kelurahan') }}</small> -->
           </div>
         </div>
         <div class="flex-1 mx-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Kecamatan</label>
             <input type="text" class="text-xs" name="Kecamatan" 
-                    v-model="editInfoData.district"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Kecamatan') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Kecamatan') }}</small>
+                    v-model="editInfoData.district">
+            <!-- <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Kecamatan') }}</small> -->
           </div>
         </div>
-        <div class="flex-1 ml2">
-          <div class="input-div">
-            <label for="" class="text-xs block mb-1">Status Pernikahan</label>
-            <input type="text" class="text-xs" name="Status Pernikahan" 
-                    v-model="editInfoData.maritalStatus"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Status Pernikahan') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Status Pernikahan') }}</small>
-          </div>
-        </div>
-        <!-- <div class="flex-1 ml-2">
+        <div class="flex-1 ml-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Provinsi</label>
             <input type="text" class="text-xs" name="Provinsi" 
-                    v-model="editInfoData.province"
-                    :class="{ 'border-dangerMsg': errors.first('frmEditInfo.Provinsi') }"
-                    v-validate="'required'">
-            <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Provinsi') }}</small>
+                    v-model="editInfoData.province">
+            <!-- <small class="text-dangerMsg mt-2 block">{{ errors.first('frmEditInfo.Provinsi') }}</small> -->
           </div>
-        </div> -->
+        </div>
         
       </div>
 
-      <!-- <div class="flex mb-2">
+      <div class="flex mb-2">
         <div class="flex-1 mr-2">
           <div class="input-div">
             <label for="" class="text-xs block mb-1">Status Pernikahan</label>
@@ -128,7 +103,7 @@
         </div>
         <div class="flex-1 mx-2"></div>
         <div class="flex-1 ml-2"></div>
-      </div> -->
+      </div>
 
       <div class="text-right mt-5">
         <button @click.prevent="closeModal(false, 'editInfo')" class="btn px-4 py-2 mx-1 bg-closeBtn text-white rounded-md text-sm">Close</button>
@@ -233,7 +208,8 @@ export default {
         blood_type: vm.editInfoData.bloodType,
         name: vm.editInfoData.name,
         village: vm.editInfoData.village,
-        rt_rw: vm.editInfoData.rtrw
+        rt_rw: vm.editInfoData.rtrw,
+        provinsi: vm.editInfoData.province,
       }
 
       vm.toggleLoader(true);

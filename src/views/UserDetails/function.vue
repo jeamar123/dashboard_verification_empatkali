@@ -589,7 +589,7 @@
 
 						vm.userDetails.ocrData = {
 							name: res.data.display.data.result.name,
-							province: res.data.display.data.result.province,
+							province: res.data.display.data.result.provinsi,
 							idNumber: res.data.display.data.result.nik,
 							birthPlaceBirthday: res.data.display.data.result.birthplace && res.data.display.data.result.birthday ? res.data.display.data.result.birthplace + ', ' + res.data.display.data.result.birthday : '',
 							bloodType: res.data.display.data.result.blood_type,
