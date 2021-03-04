@@ -328,7 +328,7 @@
                     </div>
                   </div>
 
-                  <button @click="toggleModals(true, 'compareKTP')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-none shadow py-2">Bandingkan</button>
+                  <!-- <button @click="toggleModals(true, 'compareKTP')" class="btn xs-text text-violet border border-violet rounded-md w-full font-bold flex-none shadow py-2">Bandingkan</button> -->
                 </div>
               </div>
               <div class="flex flex-col flex-3 ml-1">
