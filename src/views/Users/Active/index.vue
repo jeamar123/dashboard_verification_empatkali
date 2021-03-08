@@ -96,7 +96,7 @@
 							<th class="border-b-2 py-3 pr-6 text-sm">Limit</th>
 							<th class="border-b-2 py-3 pr-6 text-sm">Limit digunakan</th>
 							<th class="border-b-2 py-3 pr-6 text-sm">Waktu Daftar</th>
-							<th class="border-b-2 py-3 text-sm text-center">Aksi</th>
+							<th class="border-b-2 py-3 text-sm text-center w-48">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
