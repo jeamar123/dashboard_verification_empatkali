@@ -571,8 +571,8 @@
 
                   <GmapMap
                     :center="{
-                      lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
-                      lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                      lat: parseFloat(userDetails.loc ? userDetails.loc.coordinates[1] : 0),
+                      lng: parseFloat(userDetails.loc ? userDetails.loc.coordinates[0] : 0)
                     }"
                     :zoom="10"
                     :options="{
@@ -583,8 +583,8 @@
                   >
                     <GmapMarker
                         :position="{
-                          lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
-                          lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                          lat: parseFloat(userDetails.loc ? userDetails.loc.coordinates[1] : 0),
+                          lng: parseFloat(userDetails.loc ? userDetails.loc.coordinates[0] : 0)
                         }"
                       />
                   </GmapMap>
@@ -788,8 +788,8 @@
             <p class="sm-text font-bold mb-2 absolute top-3 left-4 z-10">Lokasi saat daftar</p>
             <GmapMap
               :center="{
-                lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
-                lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                lat: parseFloat(userDetails.loc ? userDetails.loc.coordinates[1] : 0),
+                lng: parseFloat(userDetails.loc ? userDetails.loc.coordinates[0] : 0)
               }"
               :zoom="10"
               :options="{
@@ -806,8 +806,8 @@
             >
               <GmapMarker
                   :position="{
-                    lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
-                    lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                    lat: parseFloat(userDetails.loc ? userDetails.loc.coordinates[1] : 0),
+                    lng: parseFloat(userDetails.loc ? userDetails.loc.coordinates[0] : 0)
                   }"
                 />
             </GmapMap>

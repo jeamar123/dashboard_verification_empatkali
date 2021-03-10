@@ -17,9 +17,8 @@
       <p class="flex-2 text-sm">{{ user.detail ? user.detail.email : '---' }}</p>
     </div>
 
-    <div v-if="requestData.type == 'approve'" class="flex mb-3 items-center">
+    <!-- <div v-if="requestData.type == 'approve'" class="flex mb-3 items-center">
       <label for="" class="flex-1 text-sm text-gray-700 relative">Limit <span class="absolute top-0 right-2 font-bold">:</span></label>
-      <!-- <p class="flex-1 text-sm text-voilet">{{ '5000000' | currency }}</p> -->
       <div class="flex-2">
         <div class="relative select-limit-drop">
           <div class="border-b w-36 py-1 text-sm relative cursor-pointer inline-block" :class="{'text-gray-400' : !confirmData.approvedLimit, 'border-dangerBtn' : errStatus == 'limit' || errStatus == 'all'}" @click="toggleDrops('limit')">
@@ -41,7 +40,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div v-if="requestData.type == 'reject'">
       <div  class="flex mb-3 items-center">
@@ -286,10 +285,10 @@ export default {
     submitConfirm(){
       let vm = this
       if(vm.requestData.type == 'approve'){
-        if(vm.confirmData.approvedLimit == ''){
-          vm.errStatus = 'limit';
-          return false;
-        }
+        // if(vm.confirmData.approvedLimit == ''){
+        //   vm.errStatus = 'limit';
+        //   return false;
+        // }
         vm.errStatus = 'none';
         vm.approveUser();
       }
