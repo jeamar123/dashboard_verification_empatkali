@@ -215,7 +215,6 @@
                 <div class="card px-4 py-3 mr-2 mt-1 flex-5 flex flex-col">
                   <div class="flex flex-1 mb-2">
                     <div class="flex-1 mr-1">
-                      <!-- @click="toggleModals(true, 'fotoKtp')"  -->
                       <div @click="toggleModals(true, 'fotoKtp')" class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <!-- style="background-image: url('https://empatkalibucket.oss-ap-southeast-5.aliyuncs.com/npwp/iN6u4kzhPrN1WUPURzNIfh0n9BU6Om.jpg');background-size: cover;" -->
                         <img 
@@ -224,7 +223,6 @@
                         >
                       </div>
                     </div>
-                    <!-- @click="toggleModals(true, 'selfieKtp')"  -->
                     <div @click="toggleModals(true, 'selfieKtp')" class="flex-1 ml-1">
                       <div class="img-container w-full h-full rounded-lg relative overflow-hidden">
                         <img 
@@ -235,7 +233,7 @@
                     </div>
                   </div>
                   <div class="flex-none">
-                    <!-- <div 
+                    <div 
                       class="count-badge rounded-2xl px-5 py-2 text-center w-full inline-block text-white font-bold xs-text"
                       :class="{
                         'bdg-status--success' : userDetails.ktpValidation ? userDetails.ktpValidation.isFoundMatch : '---',
@@ -257,7 +255,7 @@
                           'Not Found' 
                         : 'No Record' 
                       }}
-                    </div> -->
+                    </div>
                   </div>
                 </div>
                 <div class="card p-4 ml-1 mt-1 flex-3">
@@ -281,7 +279,7 @@
               <div class="flex flex-col flex-5 mr-2">
                 <div class="card px-4 py-3 flex-1 flex flex-col">
                   <p class="sm-text font-bold mb-3">Validasi KTP</p>
-                  <!-- <div 
+                  <div 
                     class="count-badge rounded-2xl px-5 py-2 text-center w-full inline-block text-white font-bold xs-text mb-3"
                     :class="{
                       'bdg-status--success' : userDetails.ktpValidation ? userDetails.ktpValidation.isFoundMatch : '---',
@@ -303,7 +301,7 @@
                         'Not Found' 
                       : 'No Record' 
                     }}
-                  </div> -->
+                  </div>
 
                   <div class="flex flex-1 mb-2">
                     <div class="flex-1 flex flex-col mr-1">
