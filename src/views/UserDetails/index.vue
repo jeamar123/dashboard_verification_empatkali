@@ -571,8 +571,8 @@
 
                   <GmapMap
                     :center="{
-                      lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
-                      lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                      lat: parseFloat(userDetails.loc ? userDetails.loc.coordinates[1] : 0),
+                      lng: parseFloat(userDetails.loc ? userDetails.loc.coordinates[0] : 0)
                     }"
                     :zoom="10"
                     :options="{
@@ -583,8 +583,8 @@
                   >
                     <GmapMarker
                         :position="{
-                          lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
-                          lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                          lat: parseFloat(userDetails.loc ? userDetails.loc.coordinates[1] : 0),
+                          lng: parseFloat(userDetails.loc ? userDetails.loc.coordinates[0] : 0)
                         }"
                       />
                   </GmapMap>
@@ -788,8 +788,8 @@
             <p class="sm-text font-bold mb-2 absolute top-3 left-4 z-10">Lokasi saat daftar</p>
             <GmapMap
               :center="{
-                lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
-                lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                lat: parseFloat(userDetails.loc ? userDetails.loc.coordinates[1] : 0),
+                lng: parseFloat(userDetails.loc ? userDetails.loc.coordinates[0] : 0)
               }"
               :zoom="10"
               :options="{
@@ -806,8 +806,8 @@
             >
               <GmapMarker
                   :position="{
-                    lat: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[1] : 0),
-                    lng: parseFloat(userDetails.registrationLoc ? userDetails.registrationLoc.coordinates[0] : 0)
+                    lat: parseFloat(userDetails.loc ? userDetails.loc.coordinates[1] : 0),
+                    lng: parseFloat(userDetails.loc ? userDetails.loc.coordinates[0] : 0)
                   }"
                 />
             </GmapMap>
@@ -976,7 +976,7 @@
       <Modal 
         v-model="isFotoKtpModalShow" 
         title="Foto KTP"
-        modal-class="modal-wrapper max-w-none w-125 h-552px"
+        modal-class="modal-wrapper max-w-none w-700px h-700px"
       >
         <FotoKtpModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
       </Modal>
@@ -985,7 +985,7 @@
       <Modal 
         v-model="isSelfieKtpModalShow" 
         title="Selfie KTP"
-        modal-class="modal-wrapper max-w-none w-125 h-552px"
+        modal-class="modal-wrapper max-w-none w-700px h-700px"
       >
         <SelfieKtpModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
       </Modal>
@@ -994,7 +994,7 @@
       <Modal 
         v-model="isCompareKTPModalShow" 
         title=""
-        modal-class="modal-wrapper max-w-none w-8/10 h-552px"
+        modal-class="modal-wrapper max-w-none w-8/10 h-700px"
       >
         <CompareKTPModal :user="userDetails" :closeModal="toggleModals" :requestSuccess="refreshData" :toggleLoader="toggleLoader"/>
       </Modal>
@@ -1038,7 +1038,7 @@
 	// FOR KTP MODALS
   .show-image-modal{
     .ktp-wrapper{
-      height: 438px;
+      height: 600px;
     }
     .viewer-container{
       overflow: visible;
@@ -1055,6 +1055,9 @@
   //     text-align: center;
 	// 		display: flex;
 		}
+    .viewer-backdrop {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
     .viewer-footer{
       overflow: visible;
     }

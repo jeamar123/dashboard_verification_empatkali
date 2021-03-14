@@ -1,7 +1,7 @@
 <template>
   <div class="show-image-modal">
     <div class="shadow-lg-middle relative mb-5 ktp-wrapper">
-      <div class="absolute top-48 -right-12 transform rotate-90 text-gray-600 z-50">
+      <div class="absolute top-72 -right-12 transform rotate-90 text-gray-400 z-50">
         <p class="text-lg leading-tight text-center">EMPATKALI.CO.ID</p>
         <p v-if="user.selfieDate" class="text-xs text-center">{{ user.selfieDate | moment('DD MMM YYYY HH:MM:SS') }} WIB</p> 
         <p v-else class="text-xs text-center">{{ '---' }}</p>
@@ -11,7 +11,7 @@
       <img 
         v-viewer="viewerOptions" 
         :src="user.selfie || '/assets/img/no-image.png'" 
-        class="rounded-lg h-full"  alt=""
+        class="rounded-lg h-full w-full"  alt=""
       >
     </div>
 

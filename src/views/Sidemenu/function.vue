@@ -25,8 +25,21 @@
 			if(vm.$route.name == 'Change Limit'){
 				vm.pendingLimitUsersCount = await this.getLimitStatusCount(0); /* Get Pending Users Count */
 			}
+
+			vm.$on('refreshData', vm.refreshData() );
 		},
 		methods: {
+			async refreshData(){
+				console.log('refresh');
+				let vm = this
+				console.log(vm.$route.name);
+				if(vm.$route.name == 'Users'){
+					vm.pendingUsersCount = await this.getUserStatusCount(1); /* Get Pending Users Count */
+				}
+				if(vm.$route.name == 'Change Limit'){
+					vm.pendingLimitUsersCount = await this.getLimitStatusCount(0); /* Get Pending Users Count */
+				}
+			},
 			toggleLoader(opt, msg){ /* Toggle Parent Loader */
 				let vm = this
 				vm.$parent.toggleLoader(opt, msg);

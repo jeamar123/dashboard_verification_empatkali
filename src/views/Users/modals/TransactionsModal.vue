@@ -63,7 +63,7 @@
                 <img :src="'../assets/img/money.png'" class="w-full block" alt="">
               </div>
               <div class="flex-1 text-xs font-bold">
-                {{ mapTransactionTerms(terms).total | currency }}
+                {{  ( user.status != 5 ? mapTransactionTerms(terms).total : (parseFloat(terms.total) + parseFloat(terms.lateFee))) | currency }}
               </div>
             </div>
 
@@ -96,7 +96,7 @@
 
               <button @click.prevent="checkPayment(list, terms)" class="btn rounded-md px-8 py-2 bg-white border border-violet w-44 text-xs text-violet font-bold mt-2 mb-3">Check Payment</button>
 
-              <div>
+              <div class="mb-3">
                 <div class="input-div mb-1">
                   <select class="va-select" v-model="generateVAforUnpaidInstallmentBankInput[terms._id]">
                     <option value="">Select a bank</option>
@@ -108,6 +108,20 @@
                 </div>
                 <button @click.prevent="generateVAforUnpaidInstallment(list, terms)" class="btn bg-violet rounded-md text-sm font-bold text-white mt-1 w-44 px-8 py-2">Generate VA</button>
               </div>
+
+
+              <div v-if="user.status == 5 && terms.lateFee != 0">
+                <div class="input-div mb-1">
+                  <input 
+                    type="number" 
+                    class="late-fee-input" 
+                    v-model="reqAdjustLateFee[terms._id]"
+                    placeholder="Masukkan disini"
+                  >
+                </div>
+                <button @click.prevent="adjustLateFee(list._id, terms._id, terms)" class="btn bg-dangerBtn rounded-md text-sm font-bold text-white mt-1 w-44 px-8 py-2">Adjust Late Fee</button>
+              </div>
+
               
             </div>
           </td>
@@ -137,6 +151,7 @@ export default {
       },
       transactionsArr:  [],
       generateVAforUnpaidInstallmentBankInput: [],
+      reqAdjustLateFee: [],
   	}
   },
   created() {
@@ -174,6 +189,7 @@ export default {
      * @param  Object dat
      */
     mapTransactionTerms(dat) {
+      let vm = this
       let responseObj = {
         payment_id: dat.paid.payment_id,
         paid_date: dat.paid.date
@@ -181,6 +197,8 @@ export default {
 
       // Compute total, that may include reimbursement, late fee, etc
       responseObj.total = ( parseFloat(dat.total) + parseFloat(dat.lateFee) ) + (dat.reimbursement)
+
+      vm.reqAdjustLateFee[dat._id] = dat.lateFee;
 
       // reset value of select
       this.generateVAforUnpaidInstallmentBankInput[dat._id] = ''
@@ -270,6 +288,45 @@ export default {
         vm.$swal('Error!', 'Tidak ada pembayaran untuk transaksi ini.', 'error');
       }
     },
+
+    /**
+     * Adjust Late Fee
+     *
+     * @param  Object transId
+     * @param  Object terminId
+     * @param  Object terminObj
+     */
+    adjustLateFee(transId, terminId, terminObj) {
+      let vm = this
+
+      vm.$swal({
+        title: 'Adjust late fee?',
+        text: `Late fee will be adjusted to ${vm.reqAdjustLateFee[terminId]}, sure?`,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Adjust'
+      }).then((result) => {
+        if (result.value) {
+
+          let requestLateFee = {
+            terminId: terminId,
+            amount: vm.reqAdjustLateFee[terminId]
+          }
+
+          axios
+            .post(`/api/approvedtransactions/${transId}/adjustlatefee`, requestLateFee, vm.requestedHeaders)
+            .then(() => {
+              terminObj.lateFee = vm.reqAdjustLateFee[terminId];
+              vm.$swal(
+                'Success!',
+                `Late fee adjusted accordingly.`,
+                'success'
+              )
+            })
+        }
+      })
+    },
   }
 }
 </script>
@@ -297,7 +354,7 @@ export default {
       background-color:#EB5757; 
     }
   }
-  .va-select{
+  .va-select, .late-fee-input{
     @apply border-0 border-b text-sm bg-transparent rounded-none pl-0 w-44 pb-0;
   }
 </style>

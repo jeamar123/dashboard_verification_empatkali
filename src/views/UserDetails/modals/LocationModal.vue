@@ -2,8 +2,8 @@
   <div>
     <GmapMap
       :center="{
-        lat: parseFloat(user.registrationLoc ? user.registrationLoc.coordinates[1] : 0),
-        lng: parseFloat(user.registrationLoc ? user.registrationLoc.coordinates[0] : 0)
+        lat: parseFloat(user.loc ? user.loc.coordinates[1] : 0),
+        lng: parseFloat(user.loc ? user.loc.coordinates[0] : 0)
       }"
       :zoom="10"
       :options="{
@@ -19,8 +19,8 @@
     >
       <GmapMarker
           :position="{
-            lat: parseFloat(user.registrationLoc ? user.registrationLoc.coordinates[1] : 0),
-            lng: parseFloat(user.registrationLoc ? user.registrationLoc.coordinates[0] : 0)
+            lat: parseFloat(user.loc ? user.loc.coordinates[1] : 0),
+            lng: parseFloat(user.loc ? user.loc.coordinates[0] : 0)
           }"
         />
     </GmapMap>

@@ -1,7 +1,9 @@
 <template>
 	<div class="sidemenu-container w-64 py-4 h-full shadow-lg bg-sidemenuColor">
 		<div class="logo-wrapper h-10 mb-5 px-4">
-			<img :src="'../assets/img/EmpatKali_Logo.png'" alt="" class="h-full">
+			<router-link :to="{ name: 'Users', params: { status: 'all' } }" >
+				<img :src="'../assets/img/EmpatKali_Logo.png'" alt="" class="h-full">
+			</router-link>
 		</div>
 		<div class="mb-8 px-4">
 			<p class="text-md"><span class="font-bold">Verification</span> Dashboard</p>
