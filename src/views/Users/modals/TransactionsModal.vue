@@ -55,7 +55,8 @@
                 <img :src="'../assets/img/calendar-icon.png'" class="w-full block" alt="">
               </div>
               <div class="flex-1 text-xs">
-                {{ mapTransactionTerms(terms).paid_date | moment("DD MMM YYYY") }}
+                <span v-if="mapTransactionTerms(terms).paid_date">{{ mapTransactionTerms(terms).paid_date | moment("DD MMM YYYY") }}</span>
+                <span v-if="!mapTransactionTerms(terms).paid_date">{{ '---' }}</span>
               </div>
             </div>
             <div class="flex items-center mb-2">
@@ -110,7 +111,7 @@
               </div>
 
 
-              <div v-if="user.status == 5 && terms.lateFee != 0">
+              <div v-if="user.status == 5 && terms.lateFee !== 0">
                 <div class="input-div mb-1">
                   <input 
                     type="number" 
@@ -261,6 +262,7 @@ export default {
           vm.toggleLoader(false);
           terminObj.paid.payment_id = res.data.virtual_account;
           vm.generateVAforUnpaidInstallmentBankInput[terminObj._id] = ''
+          vm.$forceUpdate();
           vm.$swal('Success!', 'Successfully generated!', 'success');
         })
         .catch(function (error) {
@@ -298,6 +300,11 @@ export default {
      */
     adjustLateFee(transId, terminId, terminObj) {
       let vm = this
+
+      if(!vm.reqAdjustLateFee[terminId] || vm.reqAdjustLateFee[terminId] == ''){
+        vm.$swal("Error", "Mohon isi latefee terlebih dahulu", 'error');
+        return false;
+      }
 
       vm.$swal({
         title: 'Adjust late fee?',
@@ -340,7 +347,7 @@ export default {
       background-color: #FFF3CE; 
     }
     &--danger{
-      background-color: #EB5757; 
+      background-color: #e07f7f; 
     }
   }
   .bdg-status{
