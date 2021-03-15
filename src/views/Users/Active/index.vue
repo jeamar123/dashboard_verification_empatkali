@@ -135,14 +135,24 @@
 								</div>
 							</td>
 							<td class="border-b-2 py-3 text-xs 2xl:text-sm text-center">
-								<div class="mr-3 inline-block">
-									<a href="#" @click.prevent="toggleModals(true, 'ban', list)">
+								<div class="mr-3 inline-block ">
+									<a href="#" @click.prevent="toggleModals(true, 'ban', list)" class="relative has-tooltip">
 										<img :src="'../assets/img/banned.png'" alt="" class="w-6">
+
+										<div class="custom-tooltip ban">
+											<div class="text-white bg-gray-700 rounded-md py-1 px-3 font-bold relative z-20">Banned</div>
+											<div class="top-2 h-3 w-3 bg-gray-700 transform rotate-45 relative -top-2 inline-block z-10"></div>
+										</div>
 									</a>
 								</div>
-								<div class="mr-3 inline-block">
-									<a href="#" @click.prevent="toggleModals(true, 'transaction', list)">
+								<div class="mr-3 inline-block relative">
+									<a href="#" @click.prevent="toggleModals(true, 'transaction', list)" class="relative has-tooltip">
 										<img :src="'../assets/img/transactions.png'" alt="" class="w-6">
+
+										<div class="custom-tooltip trans">
+											<div class="text-white bg-gray-700 rounded-md py-1 px-3 font-bold relative z-20">Transaction</div>
+											<div class="h-3 w-3 bg-gray-700 transform rotate-45 relative -top-2 inline-block z-10"></div>
+										</div>
 									</a>
 								</div>
 								<button @click="goToUserDetails(list)" class="btn border-2 font-bold border-violet font-bold py-2 px-3 rounded-md text-violet text-sm">Lihat Detail</button>

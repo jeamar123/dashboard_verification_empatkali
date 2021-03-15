@@ -125,8 +125,13 @@
 							</td>
 							<td class="border-b-2 py-3 text-sm text-center">
 								<div class="mr-5 inline-block">
-									<a href="#" @click.prevent="toggleModals(true, 'ban', list)">
+									<a href="#" @click.prevent="toggleModals(true, 'ban', list)" class="relative has-tooltip">
 										<img :src="'../assets/img/un-banned.png'" alt="" class="w-6">
+
+										<div class="custom-tooltip unban">
+											<div class="text-white bg-gray-700 rounded-md py-1 px-3 font-bold relative z-20 whitespace-nowrap text-xs">Unbanned User</div>
+											<div class="h-4 w-4 bg-gray-700 transform rotate-45 relative -top-3 inline-block z-10"></div>
+										</div>
 									</a>
 								</div>
 								<button @click="goToUserDetails(list)" class="btn border-2 font-bold border-violet font-bold py-2 px-4 rounded-md text-violet text-sm">Lihat Detail</button>
