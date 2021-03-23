@@ -1,7 +1,7 @@
 <template>
 	<div class="sidemenu-container w-64 py-4 h-full shadow-lg bg-sidemenuColor">
 		<div class="logo-wrapper h-10 mb-5 px-4">
-			<router-link :to="{ name: 'Users', params: { status: 'all' } }" >
+			<router-link active-class="bg-transparent" :to="{ name: 'Users', params: { status: 'all' } }" >
 				<img :src="'../assets/img/EmpatKali_Logo.png'" alt="" class="h-full">
 			</router-link>
 		</div>
