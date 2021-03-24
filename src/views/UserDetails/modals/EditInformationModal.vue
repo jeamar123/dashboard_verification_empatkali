@@ -213,7 +213,7 @@ export default {
       }
 
       vm.toggleLoader(true);
-      axios.post(`https://minion.empatkali.co.id/advance/postktp.php?id=${vm.user._id}&t=sb`, params, vm.requestedHeaders)
+      axios.post(`https://minion.empatkali.co.id/advance/postktp.php?id=${vm.user._id}&t=pr`, params, vm.requestedHeaders)
       .then(function (response) {
         console.log(response);
         if (response.status) {
