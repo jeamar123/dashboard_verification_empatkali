@@ -587,24 +587,48 @@
 					.then((res)	=>	{
 						console.log(res);
 
-						vm.userDetails.ocrData = {
-							name: res.data.display.data.result.name,
-							province: res.data.display.data.result.provinsi,
-							idNumber: res.data.display.data.result.nik,
-							birthPlaceBirthday: res.data.display.data.result.birthplace && res.data.display.data.result.birthday ? res.data.display.data.result.birthplace + ', ' + res.data.display.data.result.birthday : '',
-							bloodType: res.data.display.data.result.blood_type,
-							address: res.data.display.data.result.address,
-							rtrw: res.data.display.data.result.rt_rw,
-							village: res.data.display.data.result.village,
-							district: res.data.display.data.result.street,
-							religion: res.data.display.data.result.religion,
-							maritalStatus: res.data.display.data.result.marital_status,
-							occupation: res.data.display.data.result.occupation,
-							expiryDate: res.data.display.data.result.expiry_date,
-							birthplace: res.data.display.data.result.birthplace,
-							dob: this.$moment(res.data.display.data.result.birthday, 'DD-MM-YYYY').format('YYYY-MM-DD'),
-							gender: res.data.display.data.result.gender,
+						if(res.data.display){
+							vm.userDetails.ocrData = {
+								name: res.data.display.data.result.name,
+								province: res.data.display.data.result.provinsi,
+								idNumber: res.data.display.data.result.nik,
+								birthPlaceBirthday: res.data.display.data.result.birthplace && res.data.display.data.result.birthday ? res.data.display.data.result.birthplace + ', ' + res.data.display.data.result.birthday : '',
+								bloodType: res.data.display.data.result.blood_type,
+								address: res.data.display.data.result.address,
+								rtrw: res.data.display.data.result.rt_rw,
+								village: res.data.display.data.result.village,
+								district: res.data.display.data.result.street,
+								religion: res.data.display.data.result.religion,
+								maritalStatus: res.data.display.data.result.marital_status,
+								occupation: res.data.display.data.result.occupation,
+								expiryDate: res.data.display.data.result.expiry_date,
+								birthplace: res.data.display.data.result.birthplace,
+								dob: this.$moment(res.data.display.data.result.birthday, 'DD-MM-YYYY').format('YYYY-MM-DD'),
+								gender: res.data.display.data.result.gender,
+							}
+						}else if(res.data.data){
+							vm.userDetails.ocrData = {
+								name: res.data.data.name,
+								province: res.data.data.province,
+								idNumber: res.data.data.idNumber,
+								birthPlaceBirthday: res.data.data.birthPlaceBirthday,
+								bloodType: res.data.data.bloodType,
+								address: res.data.data.address,
+								rtrw: res.data.data.rtrw,
+								village: res.data.data.village,
+								district: res.data.data.district,
+								religion: res.data.data.religion,
+								maritalStatus: res.data.data.maritalStatus,
+								occupation: res.data.data.occupation,
+								expiryDate: res.data.data.expiryDate,
+								birthplace: res.data.data.birthPlaceBirthday.split(',')[1].replace(' ', ''),
+								dob: this.$moment(res.data.data.birthday, 'DD-MM-YYYY').format('YYYY-MM-DD'),
+								gender: res.data.data.gender,
+							}
+						}else{
+							vm.userDetails.ocrData = {};
 						}
+						console.log(vm.userDetails.ocrData);
 						vm.$forceUpdate();
 					})
 					.catch((err)	=>	{
