@@ -77,7 +77,9 @@
 				vm.getAllIndustry();
 				vm.getAFPI();
 			}
-			vm.getOCRdata();
+			if(vm.getStatusValue(vm.userDetails.status) != 'incomplete'){
+				vm.getOCRdata();
+			}
 			console.log(vm.userDetails);
 		},
 		methods: {
