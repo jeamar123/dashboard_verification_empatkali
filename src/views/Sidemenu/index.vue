@@ -11,7 +11,7 @@
 
 		<div class="sidemenu-items px-4 pb-4 overflow-y-auto">
 
-			<router-link 
+			<!-- <router-link 
 				:to="{ name: 'Home'}" 
 				class="w-full rounded-xl inline-block mb-2"
 				v-bind:class="{
@@ -26,7 +26,7 @@
 						<p class="text-md ff-medium font-bold">Dashboard</p>
 					</div>
 				</div>
-			</router-link>
+			</router-link> -->
 
 			<div 
 				class="menu-item-w-child sidemenu-user-toggle rounded-xl mb-2"
@@ -174,7 +174,7 @@
 				</div>
 			</div>
 
-			<router-link 
+			<!-- <router-link 
 				:to="{ name: 'Messages'}" 
 				class="w-full rounded-xl inline-block mb-2"
 				v-bind:class="{
@@ -189,7 +189,7 @@
 						<p class="text-md ff-medium font-bold">Messages</p>
 					</div>
 				</div>
-			</router-link>
+			</router-link> -->
 
 			<router-link 
 				:to="{ name: 'Settings'}" 
