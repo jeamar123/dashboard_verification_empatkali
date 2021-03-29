@@ -9,19 +9,9 @@ Install using Docker
 
 
 
-Deploy to Prod
+Deploy to Prod or Staging/Sandbox
 ------------------------
 
-1. Change .env api to https://api.empatkali.co.id/admin
-2. npm run build in local
-3. push updates
-
-
-
-
-Deploy to Staging/Sandbox
-------------------------
-
-1. Change .env api to https://sb-api.empatkali.co.id/admin
+1. Change .env api
 2. npm run build in local
 3. push updates
