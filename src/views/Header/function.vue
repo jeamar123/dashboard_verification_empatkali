@@ -135,6 +135,10 @@
 					vm.$route.name == 'User Management' || 
 					vm.$route.name == 'Salary'){
 						vm.headerContentName = 'settings';
+				}else if(
+					vm.$route.name == 'Tools' ||
+					vm.$route.name == 'UnbanOTP'){
+					vm.headerContentName = 'tools';
 				}else if(vm.$route.name == 'Change Limit'){
 					vm.headerContentName = vm.$route.params.status == 'all' ? 'All request' : vm.$route.params.status;
 				}else if(vm.$route.name == 'Users'){

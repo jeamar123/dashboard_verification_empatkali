@@ -17,6 +17,8 @@ import { Salary } from './views/Salary'
 import { Promotions } from './views/Promotions'
 import { Merchants } from './views/Merchants'
 import { Messages } from './views/Messages'
+import { Tools } from './views/Tools'
+import { UnbanOTP } from './views/UnbanOTP'
 
 
 
@@ -58,6 +60,8 @@ export default new Router({
         { name: 'Promotions', path: '/promotions', component: Promotions },
         { name: 'Merchants', path: '/merchants', component: Merchants },
         { name: 'Messages', path: '/messages', component: Messages },
+        { name: 'Tools', path: '/tools', component: Tools },
+        { name: 'UnbanOTP', path: '/unban-opt-user', component: UnbanOTP },
 
         { name: 'Change Limit', path: '/change-limit/:status', component: ChangeLimit },
         { name: 'User Limit Details', path: '/limit-details/:id', component: UserLimitDetails },

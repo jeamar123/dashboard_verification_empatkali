@@ -50,8 +50,13 @@
 					<div class="flex-none mr-8">
 						<p class="text-md font-bold inline-block capitalize">
 							{{ 
-								headerContentName != 'Dashboard' && headerContentName != 'All users' && headerContentName != 'All request' && headerContentName != 'settings' ? 
-								$route.name + ' - ' + headerContentName : headerContentName 
+								headerContentName != 'Dashboard' && 
+								headerContentName != 'All users' && 
+								headerContentName != 'All request' && 
+								headerContentName != 'settings' && 
+								headerContentName != 'tools' ? 
+								$route.name + ' - ' + headerContentName 
+								: headerContentName 
 							}}
 						</p>
 
