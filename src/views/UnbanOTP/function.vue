@@ -58,10 +58,10 @@
 					vm.errMsg = 'Please input phone number.'
 					return false;
 				}
-				if(number.length != 13){
-					vm.errMsg = 'Phone number should be 13 digits and starts with the digits 08.'
-					return false;
-				}
+				// if(number.length != 13){
+				// 	vm.errMsg = 'Phone number should be 13 digits and starts with the digits 08.'
+				// 	return false;
+				// }
 
 				let data = {
 					user: number
