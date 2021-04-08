@@ -829,6 +829,7 @@
               <p v-if="userDetails.emailLogs && userDetails.emailLogs.length == 0" class="flex-4">{{ '---' }}</p>
               <div v-else class="flex-4">
                 <button @click="toggleModals(true, 'email')" class="btn xs-text text-violet border border-violet rounded-md font-bold px-8 py-2 shadow">Detail</button>
+                <button @click="resendVerifEmail()" class="btn xxs-text text-violet border border-violet rounded-md font-bold px-3 py-2 shadow ml-2">Resend Verif Email </button>
               </div>
             </div>
             <div class="flex xs-text mb-3">
@@ -874,6 +875,9 @@
           </div>
           <div v-else class="flex-1"></div>
           <div class="flex-none flex justify-end items-center ml-3">
+            <div v-if="getStatusValue(userDetails.status) == 'approved'" class="px-3">
+              <button @click="resendVerifEmail()" class="btn xs-text text-violet border border-violet rounded-md font-bold px-3 py-2 shadow">Resend Verif Email </button>
+            </div>
             <label class="mr-3 mb-0 sm-text">
               <b>
                 Di {{ getStatusValue(userDetails.status) == 'rejected' ? 'Reject' : 'Approve' }} oleh :
