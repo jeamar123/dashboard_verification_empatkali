@@ -639,6 +639,28 @@
 						vm.toggleLoader(false);
 					})
 			},
+			resendVerifEmail(){
+				let vm = this
+				let data = {
+					users: [vm.$route.params.id]
+				}
+				vm.toggleLoader(true);
+				axios.put('/api/users/resendverifyemail', data, vm.requestedHeaders)
+					.then(res => {
+						console.log(res);
+						if (res.status == 200){
+							vm.$swal('Success!', 'Verification Email Sent.', 'success')
+						}else{
+							vm.$swal('Error!', res.data.message, 'error')
+						}
+						vm.toggleLoader(false);
+					})
+					.catch(err => {
+						console.log(err.response)
+						vm.$swal('Error!', err.message, 'error')
+						vm.toggleLoader(false);
+					})
+			},
     }
 	}
 	export default UserDetails
