@@ -645,7 +645,10 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.ktp && userDetails.ktp.number ? userDetails.ktp.number : '---' }}</p>
+              <div class="flex-4 flex items-center">
+                <p>{{ userDetails.ktp && userDetails.ktp.number ? userDetails.ktp.number : '---' }}</p>
+                <img v-if="userDetails.ktp && userDetails.ktp.validateNIK" :src="'../../assets/img/secure.png'" class="w-5 ml-3" alt="">
+              </div>
             </div>
           </div>
           <div class="card p-4">
