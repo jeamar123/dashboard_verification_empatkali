@@ -54,7 +54,10 @@
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">NIK <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <p class="flex-4">{{ userDetails.ktp && userDetails.ktp.number ? userDetails.ktp.number : '---' }}</p>
+              <div class="flex-4 flex items-center">
+                <p>{{ userDetails.ktp && userDetails.ktp.number ? userDetails.ktp.number : '---' }}</p>
+                <img v-if="userDetails.ktp && userDetails.ktp.validateNIK" :src="'../../assets/img/secure.png'" class="w-5 ml-3" alt="">
+              </div>
             </div>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Usia <span class="absolute top-0 right-2 font-bold">:</span></label>
@@ -816,12 +819,9 @@
             <p class="sm-text font-bold mb-4">Data Pendukung</p>
             <div class="flex xs-text mb-3">
               <label class="text-gray-500 flex-3 relative">Status Kontrak <span class="absolute top-0 right-2 font-bold">:</span></label>
-              <div v-if="userDetails.danaVerifiedAccount && !userDetails.danaData" class="flex-4">
-                <InsideSpinner :options="{width: '15px', height: '15px',}"  />
-              </div>
-              <p v-else class="flex-4">
-                <span v-if="userDetails.danaVerifiedAccount && userDetails.danaData">{{ userDetails.danaData.kontrak }}</span>
-                <span v-else>{{ '---' }}</span>
+              <p class="flex-4">
+                <span>{{ userDetails.contract ? 'Sudah klik kontrak' : 'Belum klik kontrak' }}</span>
+                <!-- <span v-else>{{ '---' }}</span> -->
               </p>
             </div>
             <div class="flex xs-text mb-3 items-center">
