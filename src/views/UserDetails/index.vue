@@ -860,9 +860,9 @@
           <button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-28 2xl:w-36 xs-text text-white rounded-md font-bold bg-dangerBtn">
             Reject
           </button>
-          <button @click="toggleModals(true, 'process', 'approve')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-successBtn">
+          <!-- <button @click="toggleModals(true, 'process', 'approve')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-successBtn">
             Approve
-          </button>
+          </button> -->
         </div>
 
         <div v-if="getStatusValue(userDetails.status) == 'active' || getStatusValue(userDetails.status) == 'approved' || getStatusValue(userDetails.status) == 'rejected'" class="flex-1 flex items-center">

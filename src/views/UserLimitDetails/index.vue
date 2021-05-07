@@ -414,12 +414,12 @@
 				<button @click="toggleModals(true, 'process', 'reject')" class="btn ml-4 px-5 py-2 w-28 2xl:w-36 xs-text text-white rounded-md font-bold bg-dangerBtn">
 					Reject
 				</button>
-				<button @click="toggleModals(true, 'process', 'approve-w-limit')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-primaryBtn">
+				<!-- <button @click="toggleModals(true, 'process', 'approve-w-limit')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-primaryBtn">
 					Approve dengan limit lain
 				</button>
 				<button @click="toggleModals(true, 'process', 'approve')" class="btn ml-4 px-5 py-2 w-52 2xl:w-64 xs-text text-white rounded-md font-bold bg-successBtn">
 					Approve
-				</button>
+				</button> -->
 			</div>
 			<!-- v-if="limitDetails.status != 0"  -->
 			<div v-if="limitDetails.status != 0" class="flex-1 flex items-center">
